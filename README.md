@@ -21,6 +21,7 @@ Primary Assembly of <i>Trachurus japonicus</i> genome (agi1) was developed by Dr
 Run a series of the shell scripts in the order listed after changing paths according to your environemt:
  
 ```bash
+Pipe.00.fastp.sh
 Pipe.01.BWA_mapping.sh
 
 ...
