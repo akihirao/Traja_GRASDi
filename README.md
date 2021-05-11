@@ -8,7 +8,6 @@ The jack mackerel, <i>Trachurus japonicus</i>, is a pelagic fish distributed on 
 * vcftools: A set of tools for working with VCF files (https://github.com/vcftools/vcftools)
 * BWA: Burrow-Wheeler Aligner (http://bio-bwa.sourceforge.net) 
 * GATK: Genome Analysis Toolkit (https://gatk.broadinstitute.org/)
-* EAGLE: Explicit Alternative Genome Likelihood Evaluator (https://github.com/tony-kuo/eagle)
 * Plink: Whole-genome association analysis tool (https://www.cog-genomics.org/plink/)
 
 The environments under Ubuntu 18.04 are tested. The versions of the tools used are documented in a series of shell scripts.
