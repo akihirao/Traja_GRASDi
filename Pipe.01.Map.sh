@@ -24,6 +24,11 @@ if [ ! -e $reference_folder/aig1.fa.bwt ]; then
 		bwa index $reference_folder/agi1.fa
 fi
 
+#Checking for fasta index
+if [ ! -e $reference_folder/aig1.fa.fai ]; then
+                samtools faidx $reference_folder/agi1.fa
+fi
+
 #preparing for output folder
 mkdir -p $main_folder/bwa_out
 
