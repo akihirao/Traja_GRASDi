@@ -6,7 +6,7 @@ set -exuo pipefail
 
 SCRIPT_DIR=$(cd $(dirname $0)  && pwd)
 
-CPU=16
+no_thread=16
 
 reference_folder=/home/akihirao/work/Traja/RefGenome/RefGenome_v1
 main_folder=/home/akihirao/work/Traja/Traja_GRASDi
@@ -43,16 +43,16 @@ while read sample; do
 	fastq_R1=$sample$R1_tag.trimQ30.fastq.gz
 	fastq_R2=$sample$R2_tag.trimQ30.fastq.gz
 		
-	#setting RG: @RG\tID:AT48\tSM:$sample\tPL:Illumina
+	#setting RG: @RG\tID:Traja_GRASDi\tSM:$sample\tPL:Illumina
 	specific_ID="Traja_GRASDi"
 	tag_read_group_part1="@RG\tID:"
 	tag_read_group_part2="\tSM:"
 	tag_read_group_part3="\tPL:Illumina"
 	tag_read_group=$tag_read_group_part1$specific_ID$tag_read_group_part2$sample$tag_read_group_part3
 
-	bwa mem -t $CPU -M -R $tag_read_group $reference_folder/agi1.fa\
-	 $QC_folder/$sample/$fastq_R1 $QC_folder/$sample/$fastq_R2 | samtools view -@ $CPU -b | samtools sort -@ $CPU > $sample.agi1.bam
-	samtools index -@ $CPU $sample.agi1.bam
+	bwa mem -t $no_thread -M -R $tag_read_group $reference_folder/agi1.fa\
+	 $QC_folder/$sample/$fastq_R1 $QC_folder/$sample/$fastq_R2 | samtools view -@ $no_thread -b | samtools sort -@ $no_thread > $sample.agi1.bam
+	samtools index -@ $no_thread $sample.agi1.bam
 	
 done < $SCRIPT_DIR/sample_ID.list #list of MIDs
 #done < $SCRIPT_DIR/sample_ID.test.list #list of MIDs
