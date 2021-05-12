@@ -1,6 +1,6 @@
 #!/bin/bash
 #Pipe.00.fastp.sh
-#by HIRAO Akiras
+#by HIRAO Akira
 
 
 set -exuo pipefail
