@@ -1,5 +1,5 @@
 # Bioinformatics pipeline for SNPs calling workflow for GRAS-Di analysis of <i>Trachurus japonicus</i>
-[<i>Trachurus japonicus</i>](https://www.fishbase.de/summary/366), Japanese Jack meckerel, is a pelagic fish distributed on the continental shelf waters along the subtropical Kuroshio Current and the Tsushima Warm Current in the sewtern North Pacific. <i>Trachurus japonicus</i> is a commercially important species in the East Asia, especially in Japan, Korea and China.
+[<i>Trachurus japonicus</i>](https://www.fishbase.de/summary/366), Japanese Jack mackerel, is a pelagic fish distributed on the continental shelf waters along the subtropical Kuroshio Current and the Tsushima Warm Current in the sewtern North Pacific. <i>Trachurus japonicus</i> is a commercially important species in the East Asia, especially in Japan, Korea and China.
 
 
 ## Requirement
