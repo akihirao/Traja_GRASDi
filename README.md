@@ -15,7 +15,7 @@ The environments under Ubuntu 18.04 are tested. The versions of the tools used a
 
 
 ## Reference genome
-Primary assembly of <i>Trachurus japonicus</i> genome (agi1) was developed by Dr. Atsushi Fujiwara. 
+Primary assembly of <i>Trachurus japonicus</i> genome (agi1) was developed by Dr. Atsushi Fujiwara (Fisheries Research Agency, Japan). 
 
 
 ## Usage
