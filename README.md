@@ -1,5 +1,5 @@
 # Bioinformatics pipeline for SNPs calling workflow for GRAS-Di analysis of <i>Trachurus japonicus</i>
-The jack mackerel, <i>Trachurus japonicus</i>, is a pelagic fish distributed on the continental shelf waters along the subtropical Kuroshio Current and the Tsushima Warm Current in the sewtern North Pacific. <i>Trachurus japonicus</i> is a commercially important species in the East Asia, especially Japan, Korea and China.
+[<i>Trachurus japonicus</i>](https://www.fishbase.de/summary/366), Japanese Jack mackerel, is a pelagic fish distributed on the continental shelf waters along the subtropical Kuroshio Current and the Tsushima Warm Current in the sewtern North Pacific. <i>Trachurus japonicus</i> is a commercially important species in the East Asia, especially in Japan, Korea and China.
 
 
 ## Requirement
@@ -15,7 +15,7 @@ The environments under Ubuntu 18.04 are tested. The versions of the tools used a
 
 
 ## Reference genome
-Primary assembly of <i>Trachurus japonicus</i> genome (agi1) was developed by Dr. Atsushi Fujiwara. 
+Primary assembly of <i>Trachurus japonicus</i> genome (agi1) was developed by Dr. Atsushi Fujiwara (Fisheries Research Agency, Japan). 
 
 
 ## Usage
