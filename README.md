@@ -23,12 +23,10 @@ Run a series of the shell scripts in the order listed after changing paths accor
  
 ```bash
 Pipe.00.fastp.sh
-Pipe.01.BWA_mapping.sh
-
+Pipe.01.Map.sh
 ...
 Pipe.10.GenotypeFiltering.sh
 ```
-
 
 
 ## Note
