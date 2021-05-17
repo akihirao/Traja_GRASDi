@@ -6,9 +6,9 @@ set -exuo pipefail
 
 SCRIPT_DIR=$(cd $(dirname $0)  && pwd)
 
-no_thread=16
+no_thread=64
 
-reference_folder=/home/akihirao/work/Traja/RefGenome/RefGenome_v1
+reference_folder=/home/akihirao/work/Traja/RefGenome/RefGenome_v2
 main_folder=/home/akihirao/work/Traja/Traja_GRASDi
 QC_folder=$main_folder/Traja_QCData_GRASDi
 
@@ -20,13 +20,13 @@ R2_tag="_R2"
 #Using htslib 1.12-10-gc3ba302
 
 #Checking for reference index
-if [ ! -e $reference_folder/aig1.fa.bwt ]; then
-		bwa index $reference_folder/agi1.fa
+if [ ! -e $reference_folder/agi1.2.fa.bwt ]; then
+		bwa index $reference_folder/agi1.2.fa
 fi
 
 #Checking for fasta index
-if [ ! -e $reference_folder/aig1.fa.fai ]; then
-                samtools faidx $reference_folder/agi1.fa
+if [ ! -e $reference_folder/agi1.2.fa.fai ]; then
+                samtools faidx $reference_folder/agi1.2.fa
 fi
 
 #preparing for output folder
@@ -50,9 +50,9 @@ while read sample; do
 	tag_read_group_part3="\tPL:Illumina"
 	tag_read_group=$tag_read_group_part1$specific_ID$tag_read_group_part2$sample$tag_read_group_part3
 
-	bwa mem -t $no_thread -M -R $tag_read_group $reference_folder/agi1.fa\
-	 $QC_folder/$sample/$fastq_R1 $QC_folder/$sample/$fastq_R2 | samtools view -@ $no_thread -b | samtools sort -@ $no_thread > $sample.agi1.bam
-	samtools index -@ $no_thread $sample.agi1.bam
+	bwa mem -t $no_thread -M -R $tag_read_group $reference_folder/agi1.2.fa\
+	 $QC_folder/$sample/$fastq_R1 $QC_folder/$sample/$fastq_R2 | samtools view -@ $no_thread -b | samtools sort -@ $no_thread > $sample.agi1.2.bam
+	samtools index -@ $no_thread $sample.agi1.2.bam
 	
 done < $SCRIPT_DIR/sample_ID.list #list of MIDs
 #done < $SCRIPT_DIR/sample_ID.test.list #list of MIDs
