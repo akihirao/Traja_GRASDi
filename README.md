@@ -4,12 +4,12 @@
 
 ## Requirement
 
-* samtools: Tools for manipulating NGS data (https://github.com/samtools/samtools)
-* vcftools: A set of tools for working with VCF files (https://github.com/vcftools/vcftools)
+* bedtools: a powerful toolset for genome arithmetic (https://bedtools.readthedocs.io)
 * BWA: Burrow-Wheeler Aligner (http://bio-bwa.sourceforge.net) 
-* GATK: Genome Analysis Toolkit (https://gatk.broadinstitute.org/)
-* Plink: Whole-genome association analysis tool (https://www.cog-genomics.org/plink/)
 * fastp: An all-in-one preprocessing tool for fastq files (https://github.com/OpenGene/fastp) 
+* GATK: Genome Analysis Toolkit (https://gatk.broadinstitute.org/)* samtools: Tools for manipulating NGS data (https://github.com/samtools/samtools)
+* Plink: Whole-genome association analysis tool (https://www.cog-genomics.org/plink/)
+* vcftools: A set of tools for working with VCF files (https://github.com/vcftools/vcftools)
 
 The environments under Ubuntu 18.04 are tested. The versions of the tools used are documented in a series of shell scripts.
 
