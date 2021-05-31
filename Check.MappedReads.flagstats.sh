@@ -30,7 +30,7 @@ while read sample; do
 	echo $sample.agi1.2.filtered.bam >> $SCRIPT_DIR/CheckOutMappedReads.filtered.bam.txt
 	samtools flagstats --threads $no_thread $sample.agi1.2.filtered.bam >> $SCRIPT_DIR/CheckOutMappedReads.filtered.bam.txt
 
-done < $SCRIPT_DIR/sample_ID.list  #list of MIDs
+done < $SCRIPT_DIR/sample_ID.2nd.list  #list of MIDs
 
 cd $SCRIPT_DIR
 
