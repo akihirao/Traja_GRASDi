@@ -8,7 +8,7 @@ set -exuo pipefail
 SCRIPT_DIR=$(cd $(dirname $0)  && pwd)
 
 
-no_thread=16
+no_thread=32
 
 raw_fastq_folder=/home/akihirao/work/Traja/Traja_GRASDi/Traja_RawData_GRASDi
 QC_folder=/home/akihirao/work/Traja/Traja_GRASDi/Traja_QCData_GRASDi
@@ -36,8 +36,6 @@ while read sample; do
 	 -q 30 -l 50\
 	 -w $no_thread
 
-#done < $SCRIPT_DIR/sample_ID.test.list #list of ID
-done < $SCRIPT_DIR/sample_ID.list #list of ID
-
+done < $SCRIPT_DIR/sample_ID.A0001_A0646.list #list of ID
 
 
