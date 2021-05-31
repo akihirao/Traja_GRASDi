@@ -6,7 +6,7 @@ set -exuo pipefail
 
 SCRIPT_DIR=$(cd $(dirname $0)  && pwd)
 
-no_thread=64
+no_thread=128
 
 reference_folder=/home/akihirao/work/Traja/RefGenome/RefGenome_v2
 main_folder=/home/akihirao/work/Traja/Traja_GRASDi
