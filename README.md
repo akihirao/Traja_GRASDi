@@ -14,7 +14,7 @@
 The environments under Ubuntu 18.04 are tested. The versions of the tools used are documented in a series of shell scripts.
 
 
-## Reference genome and the raw sequencing data
+## Reference genome and the sequencing data
 Primary assembly of <i>Trachurus japonicus</i> genome (agi1) was developed by Dr. Atsushi Fujiwara (Fisheries Research Agency, Japan). The raw sequencing data analyzed were deposited into the DNA Data Bank of Japan Sequence Read Archive with the accession number DRAxxxxxx and DRA012187.
 
 
