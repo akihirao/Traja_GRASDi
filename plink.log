@@ -1,0 +1,12 @@
+PLINK v1.90b6.24 64-bit (6 Jun 2021)
+Options in effect:
+  --gzvcf
+
+Hostname: node3.saints.fra.go.jp
+Working directory: /home/akihirao/work/Traja/Traja_GRASDi/scripts
+Start time: Thu Jun 10 18:24:02 2021
+
+Error: Unrecognized flag ('--gzvcf').
+For more information, try "plink --help <flag name>" or "plink --help | more".
+
+End time: Thu Jun 10 18:24:02 2021
