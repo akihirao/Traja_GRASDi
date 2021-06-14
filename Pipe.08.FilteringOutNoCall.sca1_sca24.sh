@@ -18,6 +18,13 @@ mkdir -p $work_folder
 
 cd $work_folder
 
+#Filtering out samples with label repetation
+gatk SelectVariants\
+ -R $reference_folder/agi1.2.fa\
+ -V $target_ID.sca1_sca24.snp.DPfilterNoCall.vcf.gz\
+ --exclude-sample-name $SCRIPT_DIR/TrajaGRASDi.LabelRepetation.args\
+ -O $target_ID.sca1_sca24.snp.DPfilterNoCall.P99.vcf.gz
+
 
 
 #Set filtered sites to no call:SNP
