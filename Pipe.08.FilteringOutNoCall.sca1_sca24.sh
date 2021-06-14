@@ -22,14 +22,14 @@ cd $work_folder
 gatk SelectVariants\
  -R $reference_folder/agi1.2.fa\
  -V $target_ID.sca1_sca24.snp.DPfilterNoCall.vcf.gz\
- --exclude-sample-name $SCRIPT_DIR/TrajaGRASDi.LabelRepetation.args\
+ --exclude-sample-name $SCRIPT_DIR/Traja_GRASDi.LabelRepetation.args\
  -O $target_ID.sca1_sca24.snp.DPfilterNoCall.non_rep.vcf.gz
 
 #Filtering out samples with label repetation: INDEL
 gatk SelectVariants\
  -R $reference_folder/agi1.2.fa\
  -V $target_ID.sca1_sca24.indel.DPfilterNoCall.vcf.gz\
- --exclude-sample-name $SCRIPT_DIR/TrajaGRASDi.LabelRepetation.args\
+ --exclude-sample-name $SCRIPT_DIR/Traja_GRASDi.LabelRepetation.args\
  -O $target_ID.sca1_sca24.indel.DPfilterNoCall.non_rep.vcf.gz
 
 
