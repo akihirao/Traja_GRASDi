@@ -35,7 +35,7 @@ echo $input_samples
 #-----------------------------------------------------
 
 
-target_ID=Traja_GRASDi.$no_sample
+target_ID=Traja_GRASDi.2019.2022.YearClass
 output_folder=$main_folder/gDB
 mkdir -p $output_folder
 
