@@ -19,10 +19,10 @@ mkdir -p $plink_folder
 
 cd $plink_folder
 
-
+#<< COMMENTOUT
 #Convert from vcf to plink
-#vcftools --gzvcf $vcf_folder/Traja_GRASDi.sca1_sca24.snp.DPfilterNoCall.P99.vcf.gz\
-# --plink --out $plink_folder/Traja_GRASDi.sca1_sca24.snp
+vcftools --gzvcf $vcf_folder/Traja_GRASDi.sca1_sca24.snp.DPfilterNoCall.non_rep.P99.vcf.gz\
+ --plink --out $plink_folder/Traja_GRASDi.sca1_sca24.snp
 
 lab_99_filtering="99"
 lab_95_filtering="95"
@@ -88,3 +88,42 @@ plink --noweb --allow-extra-chr\
  --out Traja_GRASDi.sca1_sca24.snp.$lab_50_filtering\
  --recode
 
+#COMMENTOUT
+
+
+perl $SCRIPT_DIR/PlinkMAP2BED.pl < $plink_folder/Traja_GRASDi.sca1_sca24.snp.$lab_50_filtering.map > $plink_folder/Traja_GRASDi.sca1_sca24.snp.$lab_50_filtering.bed
+perl $SCRIPT_DIR/scripts/Select_ID_PED.pl < Traja_GRASDi.sca1_sca24.snp.$lab_50_filtering > $SCRIPT_DIR/Traja_GRASDi.sca1_sca24.snp.$lab_50_filtering.indiv.args
+cat $SCRIPT_DIR/Traja_GRASDi.sca1_sca24.snp.$lab_50_filtering.indiv.args $SCRIPT_DIR/Traja_GRASDi.LabelRepetation.args\
+ | sort Traja_GRASDi.sca1_sca24.snp.maf001.indiv.concatenate.args\
+ | uniq -u > Traja_GRASDi.sca1_sca24.snp.maf001.indiv.extract_out.args
+
+vcftools --gzvcf $vcf_folder/Traja_GRASDi.sca1_sca24.snp.DPfilterNoCall.non_rep.P99.vcf.gz\
+ --recode --recode-INFO-all --stdout --bed $plink_folder/Traja_GRASDi.sca1_sca24.snp.$lab_50_filtering.bed --max-missing 0.9 > Traja_GRASDi.sca1_sca24.snp.$lab_50_filtering.from_bed.vcf
+
+
+<< COMMENTOUT2
+#filtering out MAF < 0.01: H-subgenome
+vcftools --vcf $vcf_folder/Akm.ahal.snp.filter06.vcf --maf 0.01 --recode --recode-INFO-all --stdout > $vcf_folder/Akm.ahal.snp.maf001.vcf
+bgzip -c $vcf_folder/Akm.ahal.snp.maf001.vcf > $vcf_folder/Akm.ahal.snp.maf001.vcf.gz
+tabix -p $vcf_folder/Akm.ahal.snp.maf001.vcf.gz
+
+#Convering from vcf to plink ped/map
+vcftools --vcf $vcf_folder/Akm.ahal.snp.maf001.vcf\
+ --plink --out $plink_folder/Akm.ahal.06maf001
+
+#LD-pruning: H-subgenome
+plink2 --allow-extra-chr\
+ --vcf $vcf_folder/Akm.ahal.snp.maf001.vcf\
+ --indep-pairwise 100 kb 1 0.1 --set-all-var-ids @:#\
+ --out $vcf_folder/Akm.ahal.snp.maf001
+
+#convert from LD-prune.in to BED: H-subgenome
+perl $SCRIPT_DIR/LDpruned2BED.pl < $vcf_folder/Akm.ahal.snp.maf001.prune.in > $plink_folder/Akm.ahal.LDpruned.bed
+gatk SelectVariants\
+ -R $reference_folder/Ahal_v2_2_1.fa\
+ -V $vcf_folder/Akm.ahal.snp.lab_edit.vcf.gz\
+ --sample-name $SCRIPT_DIR/Akm.$lab_06.indiv.args\
+ -L $plink_folder/Akm.ahal.LDpruned.bed\
+ -O $vcf_folder/Akm.ahal.snp.maf001.LDpruned.vcf
+
+COMMENTOUT2
