@@ -19,10 +19,17 @@ mkdir -p $plink_folder
 
 cd $plink_folder
 
+<<<<<<< HEAD
 #<< COMMENTOUT
 #Convert from vcf to plink
 vcftools --gzvcf $vcf_folder/Traja_GRASDi.sca1_sca24.snp.DPfilterNoCall.non_rep.P99.vcf.gz\
  --plink --out $plink_folder/Traja_GRASDi.sca1_sca24.snp
+=======
+
+#Convert from vcf to plink
+#vcftools --gzvcf $vcf_folder/Traja_GRASDi.sca1_sca24.snp.DPfilterNoCall.P99.vcf.gz\
+# --plink --out $plink_folder/Traja_GRASDi.sca1_sca24.snp
+>>>>>>> 511e2680e792458b218693faebe85bd1f83c051f
 
 lab_99_filtering="99"
 lab_95_filtering="95"
@@ -88,6 +95,7 @@ plink --noweb --allow-extra-chr\
  --out Traja_GRASDi.sca1_sca24.snp.$lab_50_filtering\
  --recode
 
+<<<<<<< HEAD
 #COMMENTOUT
 
 
@@ -127,3 +135,5 @@ gatk SelectVariants\
  -O $vcf_folder/Akm.ahal.snp.maf001.LDpruned.vcf
 
 COMMENTOUT2
+=======
+>>>>>>> 511e2680e792458b218693faebe85bd1f83c051f
