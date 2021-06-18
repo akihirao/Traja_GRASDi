@@ -1,5 +1,5 @@
 #!/bin/bash
-#Pipe.04.GenomicsDBImportGVCF.A0001_A0646.sh
+#Pipe.04.GenomicsDBImportGVCF.2019.2020.YearClass.sh
 #by HIRAO Akira
 
 set -exuo pipefail
@@ -52,3 +52,4 @@ $input_samples \
 --reader-threads $no_thread
 
 cd $SCRIPT_DIR
+
