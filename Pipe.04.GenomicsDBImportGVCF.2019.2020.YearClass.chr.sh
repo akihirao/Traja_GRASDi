@@ -35,11 +35,11 @@ echo $input_samples
 #-----------------------------------------------------
 
 
-target_ID=Traja_GRASDi.2019.2022.YearClass
+target_ID=Traja_GRASDi_2019_2020
 output_folder=$main_folder/gDB
+lab_under_bar="_"
 mkdir -p $output_folder
 
-genomicsDB_name=genomicsDB.$target_ID
 
 
 cd $output_folder
@@ -47,7 +47,10 @@ cd $output_folder
 
 while read chr; do
 
-	DB_path=$output_folder/$genomicsDB_name.$chr
+	genomicsDB_name=genomicsDB.$target_ID$lab_under_bar$chr
+
+
+	DB_path=$output_folder/$genomicsDB_name
 
 	gatk GenomicsDBImport\
 	 $input_samples\
