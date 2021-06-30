@@ -17,7 +17,6 @@ mkdir -p $output_folder
 
 cd $output_folder
 
-<< COMMENTOUT
 
 #===============================================
 #Filtering out unplaced & mt + deplicated indiv
@@ -71,7 +70,7 @@ gatk SelectVariants\
  -O $target_ID.sca1_24.indel.no_ExcessHetBlock.vcf.gz \
 #=====================================================================
 
-COMMENTOUT
+
 
 #VariantFiltration for SNP
 gatk VariantFiltration\
