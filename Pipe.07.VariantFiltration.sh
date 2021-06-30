@@ -22,13 +22,13 @@ cd $output_folder
 gatk SelectVariants\
  -R $reference_folder/agi1.2.fa\
  -V $target_ID.sca_all.snp.vcf.gz\
- -XL unplaced_mt.list\
+ -XL $SCRIPT_DIR/unplaced_mt.list\
  -O $target_ID.sca1_24.snp.vcf.gz
 
 gatk SelectVariants\
  -R $reference_folder/agi1.2.fa\
  -V $target_ID.sca_all.indel.vcf.gz\
- -XL unplaced_mt.list\
+ -XL $SCRIPT_DIR/unplaced_mt.list\
  -O $target_ID.sca1_24.indel.vcf.gz
 #===============================================
  
