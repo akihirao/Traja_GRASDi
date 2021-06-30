@@ -17,6 +17,8 @@ mkdir -p $output_folder
 
 cd $output_folder
 
+<< COMMENTOUT
+
 #===============================================
 #Filtering out unplaced & mt + deplicated indiv
 gatk SelectVariants\
@@ -69,7 +71,7 @@ gatk SelectVariants\
  -O $target_ID.sca1_24.indel.no_ExcessHetBlock.vcf.gz \
 #=====================================================================
 
-
+COMMENTOUT
 
 #VariantFiltration for SNP
 gatk VariantFiltration\
@@ -82,7 +84,7 @@ gatk VariantFiltration\
  --filter-expression "ReadPosRankSum < -8.0" --filter-name "ReadPosRankSumltnegative8"\
  --filter-expression "SOR > 4.0" --filter-name "SORgt4"\
  --filter-expression "${ExcessHet_param}" --filter-name "ExHet"\
- -O $target_ID.snp.filter.vcf
+ -O $target_ID.sca1_24.snp.filter.vcf
 
 grep -E '^#|PASS' $target_ID.sca1_24.snp.filter.vcf | bgzip > $target_ID.sca1_24.snp.filterPASSED.vcf.gz
 tabix -f -p vcf $target_ID.sca1_24.snp.filterPASSED.vcf.gz
