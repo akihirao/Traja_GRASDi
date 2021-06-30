@@ -36,5 +36,4 @@ gatk SelectVariants\
  -O $work_folder/$target_ID.sca_all.indel.vcf.gz
 #----------------------------------------------------------------------------------
 
-
 cd $SCRIPT_DIR
