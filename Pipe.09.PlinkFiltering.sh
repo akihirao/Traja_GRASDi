@@ -96,7 +96,7 @@ CUT2
 
 
 perl $SCRIPT_DIR/PlinkMAP2BED.pl < $plink_folder/$target_ID.sca1_24.snp.$lab_50_filtering.map > $plink_folder/$target_ID.sca1_24.snp.$lab_50_filtering.bed
-perl $SCRIPT_DIR/scripts/Select_ID_PED.pl < $plink_folder/$target_ID.sca1_24.snp.$lab_50_filtering > $SCRIPT_DIR/$target_ID.sca1_24.snp.$lab_50_filtering.indiv.args
+perl $SCRIPT_DIR/scripts/Select_ID_PED.pl < $plink_folder/$target_ID.sca1_24.snp.$lab_50_filtering.ped > $SCRIPT_DIR/$target_ID.sca1_24.snp.$lab_50_filtering.indiv.args
 cat $SCRIPT_DIR/$target_ID.sca1_24.snp.$lab_50_filtering.indiv.args $SCRIPT_DIR/$target_ID.LabelRepetation.args\
  | sort $target_ID.sca1_24.snp.maf001.indiv.concatenate.args\
  | uniq -u > $target_ID.sca1_24.snp.maf001.indiv.extract_out.args
