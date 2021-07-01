@@ -1,5 +1,5 @@
 #!/bin/bash -i
-#Pipe.08.FilteringOutNoCall.sca1_sca24.sh
+#Pipe.08.FilteringOutNoCall.sh
 #by HIRAO Akira
 
 set -exuo pipefail
