@@ -9,7 +9,7 @@ SCRIPT_DIR=$(cd $(dirname $0)  && pwd)
 no_thread=128
 
 reference_folder=/home/akihirao/work/Traja/RefGenome/RefGenome_v2
-main_folder=/home/akihirao/work/Traja/Traja_GRASDi_2019_2020
+main_folder=/home/akihirao/work/Traja/Traja_GRASDi
 
 target_ID=Traja_GRASDi_2019_2020
 work_folder=$main_folder/vcf_out_2019_2020
