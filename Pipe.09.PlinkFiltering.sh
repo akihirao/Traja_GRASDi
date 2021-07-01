@@ -97,12 +97,16 @@ CUT2
 
 perl $SCRIPT_DIR/PlinkMAP2BED.pl < $plink_folder/$target_ID.sca1_24.snp.$lab_50_filtering.map > $plink_folder/$target_ID.sca1_24.snp.$lab_50_filtering.bed
 perl $SCRIPT_DIR/Select_ID_PED.pl < $plink_folder/$target_ID.sca1_24.snp.$lab_50_filtering.ped > $SCRIPT_DIR/$target_ID.sca1_24.snp.$lab_50_filtering.indiv.args
-cat $SCRIPT_DIR/$target_ID.sca1_24.snp.$lab_50_filtering.indiv.args $SCRIPT_DIR/$target_ID.LabelRepetation.args\
- | sort $target_ID.sca1_24.snp.maf001.indiv.concatenate.args\
- | uniq -u > $target_ID.sca1_24.snp.maf001.indiv.extract_out.args
 
 vcftools --gzvcf $vcf_folder/$target_ID.sca1_24.snp.DPfilterNoCall.non_rep.P99.vcf.gz\
- --recode --recode-INFO-all --stdout --bed $plink_folder/$target_ID.sca1_24.snp.$lab_50_filtering.bed --max-missing 0.9 > $target_ID.sca1_24.snp.$lab_50_filtering.from_bed.vcf
+ --recode --recode-INFO-all --stdout --bed $plink_folder/$target_ID.sca1_24.snp.$lab_50_filtering.bed --remove $SCRIPT_DIR/$target_ID.sca1_24.snp.$lab_50_filtering.indiv.args --max-missing 0.9 > $target_ID.sca1_24.snp.$lab_50_filtering.from_bed.vcf
+
+#gatk SelectVariants\
+# -R $reference_folder/agi1.2.fa\
+# -V $vcf_folder/$target_ID.sca1_24.snp.DPfilterNoCall.non_rep.P99.vcf.gz\
+# --sample-name $target_ID.sca1_24.snp.maf001.indiv.extract_out.args\
+# -L $plink_folder/$target_ID.snp.$lab_50_filtering.bed\
+# -O $vcf_folder/$target_ID.sca1_24.snp.$lab_50_filtering.from_bed.vcf
 
 
 ##<< COMMENTOUT
