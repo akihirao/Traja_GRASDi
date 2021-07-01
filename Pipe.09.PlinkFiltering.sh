@@ -20,9 +20,12 @@ mkdir -p $plink_folder
 
 cd $plink_folder
 
+<< CUT1
 #Convert from vcf to plink
 vcftools --gzvcf $vcf_folder/$target_ID.sca1_24.snp.DPfilterNoCall.non_rep.P99.vcf.gz\
  --plink --out $plink_folder/$target_ID.sca1_24.snp
+CUT1
+
 
 lab_99_filtering="99"
 lab_95_filtering="95"
@@ -32,6 +35,7 @@ lab_70_filtering="70"
 lab_60_filtering="60"
 lab_50_filtering="50"
 
+<< CUT2
 #mind 0.99 geno 0.99: removing >99% missing individuals and/or sites
 plink --noweb --allow-extra-chr\
  --file $target_ID.sca1_24.snp\
@@ -88,10 +92,11 @@ plink --noweb --allow-extra-chr\
  --out $target_ID.sca1_24.snp.$lab_50_filtering\
  --recode
 
+CUT2
 
 
 perl $SCRIPT_DIR/PlinkMAP2BED.pl < $plink_folder/$target_ID.sca1_24.snp.$lab_50_filtering.map > $plink_folder/$target_ID.sca1_24.snp.$lab_50_filtering.bed
-perl $SCRIPT_DIR/scripts/Select_ID_PED.pl < $target_ID.sca1_24.snp.$lab_50_filtering > $SCRIPT_DIR/$target_ID.sca1_24.snp.$lab_50_filtering.indiv.args
+perl $SCRIPT_DIR/scripts/Select_ID_PED.pl < $plink_folder/$target_ID.sca1_24.snp.$lab_50_filtering > $SCRIPT_DIR/$target_ID.sca1_24.snp.$lab_50_filtering.indiv.args
 cat $SCRIPT_DIR/$target_ID.sca1_24.snp.$lab_50_filtering.indiv.args $SCRIPT_DIR/$target_ID.LabelRepetation.args\
  | sort $target_ID.sca1_24.snp.maf001.indiv.concatenate.args\
  | uniq -u > $target_ID.sca1_24.snp.maf001.indiv.extract_out.args
