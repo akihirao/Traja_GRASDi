@@ -20,11 +20,10 @@ mkdir -p $plink_folder
 
 cd $plink_folder
 
-<< CUT1
+
 #Convert from vcf to plink
 vcftools --gzvcf $vcf_folder/$target_ID.sca1_24.snp.DPfilterNoCall.non_rep.P99.vcf.gz\
  --plink --out $plink_folder/$target_ID.sca1_24.snp
-CUT1
 
 
 lab_99_filtering="99"
