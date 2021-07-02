@@ -35,7 +35,7 @@ lab_70_filtering="70"
 lab_60_filtering="60"
 lab_50_filtering="50"
 
-<< CUT2
+
 #mind 0.99 geno 0.99: removing >99% missing individuals and/or sites
 plink --noweb --allow-extra-chr\
  --file $target_ID.sca1_24.snp\
@@ -99,18 +99,17 @@ perl $SCRIPT_DIR/Select_ID_PED.pl < $plink_folder/$target_ID.sca1_24.snp.$lab_50
 vcftools --gzvcf $vcf_folder/$target_ID.sca1_24.snp.DPfilterNoCall.non_rep.P99.vcf.gz\
  --recode --recode-INFO-all --stdout --bed $plink_folder/$target_ID.sca1_24.snp.$lab_50_filtering.bed --remove $SCRIPT_DIR/$target_ID.sca1_24.snp.$lab_50_filtering.indiv.args --max-missing 0.9 > $vcf_folder/$target_ID.sca1_24.snp.$lab_50_filtering.from_bed.vcf
 
-CUT2
 
-
-##<< COMMENTOUT
 #filtering out MAF < 0.01
 vcftools --vcf $vcf_folder/$target_ID.sca1_24.snp.$lab_50_filtering.from_bed.vcf --maf 0.01 --recode --recode-INFO-all --stdout > $vcf_folder/$target_ID.snp.maf001.vcf
 bgzip -c $vcf_folder/$target_ID.snp.maf001.vcf > $vcf_folder/$target_ID.snp.maf001.vcf.gz
 tabix -p vcf $vcf_folder/$target_ID.snp.maf001.vcf.gz
 
+
 #Convering from vcf to plink ped/map
 vcftools --vcf $vcf_folder/$target_ID.snp.maf001.vcf\
  --plink --out $plink_folder/$target_ID.snp.$lab_50_filtering.maf001
+
 
 #LD-pruning
 plink2 --allow-extra-chr\
@@ -118,8 +117,10 @@ plink2 --allow-extra-chr\
  --indep-pairwise 100 kb 1 0.1 --set-all-var-ids @:#\
  --out $vcf_folder/$target_ID.snp.maf001
 
+
 #convert from LD-prune.in to BED
 perl $SCRIPT_DIR/LDpruned2BED.pl < $vcf_folder/$target_ID.snp.maf001.prune.in > $plink_folder/$target_ID.snp.maf001.LDpruned.bed
+
 gatk SelectVariants\
  -R $reference_folder/agi1.2.fa\
  -V $vcf_folder/$target_ID.sca1_24.snp.DPfilterNoCall.non_rep.P99.vcf.gz\
@@ -127,8 +128,8 @@ gatk SelectVariants\
  -L $plink_folder/$target_ID.snp.maf001.LDpruned.bed\
  -O $vcf_folder/$target_ID.snp.maf001.LDpruned.vcf
 
-
-##COMMENTOUT
+bgzip -c $vcf_folder/$target_ID.snp.maf001.LDpruned.vcf > $vcf_folder/$target_ID.snp.maf001.LDpruned.vcf.gz
+tabix -p vcf $vcf_folder/$target_ID.snp.maf001.LDpruned.vcf.gz
 
 
 cd $SCRIPT_DIR
