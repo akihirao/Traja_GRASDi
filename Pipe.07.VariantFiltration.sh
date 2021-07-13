@@ -19,7 +19,7 @@ cd $output_folder
 
 
 #===============================================
-#Filtering out unplaced & mt + deplicated indiv
+#Filtering out unplaced & mt
 gatk SelectVariants\
  -R $reference_folder/agi1.2.fa\
  -V $target_ID.sca_all.snp.vcf.gz\
