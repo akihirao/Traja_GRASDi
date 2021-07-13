@@ -155,4 +155,3 @@ bcftools view $target_ID.sca1_24.indel.DPfilterNoCall.vcf.gz -Ov -o $target_ID.s
 
 
 cd $SCRIPT_DIR
-
