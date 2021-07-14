@@ -26,7 +26,8 @@ Run a series of the shell scripts in the order listed after changing paths accor
 ```bash
 Pipe.00.fastp.sh
 Pipe.01.Map.sh
-...
+Pipe.02.RemoveMultipleMappedReads.sh
+..
 Pipe.10.GenotypeFiltering.sh
 ```
 
