@@ -28,7 +28,7 @@ Pipe.00.fastp.sh
 Pipe.01.Map.sh
 Pipe.02.RemoveMultipleMappedReads.sh
 ..
-Pipe.10.GenotypeFiltering.sh
+Pipe.09.PlinkFiltering.sh
 ```
 
 
