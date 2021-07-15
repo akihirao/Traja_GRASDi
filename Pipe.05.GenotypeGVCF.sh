@@ -29,4 +29,3 @@ gatk GenotypeGVCFs \
 -O $output_folder/$target_ID.vcf.gz
 
 cd $SCRIPT_DIR
-
