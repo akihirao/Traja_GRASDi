@@ -96,7 +96,7 @@ perl $SCRIPT_DIR/PlinkMAP2BED.pl < $plink_folder/$target_ID.sca1_24.snp.$lab_50_
 perl $SCRIPT_DIR/Select_ID_PED.pl < $plink_folder/$target_ID.sca1_24.snp.$lab_50_filtering.ped > $SCRIPT_DIR/$target_ID.sca1_24.snp.$lab_50_filtering.indiv.args
 
 vcftools --gzvcf $vcf_folder/$target_ID.sca1_24.snp.DPfilterNoCall.non_rep.P99.vcf.gz\
- --recode --recode-INFO-all --stdout --bed $plink_folder/$target_ID.sca1_24.snp.$lab_50_filtering.bed --remove $SCRIPT_DIR/$target_ID.sca1_24.snp.$lab_50_filtering.indiv.args --max-missing 0.9 > $vcf_folder/$target_ID.sca1_24.snp.$lab_50_filtering.from_bed.vcf
+ --recode --recode-INFO-all --stdout --bed $plink_folder/$target_ID.sca1_24.snp.$lab_50_filtering.bed --keep $SCRIPT_DIR/$target_ID.sca1_24.snp.$lab_50_filtering.indiv.args --max-missing 0.9 > $vcf_folder/$target_ID.sca1_24.snp.$lab_50_filtering.from_bed.vcf
 
 
 #filtering out MAF < 0.01
