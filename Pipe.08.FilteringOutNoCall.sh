@@ -19,11 +19,11 @@ mkdir -p $work_folder
 cd $work_folder
 
 #Filtering out samples with label repetation: SNP
-#gatk SelectVariants\
-# -R $reference_folder/agi1.2.fa\
-# -V $target_ID.sca1_24.snp.DPfilterNoCall.vcf.gz\
-# --exclude-sample-name $SCRIPT_DIR/Traja_GRASDi.LabelRepetation.IndivRepetation.args\
-# -O $target_ID.sca1_24.snp.DPfilterNoCall.non_rep.vcf.gz
+gatk SelectVariants\
+ -R $reference_folder/agi1.2.fa\
+ -V $target_ID.sca1_24.snp.DPfilterNoCall.vcf.gz\
+ --exclude-sample-name $SCRIPT_DIR/Traja_GRASDi.LabelRepetation.IndivRepetation.args\
+ -O $target_ID.sca1_24.snp.DPfilterNoCall.non_rep.vcf.gz
 
 #Filtering out samples with label repetation: INDEL
 gatk SelectVariants\
@@ -35,13 +35,13 @@ gatk SelectVariants\
 
 #Set filtered sites to no call: SNP
 #set filtering out locus with no genotypes 99%
-#gatk SelectVariants\
-# -R $reference_folder/agi1.2.fa\
-# -V $target_ID.sca1_24.snp.DPfilterNoCall.non_rep.vcf.gz\
-# --set-filtered-gt-to-nocall\
-# --max-nocall-fraction 0.99\
-# --exclude-filtered\
-# -O $target_ID.sca1_24.snp.DPfilterNoCall.non_rep.P99.vcf.gz
+gatk SelectVariants\
+ -R $reference_folder/agi1.2.fa\
+ -V $target_ID.sca1_24.snp.DPfilterNoCall.non_rep.vcf.gz\
+ --set-filtered-gt-to-nocall\
+ --max-nocall-fraction 0.99\
+ --exclude-filtered\
+ -O $target_ID.sca1_24.snp.DPfilterNoCall.non_rep.P99.vcf.gz
 
 
 #Set filtered sites to no call: INDEL
