@@ -97,15 +97,15 @@ perl $SCRIPT_DIR/Select_ID_PED.pl < $plink_folder/$target_ID.sca1_24.snp.$lab_50
 
 vcftools --gzvcf $vcf_folder/$target_ID.sca1_24.snp.DPfilterNoCall.non_rep.P99.vcf.gz\
  --recode --recode-INFO-all --stdout --bed $plink_folder/$target_ID.sca1_24.snp.$lab_50_filtering.bed --keep $SCRIPT_DIR/$target_ID.sca1_24.snp.$lab_50_filtering.indiv.args --max-missing 0.9 > $vcf_folder/$target_ID.sca1_24.snp.$lab_50_filtering.from_bed.vcf
-bgzip -c $vcf_folder/$target_ID.sca1_24.snp.$lab_50_filtering.from_bed.vc > $vcf_folder/$target_ID.sca1_24.snp.$lab_50_filtering.from_bed.vc.gz
-tabix -p vcf $vcf_folder/$target_ID.sca1_24.snp.$lab_50_filtering.from_bed.vc.gz
+bgzip -c $vcf_folder/$target_ID.sca1_24.snp.$lab_50_filtering.from_bed.vcf > $vcf_folder/$target_ID.sca1_24.snp.$lab_50_filtering.from_bed.vcf.gz
+tabix -p vcf $vcf_folder/$target_ID.sca1_24.snp.$lab_50_filtering.from_bed.vcf.gz
 
 
 #filtering out singletons
-vcftools --gzvcf $vcf_folder/$target_ID.sca1_24.snp.$lab_50_filtering.from_bed.vc.gz --singletons --stdout > $vcf_folder/$target_ID.sca1_24.snp.$lab_50_filtering.from_bed.singletons.txt
+vcftools --gzvcf $vcf_folder/$target_ID.sca1_24.snp.$lab_50_filtering.from_bed.vcf.gz --singletons --stdout > $vcf_folder/$target_ID.sca1_24.snp.$lab_50_filtering.from_bed.singletons.txt
 perl $SCRIPT_DIR/Singletons2BED.pl < $vcf_folder/$target_ID.sca1_24.snp.$lab_50_filtering.from_bed.singletons.txt > $vcf_folder/$target_ID.sca1_24.snp.$lab_50_filtering.from_bed.singletons.bed
 
-vcftools --gzvcf $vcf_folder/$target_ID.sca1_24.snp.$lab_50_filtering.from_bed.vc.gz\
+vcftools --gzvcf $vcf_folder/$target_ID.sca1_24.snp.$lab_50_filtering.from_bed.vcf.gz\
  --recode --recode-INFO-all --stdout --exclude-bed $vcf_folder/$target_ID.sca1_24.snp.$lab_50_filtering.from_bed.singletons.bed > $vcf_folder/$target_ID.sca1_24.snp.$lab_50_filtering.non_singleton.vcf
 bgzip -c $vcf_folder/$target_ID.sca1_24.snp.$lab_50_filtering.non_singleton.vcf > $vcf_folder/$target_ID.sca1_24.snp.$lab_50_filtering.non_singleton.vcf.gz
 tabix -p vcf $vcf_folder/$target_ID.sca1_24.snp.$lab_50_filtering.non_singleton.vcf.gz
