@@ -101,6 +101,10 @@ bgzip -c $vcf_folder/$target_ID.sca1_24.snp.$lab_50_filtering.from_bed.vc > $vcf
 tabix -p vcf $vcf_folder/$target_ID.sca1_24.snp.$lab_50_filtering.from_bed.vc.gz
 
 
+#filtering out singletons
+vcftools --gzvcf $vcf_folder/$target_ID.sca1_24.snp.$lab_50_filtering.from_bed.vc.gz --singletons --out $vcf_folder/$target_ID.sca1_24.snp.$lab_50_filtering.from_bed
+
+
 #filtering out MAF < 0.01
 vcftools --vcf $vcf_folder/$target_ID.sca1_24.snp.$lab_50_filtering.from_bed.vcf --maf 0.01 --recode --recode-INFO-all --stdout > $vcf_folder/$target_ID.snp.maf001.vcf
 bgzip -c $vcf_folder/$target_ID.snp.maf001.vcf > $vcf_folder/$target_ID.snp.maf001.vcf.gz
