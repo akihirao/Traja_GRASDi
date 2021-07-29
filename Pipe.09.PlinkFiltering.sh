@@ -102,11 +102,17 @@ tabix -p vcf $vcf_folder/$target_ID.sca1_24.snp.$lab_50_filtering.from_bed.vc.gz
 
 
 #filtering out singletons
-vcftools --gzvcf $vcf_folder/$target_ID.sca1_24.snp.$lab_50_filtering.from_bed.vc.gz --singletons --out $vcf_folder/$target_ID.sca1_24.snp.$lab_50_filtering.from_bed
+vcftools --gzvcf $vcf_folder/$target_ID.sca1_24.snp.$lab_50_filtering.from_bed.vc.gz --singletons --stdout > $vcf_folder/$target_ID.sca1_24.snp.$lab_50_filtering.from_bed.singletons.txt
+perl $SCRIPT_DIR/Singletons2BED.pl < $vcf_folder/$target_ID.sca1_24.snp.$lab_50_filtering.from_bed.singletons.txt > $vcf_folder/$target_ID.sca1_24.snp.$lab_50_filtering.from_bed.singletons.bed
+
+vcftools --gzvcf $vcf_folder/$target_ID.sca1_24.snp.$lab_50_filtering.from_bed.vc.gz\
+ --recode --recode-INFO-all --stdout --exclude-bed $vcf_folder/$target_ID.sca1_24.snp.$lab_50_filtering.from_bed.singletons.bed > $vcf_folder/$target_ID.sca1_24.snp.$lab_50_filtering.non_singleton.vcf
+bgzip -c $vcf_folder/$target_ID.sca1_24.snp.$lab_50_filtering.non_singleton.vcf > $vcf_folder/$target_ID.sca1_24.snp.$lab_50_filtering.non_singleton.vcf.gz
+tabix -p vcf $vcf_folder/$target_ID.sca1_24.snp.$lab_50_filtering.non_singleton.vcf.gz
 
 
 #filtering out MAF < 0.01
-vcftools --vcf $vcf_folder/$target_ID.sca1_24.snp.$lab_50_filtering.from_bed.vcf --maf 0.01 --recode --recode-INFO-all --stdout > $vcf_folder/$target_ID.snp.maf001.vcf
+vcftools --gzvcf $vcf_folder/$target_ID.sca1_24.snp.$lab_50_filtering.non_singleton.vcf.gz --maf 0.01 --recode --recode-INFO-all --stdout > $vcf_folder/$target_ID.snp.maf001.vcf
 bgzip -c $vcf_folder/$target_ID.snp.maf001.vcf > $vcf_folder/$target_ID.snp.maf001.vcf.gz
 tabix -p vcf $vcf_folder/$target_ID.snp.maf001.vcf.gz
 
