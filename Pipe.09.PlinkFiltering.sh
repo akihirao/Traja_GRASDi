@@ -117,7 +117,7 @@ bgzip -c $vcf_folder/$target_ID.snp.maf001.vcf > $vcf_folder/$target_ID.snp.maf0
 tabix -p vcf $vcf_folder/$target_ID.snp.maf001.vcf.gz
 
 
-#Convering from vcf to plink ped/map
+#Convetion from vcf to plink ped/map
 vcftools --vcf $vcf_folder/$target_ID.snp.maf001.vcf\
  --plink --out $plink_folder/$target_ID.snp.$lab_50_filtering.maf001
 
@@ -142,6 +142,8 @@ gatk SelectVariants\
 bgzip -c $vcf_folder/$target_ID.snp.maf001.LDpruned.vcf > $vcf_folder/$target_ID.snp.maf001.LDpruned.vcf.gz
 tabix -p vcf $vcf_folder/$target_ID.snp.maf001.LDpruned.vcf.gz
 
+#Convertion into *thaw format for analysis using the package "smartsnp" in the R
+plink2 --vcf $vcf_folder/$target_ID.snp.maf001.LDpruned.vcf.gz --allow-extra-chr --recode A-transpose --out $vcf_folder/$target_ID.snp.maf001.LDpruned.genotypeMatrix
 
 cd $SCRIPT_DIR
 
