@@ -144,3 +144,4 @@ tabix -p vcf $vcf_folder/$target_ID.snp.maf001.LDpruned.vcf.gz
 
 
 cd $SCRIPT_DIR
+
