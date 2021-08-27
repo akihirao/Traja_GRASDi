@@ -1,5 +1,5 @@
 #!/bin/bash
-#Pipe.02.RemoveMultipleMappedReads.2nd.sh
+#Refmap.pipe.02.RemoveMultipleMappedReads.sh
 #by HIRAO Akira
 
 ##This pipeline for handling GARS-Di data omits the pre-processes of duplication markup and BQSR
@@ -10,7 +10,7 @@ SCRIPT_DIR=$(cd $(dirname $0) && pwd)
 
 no_thread=64
 
-reference_folder=/home/akihirao/work/Traja/RefGenome/RefGenome_v2
+reference_folder=/home/akihirao/work/Traja/RefGenome/RefGenome_v4
 main_folder=/home/akihirao/work/Traja/Traja_GRASDi
 
 #samtools 1.12-12-g38139f7
@@ -19,8 +19,8 @@ main_folder=/home/akihirao/work/Traja/Traja_GRASDi
 
 
 #Checking for gatk reference index (*.dict)
-if [ ! -e $reference_folder/agi1.2.dict ]; then
-	gatk CreateSequenceDictionary -R $reference_folder/agi1.2.fa -O $reference_folder/agi1.2.dict
+if [ ! -e $reference_folder/agi.2.0.dict ]; then
+	gatk CreateSequenceDictionary -R $reference_folder/agi.2.0.fa -O $reference_folder/agi.2.0.dict
 fi
 
 
@@ -31,10 +31,9 @@ while read sample; do
 
 	#unique alignment: MAPQ = 50; two alignments: MAPQ = 3, more than three alignment: MAPQ = 0
 	#see detailed in http://yuifu.github.io/remove-multi-reads/ (in Japanese)
-	samtools view -@ $no_thread -b -q 4 $sample.agi1.2.bam > $sample.agi1.2.filtered.bam
-	samtools index -@ $no_thread $sample.agi1.2.filtered.bam
+	samtools view -@ $no_thread -b -q 4 $sample.agi.2.0.bam > $sample.agi.2.0.filtered.bam
+	samtools index -@ $no_thread $sample.agi.2.0.filtered.bam
 
-#done < $SCRIPT_DIR/sample_ID.test.list  #list of MIDs
-done < $SCRIPT_DIR/sample_ID.2nd.list  #list of MIDs
+done < $SCRIPT_DIR/sample_ID.A0577_A0646.list #list of MIDs
 
 cd $SCRIPT_DIR
