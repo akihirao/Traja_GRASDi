@@ -1,5 +1,5 @@
 #!/bin/bash
-#Pipe.04.GenomicsDBImportGVCF.2019.2020.YearClass.sh
+#Pipe.04.GenomicsDBImportGVCF.chr.sh
 #by HIRAO Akira
 
 set -exuo pipefail
@@ -8,7 +8,7 @@ SCRIPT_DIR=$(cd $(dirname $0)  && pwd)
 
 no_thread=128
 
-reference_folder=/home/akihirao/work/Traja/RefGenome/RefGenome_v2
+reference_folder=/home/akihirao/work/Traja/RefGenome/RefGenome_v4
 main_folder=/home/akihirao/work/Traja/Traja_GRASDi
 
 no_sample=646
@@ -17,7 +17,7 @@ no_sample=646
 # defining argument of samples for GenomicsDBImports
 input_samples=""
 option_lab="-V "
-gvcf_lab=".agi1.2.g.vcf.gz"
+gvcf_lab=".agi.2.0.g.vcf.gz"
 one_space=" "
 slash_lab="/"
 
@@ -35,21 +35,31 @@ echo $input_samples
 #-----------------------------------------------------
 
 
-target_ID=Traja_GRASDi.2019.2022.YearClass
+target_ID=Traja_GRASDi_all_ref2
 output_folder=$main_folder/gDB
+lab_under_bar="_"
 mkdir -p $output_folder
 
-genomicsDB_name=genomicsDB.$target_ID
-DB_path=$output_folder/$genomicsDB_name
 
 
 cd $output_folder
 
-gatk GenomicsDBImport \
-$input_samples \
---genomicsdb-workspace-path  $DB_path \
---intervals $SCRIPT_DIR/Traja.agi1.2.Chr.list \
---reader-threads $no_thread
+
+while read chr; do
+
+	genomicsDB_name=genomicsDB.$target_ID$lab_under_bar$chr
+
+
+	DB_path=$output_folder/$genomicsDB_name
+
+	gatk GenomicsDBImport\
+	 $input_samples\
+	 --genomicsdb-workspace-path  $DB_path\
+	 --intervals $chr\
+	 --reader-threads $no_thread
+
+done < $SCRIPT_DIR/Traja.agi.2.0.Chr.list
+
 
 cd $SCRIPT_DIR
 
