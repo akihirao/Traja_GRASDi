@@ -61,8 +61,7 @@ while read sample; do
 	 $QC_folder/$sample/$fastq_R1 $QC_folder/$sample/$fastq_R2 | samtools view -@ $no_thread -b | samtools sort -@ $no_thread > $sample.agi.2.0.bam
 	samtools index -@ $no_thread $sample.agi.2.0.bam
 	
-done < $SCRIPT_DIR/sample_ID.A0001_A0576.list #list of MIDs
-#done < $SCRIPT_DIR/sample_ID.A0577_A0646.list #list of MIDs
+done < $SCRIPT_DIR/sample_ID.list  #list of MIDs
 
 
 cd $SCRIPT_DIR

@@ -29,8 +29,7 @@ while read sample; do
 	samtools view -@ $no_thread -b -q 4 $sample.agi.2.0.bam > $sample.agi.2.0.filtered.bam
 	samtools index -@ $no_thread $sample.agi.2.0.filtered.bam
 
-done < $SCRIPT_DIR/sample_ID.A0001_A0576.list #list of MIDs
-#done < $SCRIPT_DIR/sample_ID.list  #list of MIDs
+done < $SCRIPT_DIR/sample_ID.list  #list of MIDs
 
 cd $SCRIPT_DIR
 
