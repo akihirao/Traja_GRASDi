@@ -6,9 +6,9 @@ set -exuo pipefail
 
 SCRIPT_DIR=$(cd $(dirname $0)  && pwd)
 
-no_thread=128
+no_thread=64
 
-reference_folder=/home/akihirao/work/Traja/RefGenome/RefGenome_v3
+reference_folder=/home/akihirao/work/Traja/RefGenome/RefGenome_v4
 main_folder=/home/akihirao/work/Traja
 work_folder=$main_folder/Tratra
 fastq_folder=$main_folder/RefGenome/RefGenome_Tratra
@@ -18,14 +18,20 @@ fastq_folder=$main_folder/RefGenome/RefGenome_Tratra
 #Using htslib 1.12-10-gc3ba302
 
 #Checking for reference index
-if [ ! -e $reference_folder/agi1.2.fa.bwt ]; then
-		bwa index $reference_folder/agi1.2.fa
+if [ ! -e $reference_folder/agi.2.0.fa.bwt ]; then
+		bwa index $reference_folder/agi.2.0.fa
 fi
 
 #Checking for fasta index
-if [ ! -e $reference_folder/agi1.2.fa.fai ]; then
-                samtools faidx $reference_folder/agi1.2.fa
+if [ ! -e $reference_folder/agi.2.0.fa.fai ]; then
+                samtools faidx $reference_folder/agi.2.0.fa
 fi
+
+#Checking for gatk reference index (*.dict)
+if [ ! -e $reference_folder/agi.2.0.dict ]; then
+	gatk CreateSequenceDictionary -R $reference_folder/agi.2.0.fa -O $reference_folder/agi.2.0.dict
+fi
+
 
 #preparing for output folder
 mkdir -p $work_folder
@@ -46,10 +52,9 @@ tag_read_group=$tag_read_group_part1$specific_ID$tag_read_group_part2$sample_lab
 
 echo $tag_read_group
 
-#Bwa-mem2: next verstion of bwa-mem algorisms by Heng Li
-/home/akihirao/local/bwa-mem2/bwa-mem2 mem $reference_folder/agi1.2.fa $fastq_folder/$fastq_R1 $fastq_folder/$fastq_R2 > $Tratra.WG.sam
 
-#samtools view --threads $no_thread -b | samtools sort --threads $no_thread > $Tratra.WG.bam
-#samtools index -@ $no_thread Tratra.WG.bam
+bwa mem -t $no_thread -M -R $tag_read_group $reference_folder/agi.2.0.fa\
+ $fastq_folder/$fastq_R1 $fastq_folder/$fastq_R2 | samtools view -@ $no_thread -b | samtools sort -@ $no_thread > Tratra.WG.bam
+samtools index -@ $no_thread Tratra.WG.bam
 	
 cd $SCRIPT_DIR

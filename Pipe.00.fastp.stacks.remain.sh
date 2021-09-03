@@ -38,6 +38,6 @@ while read sample; do
 	 -A -Q\
 	 -w $no_thread
 
-done < $SCRIPT_DIR/sample_ID.2nd.list #list of ID
+done < $SCRIPT_DIR/sample_ID.A0066_A0576.list #list of ID
 
 
