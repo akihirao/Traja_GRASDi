@@ -24,11 +24,11 @@ Primary assembly of <i>Trachurus japonicus</i> genome (agi2) was developed by Dr
 Run a series of the shell scripts in the order listed after changing paths according to your environemt:
  
 ```bash
-Pipe.00.trimmomatic.fastp.sh
-Pipe.01.Map.sh
-Pipe.02.RemoveMultipleMappedReads.sh
+Pipe.01.trimmomatic.fastp.sh
+Pipe.02.Map.sh
+Pipe.03.RemoveMultipleMappedReads.sh
 ..
-Pipe.10.PlinkFiltering.sh
+Pipe.11.PlinkFiltering.sh
 ```
 
 
