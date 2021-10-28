@@ -19,14 +19,14 @@ while read sample; do
 
 	gatk HaplotypeCaller\
 	 -R $reference_folder/agi.2.0.fa\
-	 -I $sample.agi.2.0.filtered.bam\
+	 -I $sample.agi.2.0.filteredDup.bam\
 	 --emit-ref-confidence GVCF\
-	 --bam-output $sample.agi.2.0.hpcall.bam\
+	 --bam-output $sample.agi.2.0.hard.filtered.hpcall.bam\
 	 --native-pair-hmm-threads $no_thread\
-	 -O $sample.agi.2.0.g.vcf.gz
+	 -O $sample.agi.2.0.hard.filtered.g.vcf.gz
 
-done < $SCRIPT_DIR/sample_ID.A0001_A0576.list #list of MIDs
-#done < $SCRIPT_DIR/sample_ID.list  #list of MIDs
+done < $SCRIPT_DIR/sample_ID.A0001_A0646.list #list of MIDs
+#done < $SCRIPT_DIR/sample_ID.test.list  #list of MIDs
 
 
 cd $SCRIPT_DIR

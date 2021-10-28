@@ -30,6 +30,7 @@ while read sample; do
 	samtools index -@ $no_thread $sample.agi.2.0.filteredDup.bam
 
 done < $SCRIPT_DIR/sample_ID.A0001_A0646.list  #list of MIDs
+#done < $SCRIPT_DIR/sample_ID.test.list
 
 cd $SCRIPT_DIR
 
