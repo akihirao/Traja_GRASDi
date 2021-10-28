@@ -1,0 +1,4 @@
+Sample,Total_reads,Mapped_reads,Mapped_reads_rate,Properly_paired_mapped_reads,Properly_paired_mapped_reads_rate
+A0001,2789376,2789376,100.00%,2736671,98.63%
+A0002,2763058,2763058,100.00%,2686370,97.99%
+A0003,2778142,2778142,100.00%,2703488,98.03%
