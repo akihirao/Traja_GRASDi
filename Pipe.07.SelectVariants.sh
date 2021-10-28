@@ -1,5 +1,5 @@
 #!/bin/bash
-#Pipe.07.SelectVariants.HardFiltered.sh
+#Pipe.07.SelectVariants.sh
 #by HIRAO Akira
 
 set -exuo pipefail

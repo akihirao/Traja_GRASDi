@@ -1,5 +1,5 @@
 #!/bin/bash -i
-#Pipe.08.VariantFiltration.HardFiltered.sh
+#Pipe.08.VariantFiltration.sh
 #by HIRAO Akira
 
 set -exuo pipefail

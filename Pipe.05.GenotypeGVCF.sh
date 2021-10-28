@@ -1,5 +1,5 @@
 #!/bin/bash
-#Pipe.05.GenotypeGVCF.hard.filtering.2nd.sh
+#Pipe.05.GenotypeGVCF.sh
 #by HIRAO Akira
 
 set -exuo pipefail
@@ -13,7 +13,7 @@ main_folder=/home/akihirao/work/Traja/Traja_GRASDi
 
 
 
-target_ID=Traja_GRASDi_2nd_ref2_HardFiltered
+target_ID=Traja_GRASDi_ref2_HardFiltered
 output_folder=$main_folder/vcf_out_ref2_HardFiltered
 lab_under_bar="_"
 mkdir -p $output_folder
@@ -35,4 +35,5 @@ done < $SCRIPT_DIR/Traja.agi.2.0.Chr.list
 
 
 cd $SCRIPT_DIR
+
 

@@ -1,5 +1,5 @@
 #!/bin/bash -i
-#Pipe.10.PlinkFiltering.HardFiltered.sh
+#Pipe.10.PlinkFiltering.sh
 #by HIRAO Akira
 
 set -exuo pipefail

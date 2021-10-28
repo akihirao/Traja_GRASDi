@@ -1,5 +1,5 @@
 #!/bin/bash -i
-#Pipe.09.FilteringOutNoCall.HardFiltered.sh
+#Pipe.09.FilteringOutNoCall.sh
 #by HIRAO Akira
 
 set -exuo pipefail
