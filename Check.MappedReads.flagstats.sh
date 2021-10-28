@@ -30,13 +30,13 @@ while read sample; do
 	echo $sample.agi.2.0.filteredDup.bam >> $SCRIPT_DIR/CheckOutMappedReads.filtered.bam.txt
 	samtools flagstats --threads $no_thread $sample.agi.2.0.filteredDup.bam >> $SCRIPT_DIR/CheckOutMappedReads.filtered.bam.txt
 
-#done < $SCRIPT_DIR/sample_ID.A0001_A0646.list	
-done < $SCRIPT_DIR/sample_ID.test.list  #list of MIDs
+done < $SCRIPT_DIR/sample_ID.A0001_A0646.list	
+#done < $SCRIPT_DIR/sample_ID.test.list  #list of MIDs
 
 cd $SCRIPT_DIR
 
-perl BamReadSummaryFromSamflagship.pl < CheckOutMappedReads.raw.bam.txt > CheckOutMappedReads.raw.bam.summary.csv
+perl BamReadSummaryFromSamflagship.pl < CheckOutMappedReads.raw.bam.txt > Summary.MappedReads.raw.bam.csv
 
-perl BamReadSummaryFromSamflagship.pl < CheckOutMappedReads.filtered.bam.txt > CheckOutMappedReads.filtered.bam.summary.csv
+perl BamReadSummaryFromSamflagship.pl < CheckOutMappedReads.filtered.bam.txt > SummaryMappedReads.filtered.bam.csv
 
 
