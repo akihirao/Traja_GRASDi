@@ -1,5 +1,5 @@
 #!/bin/bash
-#Pipe.05.GenotypeGVCF.ref2.sca21_sca24.sh
+#Pipe.05.GenotypeGVCF.hard.filtering.2nd.sh
 #by HIRAO Akira
 
 set -exuo pipefail
@@ -13,8 +13,8 @@ main_folder=/home/akihirao/work/Traja/Traja_GRASDi
 
 
 
-target_ID=Traja_GRASDi_all_ref2
-output_folder=$main_folder/vcf_out_ref2
+target_ID=Traja_GRASDi_2nd_ref2_HardFiltered
+output_folder=$main_folder/vcf_out_ref2_HardFiltered
 lab_under_bar="_"
 mkdir -p $output_folder
 
@@ -31,7 +31,7 @@ while read chr; do
 	 -R $reference_folder/agi.2.0.fa -V gendb://$genomicsDB_name\
 	 -O $output_folder/$target_ID.$chr.vcf.gz
 
-done < $SCRIPT_DIR/sca21_sca24.list
+done < $SCRIPT_DIR/Traja.agi.2.0.Chr.list
 
 
 cd $SCRIPT_DIR

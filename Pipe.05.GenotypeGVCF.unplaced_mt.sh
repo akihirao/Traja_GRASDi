@@ -1,5 +1,5 @@
 #!/bin/bash
-#Pipe.05.GenotypeGVCF.ref2.sca21_sca24.sh
+#Pipe.05.GenotypeGVCF.ref2.unplaced_mt.sh
 #by HIRAO Akira
 
 set -exuo pipefail
@@ -31,7 +31,7 @@ while read chr; do
 	 -R $reference_folder/agi.2.0.fa -V gendb://$genomicsDB_name\
 	 -O $output_folder/$target_ID.$chr.vcf.gz
 
-done < $SCRIPT_DIR/sca21_sca24.list
+done < $SCRIPT_DIR/unplaced_mt.list
 
 
 cd $SCRIPT_DIR
