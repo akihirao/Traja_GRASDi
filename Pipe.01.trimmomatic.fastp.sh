@@ -1,5 +1,5 @@
 #!/bin/bash
-#Pipe.00.trimmomatic.fastp.sh
+#Pipe.0.trimmomatic.fastp.sh
 #by HIRAO Akira
 
 
