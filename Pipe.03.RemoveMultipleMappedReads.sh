@@ -1,5 +1,5 @@
 #!/bin/bash
-#Pipe.02.RemoveMultipleMappedReads.sh
+#Pipe.03.RemoveMultipleMappedReads.sh
 #by HIRAO Akira
 
 ##This pipeline for handling GARS-Di data omits the pre-processes of duplication markup and BQSR
