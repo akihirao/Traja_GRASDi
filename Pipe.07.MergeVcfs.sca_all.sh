@@ -1,5 +1,5 @@
 #!/bin/bash
-#Pipe.06.MergeVcfs.sca_all.sh
+#Pipe.07.MergeVcfs.sca_all.sh
 #by HIRAO Akira
 
 set -exuo pipefail
