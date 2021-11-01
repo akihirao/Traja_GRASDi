@@ -37,6 +37,6 @@ cd $SCRIPT_DIR
 
 perl BamReadSummaryFromSamflagship.pl < CheckOutMappedReads.raw.bam.txt > Summary.MappedReads.raw.bam.csv
 
-perl BamReadSummaryFromSamflagship.pl < CheckOutMappedReads.filtered.bam.txt > SummaryMappedReads.filtered.bam.csv
+perl BamReadSummaryFromSamflagship.pl < CheckOutMappedReads.filtered.bam.txt > Summary.MappedReads.filtered.bam.csv
 
 
