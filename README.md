@@ -6,18 +6,18 @@
 
 * bedtools: a powerful toolset for genome arithmetic (https://bedtools.readthedocs.io)
 * BWA: Burrow-Wheeler Aligner (http://bio-bwa.sourceforge.net) 
-* fastp: An all-in-one preprocessing tool for fastq files (https://github.com/OpenGene/fastp) 
+* fastp: an all-in-one preprocessing tool for fastq files (https://github.com/OpenGene/fastp) 
 * GATK: Genome Analysis Toolkit (https://gatk.broadinstitute.org/)
-* Plink: Whole-genome association analysis tool (https://www.cog-genomics.org/plink/)
-* samtools: Tools for manipulating NGS data (https://github.com/samtools/samtools)
-* Trimmomatic: A flexible read trimming tool (https://github.com/usadellab/Trimmomatic)
-* vcftools: A set of tools for working with VCF files (https://github.com/vcftools/vcftools)
+* Plink: whole-genome association analysis tool (https://www.cog-genomics.org/plink/)
+* samtools: tools for manipulating NGS data (https://github.com/samtools/samtools)
+* Trimmomatic: a flexible read trimming tool (https://github.com/usadellab/Trimmomatic)
+* vcftools: a set of tools for working with VCF files (https://github.com/vcftools/vcftools)
 
 The environments under Ubuntu 18.04 are tested. The versions of the tools used are documented in a series of shell scripts.
 
 
 ## Reference genome and the sequencing data
-Primary assembly of <i>Trachurus japonicus</i> genome (agi2) was developed by Dr. Atsushi Fujiwara (Fisheries Research Agency, Japan). The raw sequencing data analyzed were deposited into the DNA Data Bank of Japan Sequence Read Archive with the accession number DRA012187 and DRA012269.
+Primary assembly of <i>Trachurus japonicus</i> genome (agi ver.2) was developed by Dr. Atsushi Fujiwara (Fisheries Research Agency, Japan). The raw sequencing data analyzed were deposited into the DNA Data Bank of Japan Sequence Read Archive with the accession number DRA012187 and DRA012269.
 
 
 
