@@ -39,4 +39,3 @@ perl BamReadSummaryFromSamflagship.pl < CheckOutMappedReads.raw.bam.txt > Summar
 
 perl BamReadSummaryFromSamflagship.pl < CheckOutMappedReads.filtered.bam.txt > Summary.MappedReads.filtered.bam.csv
 
-
