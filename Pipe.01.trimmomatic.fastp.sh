@@ -41,12 +41,15 @@ while read sample; do
 
 	fastp -i $QC_folder/$sample/$sample_R1.trimQ20.pair.fastq.gz\
 	 -I $QC_folder/$sample/$sample_R2.trimQ20.pair.fastq.gz -3\
-	 -o $QC_folder/$sample/$sample_R1.trimQ20.trimmomatic.fastp.fastq.gz\
-	 -O $QC_folder/$sample/$sample_R2.trimQ20.trimmomatic.fastp.fastq.gz\
+	 -o $QC_folder/$sample/$sample_R1.trimQ20.trimmomatic.fastp.fastq.rev1.gz\
+	 -O $QC_folder/$sample/$sample_R2.trimQ20.trimmomatic.fastp.fastq.rev1.gz\
 	 --adapter_fasta $SCRIPT_DIR/NexteraPE-PE.fa\
-	 --average_qual 20 -q 20 -l 50\
-	 -h $QC_folder/$sample/$sample.trimQ20.trimmomatic.fastp.html\
+	 --average_qual 20 -q 20 -l 50 -t 5 -T 5\
+	 -h $QC_folder/$sample/$sample.trimQ20.trimmomatic.fastp.rev1.html\
 	 -w $no_threads
+	 #-3:  enable per read cutting by quality in tail (3'), default is disabled
+	 # -t: trimming how many bases in tail for read1, default is 0 (int [=0])
+	 # -T: trimming how many bases in tail for read2, default is 0 (int [=0])
 
 done < $SCRIPT_DIR/sample_ID.A0001_A0646.list #list of ID
 
