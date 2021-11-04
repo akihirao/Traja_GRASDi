@@ -6,8 +6,9 @@ set -exuo pipefail
 
 SCRIPT_DIR=$(cd $(dirname $0)  && pwd)
 
-no_thread=64
+no_threads=64
 
+reference_fa=agi.2.0.fa
 reference_folder=/home/akihirao/work/Traja/RefGenome/RefGenome_v4
 main_folder=/home/akihirao/work/Traja/Traja_GRASDi
 
@@ -17,7 +18,7 @@ no_sample=646
 # defining argument of samples for GenomicsDBImports
 input_samples=""
 option_lab="-V "
-gvcf_lab=".agi.2.0.hard.filtered.g.vcf.gz"
+gvcf_lab=".agi.2.0.rev1.g.vcf.gz"
 one_space=" "
 slash_lab="/"
 
@@ -35,7 +36,7 @@ echo $input_samples
 #-----------------------------------------------------
 
 
-target_ID=Traja_GRASDi_ref2_HardFiltered
+target_ID=Traja_GRASDi_ref2_rev1
 output_folder=$main_folder/gDB
 lab_under_bar="_"
 mkdir -p $output_folder
@@ -56,7 +57,7 @@ while read chr; do
 	 $input_samples\
 	 --genomicsdb-workspace-path  $DB_path\
 	 --intervals $chr\
-	 --reader-threads $no_thread
+	 --reader-threads $no_threads
 
 done < $SCRIPT_DIR/Traja.agi.2.0.Chr.list
 

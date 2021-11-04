@@ -8,8 +8,9 @@ set -exuo pipefail
 
 SCRIPT_DIR=$(cd $(dirname $0) && pwd)
 
-no_thread=64
+no_threads=64
 
+reference_fa=agi.2.0.fa
 reference_folder=/home/akihirao/work/Traja/RefGenome/RefGenome_v4
 main_folder=/home/akihirao/work/Traja/Traja_GRASDi
 
@@ -26,8 +27,8 @@ while read sample; do
 
 	#unique alignment: MAPQ = 50; two alignments: MAPQ = 3, more than three alignment: MAPQ = 0
 	#see detailed in http://yuifu.github.io/remove-multi-reads/ (in Japanese)
-	samtools view -@ $no_thread -b -q 4 $sample.agi.2.0.hard.filtered.bam > $sample.agi.2.0.filteredDup.bam
-	samtools index -@ $no_thread $sample.agi.2.0.filteredDup.bam
+	samtools view -@ $no_threads -b -q 4 $sample.agi.2.0.rev1.bam > $sample.agi.2.0.rev1.filteredDup.bam
+	samtools index -@ $no_threads $sample.agi.2.0.rev1.filteredDup.bam
 
 done < $SCRIPT_DIR/sample_ID.A0001_A0646.list  #list of MIDs
 #done < $SCRIPT_DIR/sample_ID.test.list

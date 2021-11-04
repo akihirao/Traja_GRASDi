@@ -6,15 +6,16 @@ set -exuo pipefail
 
 SCRIPT_DIR=$(cd $(dirname $0)  && pwd)
 
-no_thread=64
+no_threads=64
 
+reference_fa=agi.2.0.fa
 reference_folder=/home/akihirao/work/Traja/RefGenome/RefGenome_v4
 main_folder=/home/akihirao/work/Traja/Traja_GRASDi
 
-target_ID=Traja_GRASDi_ref2_HardFiltered
-work_folder=$main_folder/vcf_out_ref2_HardFiltered
-vcf_folder=$main_folder/vcf_out_ref2_HardFiltered
-plink_folder=$main_folder/plink_filtering_HardFiltered
+target_ID=Traja_GRASDi_ref2_rev1
+work_folder=$main_folder/vcf_out_ref2_rev1
+vcf_folder=$main_folder/vcf_out_ref2_rev1
+plink_folder=$main_folder/plink_filtering_rev1
 
 mkdir -p $plink_folder
 
@@ -133,7 +134,7 @@ plink2 --allow-extra-chr\
 perl $SCRIPT_DIR/LDpruned2BED.pl < $vcf_folder/$target_ID.nDNA.snp.maf001.prune.in > $plink_folder/$target_ID.nDNA.snp.maf001.LDpruned.bed
 
 gatk SelectVariants\
- -R $reference_folder/agi.2.0.fa\
+ -R $reference_folder/$reference_fa\
  -V $vcf_folder/$target_ID.nDNA.snp.DPfilterNoCall.non_rep.P99.vcf.gz\
  --sample-name $SCRIPT_DIR/$target_ID.nDNA.snp.$lab_50_filtering.indiv.args\
  -L $plink_folder/$target_ID.nDNA.snp.maf001.LDpruned.bed\

@@ -6,18 +6,19 @@ set -exuo pipefail
 
 SCRIPT_DIR=$(cd $(dirname $0)  && pwd)
 
-no_thread=64
+no_threads=64
 
+reference_fa=agi.2.0.fa
 reference_folder=/home/akihirao/work/Traja/RefGenome/RefGenome_v4
 main_folder=/home/akihirao/work/Traja/Traja_GRASDi
 
-target_ID=Traja_GRASDi_ref2_HardFiltered
+target_ID=Traja_GRASDi_ref2_rev1
 
-cd $main_folder/vcf_out_ref2_HardFiltered
+cd $main_folder/vcf_out_ref2_rev1
 
 
 gatk MergeVcfs\
- -R $reference_folder/agi.2.0.fa\
+ -R $reference_folder/$reference_fa\
  -I $target_ID.sca1.vcf.gz\
  -I $target_ID.sca2.vcf.gz\
  -I $target_ID.sca3.vcf.gz\
