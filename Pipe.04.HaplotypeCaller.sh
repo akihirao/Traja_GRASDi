@@ -22,9 +22,9 @@ while read sample; do
 	 -R $reference_folder/$reference_fa\
 	 -I $sample.agi.2.0.rev1.filteredDup.bam\
 	 --emit-ref-confidence GVCF\
-	 --bam-output $sample.agi.2.0.rev1..bam\
-	 --native-pair-hmm-threads $no_thread\
-	 -O $sample.agi.2.0.rev1..g.vcf.gz
+	 --bam-output $sample.agi.2.0.rev1.hpcall.bam\
+	 --native-pair-hmm-threads $no_threads\
+	 -O $sample.agi.2.0.rev1.g.vcf.gz
 
 done < $SCRIPT_DIR/sample_ID.A0001_A0646.list #list of MIDs
 #done < $SCRIPT_DIR/sample_ID.test.list  #list of MIDs

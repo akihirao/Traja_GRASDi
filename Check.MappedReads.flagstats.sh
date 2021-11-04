@@ -7,7 +7,7 @@ set -exuo pipefail
 
 SCRIPT_DIR=$(cd $(dirname $0) && pwd)
 
-no_thread=64
+no_threads=64
 
 reference_folder=/home/akihirao/work/Traja/RefGenome/RefGenome_v4
 main_folder=/home/akihirao/work/Traja/Traja_GRASDi
@@ -25,10 +25,10 @@ while read sample; do
 	work_folder=$main_folder/bwa_out/$sample
 	cd $work_folder
 
-	echo $sample.agi.2.0.hard.filtered.bam >> $SCRIPT_DIR/CheckOutMappedReads.raw.bam.txt
-	samtools flagstats --threads $no_thread $sample.agi.2.0.hard.filtered.bam >> $SCRIPT_DIR/CheckOutMappedReads.raw.bam.txt
-	echo $sample.agi.2.0.filteredDup.bam >> $SCRIPT_DIR/CheckOutMappedReads.filtered.bam.txt
-	samtools flagstats --threads $no_thread $sample.agi.2.0.filteredDup.bam >> $SCRIPT_DIR/CheckOutMappedReads.filtered.bam.txt
+	echo $sample.agi.2.0.rev1.bam >> $SCRIPT_DIR/CheckOutMappedReads.raw.bam.txt
+	samtools flagstats --threads $no_threads $sample.agi.2.0.rev1.bam >> $SCRIPT_DIR/CheckOutMappedReads.raw.bam.txt
+	echo $sample.agi.2.0.rev1.filteredDup.bam >> $SCRIPT_DIR/CheckOutMappedReads.filtered.bam.txt
+	samtools flagstats --threads $no_threads $sample.agi.2.0.rev1.filteredDup.bam >> $SCRIPT_DIR/CheckOutMappedReads.filtered.bam.txt
 
 done < $SCRIPT_DIR/sample_ID.A0001_A0646.list	
 #done < $SCRIPT_DIR/sample_ID.test.list  #list of MIDs
