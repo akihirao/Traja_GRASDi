@@ -6,6 +6,7 @@
 
 * bedtools: a powerful toolset for genome arithmetic (https://bedtools.readthedocs.io)
 * BWA: Burrow-Wheeler Aligner (http://bio-bwa.sourceforge.net) 
+* Bwa-mem2: the next version of the bwa-mem (https://github.com/bwa-mem2/bwa-mem2)
 * fastp: an all-in-one preprocessing tool for fastq files (https://github.com/OpenGene/fastp) 
 * GATK: Genome Analysis Toolkit (https://gatk.broadinstitute.org/)
 * Plink: whole-genome association analysis tool (https://www.cog-genomics.org/plink/)
