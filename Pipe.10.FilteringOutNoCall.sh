@@ -8,7 +8,7 @@ SCRIPT_DIR=$(cd $(dirname $0)  && pwd)
 
 no_threads=64
 
-refernce_fa=agi.2.0.fa
+reference_fa=agi.2.0.fa
 reference_folder=/home/akihirao/work/Traja/RefGenome/RefGenome_v4
 main_folder=/home/akihirao/work/Traja/Traja_GRASDi
 
