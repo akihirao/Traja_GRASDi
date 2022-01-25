@@ -8,13 +8,16 @@ SCRIPT_DIR=$(cd $(dirname $0)  && pwd)
 
 no_threads=64
 
+#input your account name
+user_name=akihirao
+
 #agi.2.0.fa: the reference genoeme provided by Dr. Fujiwara @2021/8/26
 reference_fa=agi.2.0.fa
 reference_fa_head=agi.2.0
-reference_folder=/home/akihirao/work/Traja/RefGenome/RefGenome_v4
-main_folder=/home/akihirao/work/Traja/Traja_GRASDi
+reference_folder=/home/$user_name/work/Traja/RefGenome/RefGenome_v4
+main_folder=/home/$user_name/work/Traja/Traja_GRASDi
 QC_folder=$main_folder/Traja_QCData_GRASDi
-bwa_mem2_folder=/home/akihirao/local/bwa-mem2-2
+bwa_mem2_folder=/home/$user_name/local/bwa-mem2
 
 R1_tag="_R1"
 R2_tag="_R2"
@@ -23,6 +26,10 @@ R2_tag="_R2"
 #bwa-mem2 v2.2.1
 #samtools 1.12-12-g38139f7
 #Using htslib 1.12-10-gc3ba302
+#gatk 4.2.0.0
+
+#set path to gatke ver.4.2.0.0
+gatk_folder=/home/$user_name/local/gatk-4.2.0.0
 
 
 #Checking for reference index (bwa-mem2)
@@ -42,7 +49,7 @@ fi
 
 #Checking for gatk reference index (gatk: *.dict)
 if [ ! -e $reference_folder/$reference_fa_head.dict ]; then
-	gatk CreateSequenceDictionary -R $reference_folder/$reference_fa -O $reference_folder/$reference_fa_head.dict
+	$gatk_folder/gatk CreateSequenceDictionary -R $reference_folder/$reference_fa -O $reference_folder/$reference_fa_head.dict
 fi
 
 

@@ -1,4 +1,4 @@
-#!/bin/bash -i
+#!/bin/bash
 #Pipe.09.VariantFiltration.sh
 #by HIRAO Akira
 
@@ -8,9 +8,16 @@ SCRIPT_DIR=$(cd $(dirname $0)  && pwd)
 
 no_threads=64
 
+#input your account name
+user_name=akihirao
+
 reference_fa=agi.2.0.fa
-reference_folder=/home/akihirao/work/Traja/RefGenome/RefGenome_v4
-main_folder=/home/akihirao/work/Traja/Traja_GRASDi
+reference_folder=/home/$user_name/work/Traja/RefGenome/RefGenome_v4
+main_folder=/home/$user_name/work/Traja/Traja_GRASDi
+
+#set path to gatk ver.4.2.0.0
+gatk_folder=/home/$user_name/local/gatk-4.2.0.0
+
 
 target_ID=Traja_GRASDi_ref2_rev1
 output_folder=$main_folder/vcf_out_ref2_rev1
@@ -21,13 +28,13 @@ cd $output_folder
 
 #===============================================
 #Filtering out mt
-gatk SelectVariants\
+$gatk_folder/gatk SelectVariants\
  -R $reference_folder/$reference_fa\
  -V $target_ID.sca_all.snp.vcf.gz\
  -XL $SCRIPT_DIR/mt.list\
  -O $target_ID.nDNA.snp.vcf.gz
 
-gatk SelectVariants\
+$gatk_folder/gatk SelectVariants\
  -R $reference_folder/$reference_fa\
  -V $target_ID.sca_all.indel.vcf.gz\
  -XL $SCRIPT_DIR/mt.list\
@@ -45,7 +52,7 @@ echo $ExcessHet_param
 
 
 #Making select sited that having ExcessHet
-gatk SelectVariants\
+$gatk_folder/gatk SelectVariants\
  -R $reference_folder/$reference_fa\
  -V $target_ID.sca_all.vcf.gz\
  -select "${ExcessHet_param}"\
@@ -57,14 +64,14 @@ perl $SCRIPT_DIR/ClusterBedBlock.pl < $target_ID.ExcessHet.cluster.bed > $target
 
 #=====================================================================
 #filtering out ExcessHetblock:SNP
-gatk SelectVariants\
+$gatk_folder/gatk SelectVariants\
  -R $reference_folder/$reference_fa\
  -V $target_ID.nDNA.snp.vcf.gz\
  --exclude-intervals $target_ID.ExcessHet.block.bed\
  -O $target_ID.nDNA.snp.no_ExcessHetBlock.vcf.gz \
 
 #Set filtered sites to no call:INDEL
-gatk SelectVariants\
+$gatk_folder/gatk SelectVariants\
  -R $reference_folder/$reference_fa\
  -V $target_ID.nDNA.indel.vcf.gz\
  --exclude-intervals $target_ID.ExcessHet.block.bed\
@@ -74,40 +81,40 @@ gatk SelectVariants\
 
 
 #VariantFiltration for SNP
-gatk VariantFiltration\
+$gatk_folder/gatk VariantFiltration\
  -R $reference_folder/$reference_fa\
  -V $target_ID.nDNA.snp.no_ExcessHetBlock.vcf.gz \
- --filter-expression "QD < 2.0" --filter-name "QDlt2"\
- --filter-expression "FS > 60.0" --filter-name "FSgt60"\
- --filter-expression "MQ < 40.0" --filter-name "MQlt40"\
- --filter-expression "MQRankSum < -12.5" --filter-name "MQRankSumltnegative12.5"\
- --filter-expression "ReadPosRankSum < -8.0" --filter-name "ReadPosRankSumltnegative8"\
+ --filter-expression "QD < 2.0" --filter-name "QD2"\
+ --filter-expression "FS > 60.0" --filter-name "FS60"\
+ --filter-expression "MQ < 40.0" --filter-name "MQ40"\
+ --filter-expression "MQRankSum < -12.5" --filter-name "MQRS_Nega12.5"\
+ --filter-expression "ReadPosRankSum < -8.0" --filter-name "RPRS_Nega8"\
  --filter-expression "SOR > 4.0" --filter-name "SORgt4"\
  --filter-expression "${ExcessHet_param}" --filter-name "ExHet"\
- -O $target_ID.nDNA.snp.filter.vcf
+ -O $target_ID.nDNA.snp.filter.vcf.gz
 
-grep -E '^#|PASS' $target_ID.nDNA.snp.filter.vcf | bgzip > $target_ID.nDNA.snp.filterPASSED.vcf.gz
+gzip -dc $target_ID.nDNA.snp.filter.vcf.gz | grep -E '^#|PASS' | bgzip > $target_ID.nDNA.snp.filterPASSED.vcf.gz
 tabix -f -p vcf $target_ID.nDNA.snp.filterPASSED.vcf.gz
 
 
 #VariantFiltration for INDEL
-gatk VariantFiltration\
+$gatk_folder/gatk VariantFiltration\
  -R $reference_folder/$reference_fa\
  -V $target_ID.nDNA.indel.no_ExcessHetBlock.vcf.gz \
- --filter-expression "QD < 2.0" --filter-name "QDlt2"\
- --filter-expression "FS > 200.0" --filter-name "FSgt200"\
- --filter-expression "ReadPosRankSum < -20.0" --filter-name "RPRSltnagative20"\
- --filter-expression "SOR > 10.0" --filter-name "SORgt10"\
+ --filter-expression "QD < 2.0" --filter-name "QD2"\
+ --filter-expression "FS > 200.0" --filter-name "FS200"\
+ --filter-expression "ReadPosRankSum < -20.0" --filter-name "RPRS_Nega20"\
+ --filter-expression "SOR > 10.0" --filter-name "SOR10"\
  --filter-expression "${ExcessHet_param}" --filter-name "ExHet"\
- -O $target_ID.nDNA.indel.filter.vcf
+ -O $target_ID.nDNA.indel.filter.vcf.gz
 
-grep -E '^#|PASS' $target_ID.nDNA.indel.filter.vcf | bgzip > $target_ID.nDNA.indel.filterPASSED.vcf.gz
+gzip -dc $target_ID.nDNA.indel.filter.vcf.gz | grep -E '^#|PASS' | bgzip > $target_ID.nDNA.indel.filterPASSED.vcf.gz
 tabix -f -p vcf $target_ID.nDNA.indel.filterPASSED.vcf.gz
 
 
 #---------------------------------------------------------------------------------------------------------------
 #DepthFiltering for SNP: DP < 10 & GQ <20 (Low Genotype Quality: less than 99%)
-gatk VariantFiltration\
+$gatk_folder/gatk VariantFiltration\
  -R $reference_folder/$reference_fa\
  -V $target_ID.nDNA.snp.filterPASSED.vcf.gz\
  -G-filter "GQ < 20"\
@@ -117,7 +124,7 @@ gatk VariantFiltration\
  -O $target_ID.nDNA.snp.DPfilterPASSED.vcf.gz
 
 #DepthFiltering for INDEL: DP < 10 & GQ < 20 (Low Genotype Quality: less than 99%) 
-gatk VariantFiltration\
+$gatk_folder/gatk VariantFiltration\
  -R $reference_folder/$reference_fa\
  -V $target_ID.nDNA.indel.filterPASSED.vcf.gz\
  -G-filter "GQ < 20"\
@@ -127,7 +134,7 @@ gatk VariantFiltration\
  -O $target_ID.nDNA.indel.DPfilterPASSED.vcf.gz
 
 #Set filtered sites to no call:SNP
-gatk SelectVariants\
+$gatk_folder/gatk SelectVariants\
  -R $reference_folder/$reference_fa\
  -V $target_ID.nDNA.snp.DPfilterPASSED.vcf.gz\
  --set-filtered-gt-to-nocall\
@@ -136,7 +143,7 @@ bcftools index -f $target_ID.nDNA.snp.DPfilterNoCall.vcf.gz
 bcftools view $target_ID.nDNA.snp.DPfilterNoCall.vcf.gz -Ov -o $target_ID.nDNA.snp.DPfilterNoCall.vcf
 
 #Set filtered sites to no call:INDEL
-gatk SelectVariants\
+$gatk_folder/gatk SelectVariants\
  -R $reference_folder/$reference_fa\
  -V $target_ID.nDNA.indel.DPfilterPASSED.vcf.gz\
  --set-filtered-gt-to-nocall\
@@ -147,7 +154,7 @@ bcftools view $target_ID.nDNA.indel.DPfilterNoCall.vcf.gz -Ov -o $target_ID.nDNA
 
 
 #Merge SNPs and INDELs vcf files into a SNV vcf file
-gatk MergeVcfs\
+$gatk_folder/gatk MergeVcfs\
  -R $reference_folder/$reference_fa\
  -I $target_ID.nDNA.snp.DPfilterNoCall.vcf.gz\
  -I $target_ID.nDNA.indel.DPfilterNoCall.vcf.gz\

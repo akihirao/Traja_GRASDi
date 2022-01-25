@@ -8,11 +8,17 @@ set -exuo pipefail
 SCRIPT_DIR=$(cd $(dirname $0)  && pwd)
 
 no_threads=64
+no_threads_fastp=16
 
+#input your account name
+user_name=akihirao
 
-raw_fastq_folder=/home/akihirao/work/Traja/Traja_GRASDi/Traja_RawData_GRASDi
-QC_folder=/home/akihirao/work/Traja/Traja_GRASDi/Traja_QCData_GRASDi
+#Prepare raw fastq.gz files in the follwing folder
+raw_fastq_folder=/home/$user_name/work/Traja/Traja_GRASDi/Traja_RawData_GRASDi
 
+#Make the foloder for QC output data
+QC_folder=/home/$user_name/work/Traja/Traja_GRASDi/Traja_QCData_GRASDi
+mkdir -p $QC_folder
 
 while read sample; do
 
@@ -46,7 +52,7 @@ while read sample; do
 	 --adapter_fasta $SCRIPT_DIR/NexteraPE-PE.fa\
 	 --average_qual 20 -q 20 -l 50 -t 5 -T 5\
 	 -h $QC_folder/$sample/$sample.trimQ20.trimmomatic.fastp.rev1.html\
-	 -w $no_threads
+	 -w $no_threads_fastp
 	 #-3:  enable per read cutting by quality in tail (3'), default is disabled
 	 # -t: trimming how many bases in tail for read1, default is 0 (int [=0])
 	 # -T: trimming how many bases in tail for read2, default is 0 (int [=0])

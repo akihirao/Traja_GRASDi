@@ -10,14 +10,20 @@ SCRIPT_DIR=$(cd $(dirname $0) && pwd)
 
 no_threads=64
 
+#input your account
+user_name=akihirao
+
 reference_fa=agi.2.0.fa
-reference_folder=/home/akihirao/work/Traja/RefGenome/RefGenome_v4
-main_folder=/home/akihirao/work/Traja/Traja_GRASDi
+reference_folder=/home/$user_name/work/Traja/RefGenome/RefGenome_v4
+main_folder=/home/$user_name/work/Traja/Traja_GRASDi
 
 
 #samtools 1.12-12-g38139f7
 #Using htslib 1.12-10-gc3ba302
 #gatk 4.2.0.0
+
+#set path to gatk ver.4.2.0.0
+gatk_folder=/home/$user_name/local/gatk-4.2.0.0
 
 
 while read sample; do
