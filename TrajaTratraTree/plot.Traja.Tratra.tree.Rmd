@@ -86,10 +86,19 @@ Labels <- c("Kuroshio", "Tsushima", "Trachurus trachurus")
 pdf("NJtree.Traja.Tratra.pdf", height=14, width=9)
 plot(Traja.Tratra.tree.rooted,
 	no.margin=FALSE,show.tip=FALSE,edge.width=0.3,
-	main="NJ Tree of Trachurus japonicus")
+	main="NJ phylogenic tree of Trachurus japonicus\n(614 individuals; 18489 SNPs)",
+	sub="No node was supported ath the 50% bootstrap level")
 tiplabels(pch=20, col=MyCol, cex=0.5)
 #axisPhylo()
 add.scale.bar(0.01, -10,length=0.03, cex=0.7, font = 1.0,lwd=0.7)
 legend("right", legend=Labels, col =Label.col, pch =20,cex=1.0)
 dev.off()
 ```
+
+
+
+
+
+
+
+
