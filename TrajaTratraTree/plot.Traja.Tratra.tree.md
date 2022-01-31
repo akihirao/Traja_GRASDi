@@ -1,8 +1,6 @@
-#Building phylogenic tree of Trachurus japonicus with T. trachurus as
-outgroup #by HIRAO Akira #reference
-\#<http://www.phytools.org/Cordoba2017/ex/2/Intro-to-phylogenies.html>
+# Plotting a phylogenic tree of *Trachurus* *japonicus* with *T.* *trachurus* as an outgroup
 
-## 1．load the libraries
+## Load the libraries
 
 ``` r
 library(ape)
@@ -14,24 +12,28 @@ library(RColorBrewer)
 library(tidyverse)
 ```
 
-## 2．load the dataset
+## Load the dataset
 
 ``` r
-#load phylogeny data
+#load phylogenic dataset based on SNPs from GRAS-Di and Reseq
 Traja.Tratra.tree <- read.tree(file="Traja.Tratra.nj.tree.rooted.boot.nwk")
 
 #load label infor
 stock.lab <- read_table("Agi.614indiv.data.txt")
 ```
 
-## 3．outgroup and the other information
+## Define outgroup
 
 ``` r
 #define outgroup
 Traja.Tratra.tree.rooted <- root(Traja.Tratra.tree, outgroup="fTratra1")
 tip.lab.vec <- Traja.Tratra.tree.rooted$tip.label
 no.tip <- length(tip.lab.vec)
+```
 
+## Link stock information
+
+``` r
 #load label information
 stock.lab <- read_table("Agi.614indiv.data.txt")
 
