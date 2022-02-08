@@ -80,7 +80,7 @@ $gatk_folder/gatk SelectVariants\
 
 
 
-#VariantFiltration for SNP
+#Site-based filtering of SNPs
 $gatk_folder/gatk VariantFiltration\
  -R $reference_folder/$reference_fa\
  -V $target_ID.nDNA.snp.no_ExcessHetBlock.vcf.gz \
@@ -93,18 +93,14 @@ $gatk_folder/gatk VariantFiltration\
  --filter-expression "${ExcessHet_param}" --filter-name "ExHet"\
  -O $target_ID.nDNA.snp.filter.vcf.gz
 
-#pigz is multi-core version of gzip
-#pigz -dc $target_ID.nDNA.snp.filter.vcf.gz | grep -E '^#|PASS' | bgzip > $target_ID.nDNA.snp.filterPASSED.vcf.gz
-#tabix -f -p vcf $target_ID.nDNA.snp.filterPASSED.vcf.gz
-
-#Excluding filtered sites (including "PASS" or "." in FILTER filed)
+##Excluding filtered sites (including "PASS" or "." in FILTER filed) of SNPs
 $gatk_folder/gatk SelectVariants\
  -R $reference_folder/$reference_fa\
  -V $target_ID.nDNA.snp.filter.vcf.gz\
  --exclude-filtered\
  -O $target_ID.nDNA.snp.filterPASSED.vcf.gz
 
-#VariantFiltration for INDEL
+#Site-based filtering of INDELs
 $gatk_folder/gatk VariantFiltration\
  -R $reference_folder/$reference_fa\
  -V $target_ID.nDNA.indel.no_ExcessHetBlock.vcf.gz \
@@ -115,7 +111,7 @@ $gatk_folder/gatk VariantFiltration\
  --filter-expression "${ExcessHet_param}" --filter-name "ExHet"\
  -O $target_ID.nDNA.indel.filter.vcf.gz
 
-#Excluding filtered sites (including "PASS" or "." in FILTER filed)
+##Excluding filtered sites (including "PASS" or "." in FILTER filed) of INDELs
 $gatk_folder/gatk SelectVariants\
  -R $reference_folder/$reference_fa\
  -V $target_ID.nDNA.indel.filter.vcf.gz\
@@ -124,7 +120,7 @@ $gatk_folder/gatk SelectVariants\
 
 
 #---------------------------------------------------------------------------------------------------------------
-#DepthFiltering for SNP: DP < 10 & GQ <20 (Low Genotype Quality: less than 99%)
+#Sample-based filtering of SNPs: DP < 10 & GQ <20 (Low Genotype Quality: less than 99%)
 $gatk_folder/gatk VariantFiltration\
  -R $reference_folder/$reference_fa\
  -V $target_ID.nDNA.snp.filterPASSED.vcf.gz\
@@ -134,7 +130,7 @@ $gatk_folder/gatk VariantFiltration\
  -G-filter-name "DP_10"\
  -O $target_ID.nDNA.snp.DPfilterPASSED.vcf.gz
 
-#DepthFiltering for INDEL: DP < 10 & GQ < 20 (Low Genotype Quality: less than 99%) 
+#Sample-based filtering of INDELs: DP < 10 & GQ < 20 (Low Genotype Quality: less than 99%) 
 $gatk_folder/gatk VariantFiltration\
  -R $reference_folder/$reference_fa\
  -V $target_ID.nDNA.indel.filterPASSED.vcf.gz\
