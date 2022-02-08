@@ -6,7 +6,7 @@ set -exuo pipefail
 
 SCRIPT_DIR=$(cd $(dirname $0)  && pwd)
 
-no_threads=64
+no_threads=48
 
 #input your account name
 user_name=akihirao
@@ -93,7 +93,8 @@ $gatk_folder/gatk VariantFiltration\
  --filter-expression "${ExcessHet_param}" --filter-name "ExHet"\
  -O $target_ID.nDNA.snp.filter.vcf.gz
 
-gzip -dc $target_ID.nDNA.snp.filter.vcf.gz | grep -E '^#|PASS' | bgzip > $target_ID.nDNA.snp.filterPASSED.vcf.gz
+#pigz is multi-core version of gzip
+pigz -dc $target_ID.nDNA.snp.filter.vcf.gz | grep -E '^#|PASS' | bgzip > $target_ID.nDNA.snp.filterPASSED.vcf.gz
 tabix -f -p vcf $target_ID.nDNA.snp.filterPASSED.vcf.gz
 
 
@@ -108,7 +109,8 @@ $gatk_folder/gatk VariantFiltration\
  --filter-expression "${ExcessHet_param}" --filter-name "ExHet"\
  -O $target_ID.nDNA.indel.filter.vcf.gz
 
-gzip -dc $target_ID.nDNA.indel.filter.vcf.gz | grep -E '^#|PASS' | bgzip > $target_ID.nDNA.indel.filterPASSED.vcf.gz
+#pigz is mulit-core version of gzip
+pigz -dc $target_ID.nDNA.indel.filter.vcf.gz | grep -E '^#|PASS' | bgzip > $target_ID.nDNA.indel.filterPASSED.vcf.gz
 tabix -f -p vcf $target_ID.nDNA.indel.filterPASSED.vcf.gz
 
 
