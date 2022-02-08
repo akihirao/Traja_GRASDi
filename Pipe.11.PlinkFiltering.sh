@@ -118,12 +118,19 @@ vcftools --gzvcf $vcf_folder/$target_ID.nDNA.snp.$lab_50_filtering.from_bed.vcf.
 bgzip -c $vcf_folder/$target_ID.nDNA.snp.$lab_50_filtering.non_singleton.vcf > $vcf_folder/$target_ID.nDNA.snp.$lab_50_filtering.non_singleton.vcf.gz
 tabix -p vcf $vcf_folder/$target_ID.nDNA.snp.$lab_50_filtering.non_singleton.vcf.gz
 
+##Performing PCA: LD-pruned
+plink --vcf $vcf_folder/$target_ID.nDNA.snp.$lab_50_filtering.non_singleton.vcf.gz\
+ --allow-extra-chr --pca --out $target_ID.nDNA.snp.$lab_50_filtering.non_singleton
+
 
 #filtering out MAF < 0.01
 vcftools --gzvcf $vcf_folder/$target_ID.nDNA.snp.$lab_50_filtering.non_singleton.vcf.gz --maf 0.01 --recode --recode-INFO-all --stdout > $vcf_folder/$target_ID.nDNA.snp.maf001.vcf
 bgzip -c $vcf_folder/$target_ID.nDNA.snp.maf001.vcf > $vcf_folder/$target_ID.nDNA.snp.maf001.vcf.gz
 tabix -p vcf $vcf_folder/$target_ID.nDNA.snp.maf001.vcf.gz
 
+##Performing PCA: MAF < 0.01
+plink --vcf $vcf_folder/$target_ID.nDNA.snp.maf001.vcf.gz\
+ --allow-extra-chr --pca --out $target_ID.nDNA.snp.maf001
 
 #Convetion from vcf to plink ped/map
 vcftools --vcf $vcf_folder/$target_ID.nDNA.snp.maf001.vcf\
@@ -145,10 +152,11 @@ $gatk_folder/gatk SelectVariants\
  -V $vcf_folder/$target_ID.nDNA.snp.DPfilterNoCall.non_rep.P99.vcf.gz\
  --sample-name $SCRIPT_DIR/$target_ID.nDNA.snp.$lab_50_filtering.indiv.args\
  -L $plink_folder/$target_ID.nDNA.snp.maf001.LDpruned.bed\
- -O $vcf_folder/$target_ID.nDNA.snp.maf001.LDpruned.vcf
+ -O $vcf_folder/$target_ID.nDNA.snp.maf001.LDpruned.vcf.gz
 
-bgzip -c $vcf_folder/$target_ID.nDNA.snp.maf001.LDpruned.vcf > $vcf_folder/$target_ID.nDNA.snp.maf001.LDpruned.vcf.gz
-tabix -p vcf $vcf_folder/$target_ID.nDNA.snp.maf001.LDpruned.vcf.gz
+##Performing PCA: LD-pruned
+plink --vcf $vcf_folder/$target_ID.nDNA.snp.maf001.LDpruned.vcf.gz\
+ --allow-extra-chr --pca --out $target_ID.nDNA.snp.maf001.LDpruned
 
 #Convertion into *thaw format for analysis using the package "smartsnp" in the R
 plink2 --vcf $vcf_folder/$target_ID.nDNA.snp.maf001.LDpruned.vcf.gz --allow-extra-chr --recode A-transpose --out $vcf_folder/$target_ID.nDNA.snp.maf001.LDpruned.genotypeMatrix
