@@ -6,7 +6,7 @@ set -exuo pipefail
 
 SCRIPT_DIR=$(cd $(dirname $0)  && pwd)
 
-no_threads=64
+no_threads=48
 
 #input your account
 user_name=akihirao

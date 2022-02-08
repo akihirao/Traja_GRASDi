@@ -94,9 +94,15 @@ $gatk_folder/gatk VariantFiltration\
  -O $target_ID.nDNA.snp.filter.vcf.gz
 
 #pigz is multi-core version of gzip
-pigz -dc $target_ID.nDNA.snp.filter.vcf.gz | grep -E '^#|PASS' | bgzip > $target_ID.nDNA.snp.filterPASSED.vcf.gz
-tabix -f -p vcf $target_ID.nDNA.snp.filterPASSED.vcf.gz
+#pigz -dc $target_ID.nDNA.snp.filter.vcf.gz | grep -E '^#|PASS' | bgzip > $target_ID.nDNA.snp.filterPASSED.vcf.gz
+#tabix -f -p vcf $target_ID.nDNA.snp.filterPASSED.vcf.gz
 
+#Excluding filtered sites (including "PASS" or "." in FILTER filed)
+$gatk_folder/gatk SelectVariants\
+ -R $reference_folder/$reference_fa\
+ -V $target_ID.nDNA.snp.filter.vcf.gz\
+ --exclude-filtered\
+ -O $target_ID.nDNA.snp.filterPASSED.vcf.gz
 
 #VariantFiltration for INDEL
 $gatk_folder/gatk VariantFiltration\
@@ -109,9 +115,12 @@ $gatk_folder/gatk VariantFiltration\
  --filter-expression "${ExcessHet_param}" --filter-name "ExHet"\
  -O $target_ID.nDNA.indel.filter.vcf.gz
 
-#pigz is mulit-core version of gzip
-pigz -dc $target_ID.nDNA.indel.filter.vcf.gz | grep -E '^#|PASS' | bgzip > $target_ID.nDNA.indel.filterPASSED.vcf.gz
-tabix -f -p vcf $target_ID.nDNA.indel.filterPASSED.vcf.gz
+#Excluding filtered sites (including "PASS" or "." in FILTER filed)
+$gatk_folder/gatk SelectVariants\
+ -R $reference_folder/$reference_fa\
+ -V $target_ID.nDNA.indel.filter.vcf.gz\
+ --exclude-filtered\
+ -O $target_ID.nDNA.indel.filterPASSED.vcf.gz
 
 
 #---------------------------------------------------------------------------------------------------------------
