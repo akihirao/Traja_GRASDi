@@ -4,18 +4,22 @@
 
 set -exuo pipefail
 
-SCRIPT_DIR=$(cd $(dirname $0)  && pwd)
+CURRENT_DIR=$(cd $(dirname $0)  && pwd)
 
-no_threads=64
+no_threads=48
 
 #input your account name
 user_name=akihirao
+
+#agi.2.0.rev2 (agi.2.0: reference genome; rev2: pair-end merge reads) 
+code_ID="agi.2.0.rev2"
 
 #agi.2.0.fa: the reference genoeme provided by Dr. Fujiwara @2021/8/26
 reference_fa=agi.2.0.fa
 reference_fa_head=agi.2.0
 reference_folder=/home/$user_name/work/Traja/RefGenome/RefGenome_v4
 main_folder=/home/$user_name/work/Traja/Traja_GRASDi
+script_folder=$main_folder/Scripts
 QC_folder=$main_folder/Traja_QCData_GRASDi
 bwa_mem2_folder=/home/$user_name/local/bwa-mem2
 
@@ -75,13 +79,13 @@ while read sample; do
 	tag_read_group=$tag_read_group_part1$specific_ID$tag_read_group_part2$sample$tag_read_group_part3
 
 	$bwa_mem2_folder/bwa-mem2 mem -t $no_threads -M -R $tag_read_group $reference_folder/$reference_fa\
-	 $QC_folder/$sample/$fastq_R1 $QC_folder/$sample/$fastq_R2 | samtools view -@ $no_threads -b | samtools sort -@ $no_threads > $sample.agi.2.0.rev1.bam
-	samtools index -@ $no_threads $sample.agi.2.0.rev1.bam
+	 $QC_folder/$sample/$fastq_R1 $QC_folder/$sample/$fastq_R2 | samtools view -@ $no_threads -b | samtools sort -@ $no_threads > $sample.$code_ID.bam
+	samtools index -@ $no_threads $sample.$code_ID.bam
 	
-done < $SCRIPT_DIR/sample_ID.A0001_A0646.list  #list of MIDs
-#done < $SCRIPT_DIR/sample_ID.test.list
+#done < $scripts_folder/sample_ID.A0001_A0646.list  #list of MIDs
+done < $scripts_folder/sample_ID.test.list
 
 
-cd $SCRIPT_DIR
+cd $CURRENT_DIR
 
 

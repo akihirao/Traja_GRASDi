@@ -4,25 +4,29 @@
 
 set -exuo pipefail
 
-SCRIPT_DIR=$(cd $(dirname $0)  && pwd)
+CURRENT_DIR=$(cd $(dirname $0)  && pwd)
 
 no_threads=48
 
 #input your account name
 user_name=akihirao
 
+#agi.2.0.rev2 (agi.2.0: reference genome; rev2: pair-end merge reads)
+code_ID="agi.2.0.rev2"
+
 reference_fa=agi.2.0.fa
 reference_folder=/home/$user_name/work/Traja/RefGenome/RefGenome_v4
 main_folder=/home/$user_name/work/Traja/Traja_GRASDi
+script_folder=$main_folder/Scripts
 
 #set path to gatk ver.4.2.0.0
 gatk_folder=/home/$user_name/local/gatk-4.2.0.0
 
 
-target_ID=Traja_GRASDi_ref2_rev1
-work_folder=$main_folder/vcf_out_ref2_rev1
-vcf_folder=$main_folder/vcf_out_ref2_rev1
-plink_folder=$main_folder/plink_filtering_rev1
+target_ID=Traja_GRASDi_ref2_rev2
+work_folder=$main_folder/vcf_out_ref2_rev2
+vcf_folder=$main_folder/vcf_out_ref2_rev2
+plink_folder=$main_folder/plink_filtering_rev2
 
 mkdir -p $plink_folder
 
@@ -100,18 +104,18 @@ plink --noweb --allow-extra-chr\
  --recode
 
 
-perl $SCRIPT_DIR/PlinkMAP2BED.pl < $plink_folder/$target_ID.nDNA.snp.$lab_50_filtering.map > $plink_folder/$target_ID.nDNA.snp.$lab_50_filtering.bed
-perl $SCRIPT_DIR/Select_ID_PED.pl < $plink_folder/$target_ID.nDNA.snp.$lab_50_filtering.ped > $SCRIPT_DIR/$target_ID.nDNA.snp.$lab_50_filtering.indiv.args
+perl $script_folder/PlinkMAP2BED.pl < $plink_folder/$target_ID.nDNA.snp.$lab_50_filtering.map > $plink_folder/$target_ID.nDNA.snp.$lab_50_filtering.bed
+perl $script_folder/Select_ID_PED.pl < $plink_folder/$target_ID.nDNA.snp.$lab_50_filtering.ped > $script_folder/$target_ID.nDNA.snp.$lab_50_filtering.indiv.args
 
 vcftools --gzvcf $vcf_folder/$target_ID.nDNA.snp.DPfilterNoCall.non_rep.P99.vcf.gz\
- --recode --recode-INFO-all --stdout --bed $plink_folder/$target_ID.nDNA.snp.$lab_50_filtering.bed --keep $SCRIPT_DIR/$target_ID.nDNA.snp.$lab_50_filtering.indiv.args --max-missing 0.9 > $vcf_folder/$target_ID.nDNA.snp.$lab_50_filtering.from_bed.vcf
+ --recode --recode-INFO-all --stdout --bed $plink_folder/$target_ID.nDNA.snp.$lab_50_filtering.bed --keep $script_folder/Scripts/$target_ID.nDNA.snp.$lab_50_filtering.indiv.args --max-missing 0.9 > $vcf_folder/$target_ID.nDNA.snp.$lab_50_filtering.from_bed.vcf
 bgzip -c $vcf_folder/$target_ID.nDNA.snp.$lab_50_filtering.from_bed.vcf > $vcf_folder/$target_ID.nDNA.snp.$lab_50_filtering.from_bed.vcf.gz
 tabix -p vcf $vcf_folder/$target_ID.nDNA.snp.$lab_50_filtering.from_bed.vcf.gz
 
 
 #filtering out singletons
 vcftools --gzvcf $vcf_folder/$target_ID.nDNA.snp.$lab_50_filtering.from_bed.vcf.gz --singletons --stdout > $vcf_folder/$target_ID.nDNA.snp.$lab_50_filtering.from_bed.singletons.txt
-perl $SCRIPT_DIR/Singletons2BED.pl < $vcf_folder/$target_ID.nDNA.snp.$lab_50_filtering.from_bed.singletons.txt > $vcf_folder/$target_ID.nDNA.snp.$lab_50_filtering.from_bed.singletons.bed
+perl $script_folder/Singletons2BED.pl < $vcf_folder/$target_ID.nDNA.snp.$lab_50_filtering.from_bed.singletons.txt > $vcf_folder/$target_ID.nDNA.snp.$lab_50_filtering.from_bed.singletons.bed
 
 vcftools --gzvcf $vcf_folder/$target_ID.nDNA.snp.$lab_50_filtering.from_bed.vcf.gz\
  --recode --recode-INFO-all --stdout --exclude-bed $vcf_folder/$target_ID.nDNA.snp.$lab_50_filtering.from_bed.singletons.bed > $vcf_folder/$target_ID.nDNA.snp.$lab_50_filtering.non_singleton.vcf
@@ -145,12 +149,12 @@ plink2 --allow-extra-chr\
 
 
 #convert from LD-prune.in to BED
-perl $SCRIPT_DIR/LDpruned2BED.pl < $vcf_folder/$target_ID.nDNA.snp.maf001.prune.in > $plink_folder/$target_ID.nDNA.snp.maf001.LDpruned.bed
+perl $script_folder/LDpruned2BED.pl < $vcf_folder/$target_ID.nDNA.snp.maf001.prune.in > $plink_folder/$target_ID.nDNA.snp.maf001.LDpruned.bed
 
 $gatk_folder/gatk SelectVariants\
  -R $reference_folder/$reference_fa\
  -V $vcf_folder/$target_ID.nDNA.snp.DPfilterNoCall.non_rep.P99.vcf.gz\
- --sample-name $SCRIPT_DIR/$target_ID.nDNA.snp.$lab_50_filtering.indiv.args\
+ --sample-name $script_folder/$target_ID.nDNA.snp.$lab_50_filtering.indiv.args\
  -L $plink_folder/$target_ID.nDNA.snp.maf001.LDpruned.bed\
  -O $vcf_folder/$target_ID.nDNA.snp.maf001.LDpruned.vcf.gz
 
@@ -161,6 +165,6 @@ plink --vcf $vcf_folder/$target_ID.nDNA.snp.maf001.LDpruned.vcf.gz\
 #Convertion into *thaw format for analysis using the package "smartsnp" in the R
 plink2 --vcf $vcf_folder/$target_ID.nDNA.snp.maf001.LDpruned.vcf.gz --allow-extra-chr --recode A-transpose --out $vcf_folder/$target_ID.nDNA.snp.maf001.LDpruned.genotypeMatrix
 
-cd $SCRIPT_DIR
+cd $CURRENT_DIR
 
 

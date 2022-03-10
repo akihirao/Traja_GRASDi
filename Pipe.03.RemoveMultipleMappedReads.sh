@@ -6,17 +6,20 @@
 
 set -exuo pipefail
 
-SCRIPT_DIR=$(cd $(dirname $0) && pwd)
+CURRENT_DIR=$(cd $(dirname $0) && pwd)
 
-no_threads=64
+no_threads=48
 
 #input your account
 user_name=akihirao
 
+#agi.2.0.rev2 (agi.2.0: reference genome; rev2: pair-end merge reads)
+code_ID="agi.2.0.rev2"
+
 reference_fa=agi.2.0.fa
 reference_folder=/home/$user_name/work/Traja/RefGenome/RefGenome_v4
 main_folder=/home/$user_name/work/Traja/Traja_GRASDi
-
+script_folder=$main_folder/Scripts
 
 #samtools 1.12-12-g38139f7
 #Using htslib 1.12-10-gc3ba302
@@ -33,11 +36,11 @@ while read sample; do
 
 	#unique alignment: MAPQ = 50; two alignments: MAPQ = 3, more than three alignment: MAPQ = 0
 	#see detailed in http://yuifu.github.io/remove-multi-reads/ (in Japanese)
-	samtools view -@ $no_threads -b -q 4 $sample.agi.2.0.rev1.bam > $sample.agi.2.0.rev1.filteredDup.bam
-	samtools index -@ $no_threads $sample.agi.2.0.rev1.filteredDup.bam
+	samtools view -@ $no_threads -b -q 4 $sample.$code_ID.bam > $sample.$code_ID.filteredDup.bam
+	samtools index -@ $no_threads $sample.$code_ID.filteredDup.bam
 
-done < $SCRIPT_DIR/sample_ID.A0001_A0646.list  #list of MIDs
-#done < $SCRIPT_DIR/sample_ID.test.list
+#done < $script_folder/sample_ID.A0001_A0646.list  #list of MIDs
+done < $script_folder/sample_ID.test.list
 
-cd $SCRIPT_DIR
+cd $CURRENT_DIR
 

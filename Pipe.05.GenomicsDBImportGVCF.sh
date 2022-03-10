@@ -4,16 +4,20 @@
 
 set -exuo pipefail
 
-SCRIPT_DIR=$(cd $(dirname $0)  && pwd)
+CURRENT_DIR=$(cd $(dirname $0)  && pwd)
 
 no_threads=64
 
 #input your account name
 user_name=akihirao
 
+#agi.2.0.rev2 (agi.2.0: reference genome; rev2: pair-end merge reads)
+code_ID="agi.2.0.rev2"
+
 reference_fa=agi.2.0.fa
 reference_folder=/home/$user_name/work/Traja/RefGenome/RefGenome_v4
 main_folder=/home/$user_name/work/Traja/Traja_GRASDi
+script_folder=$main_folder/Scripts
 
 #set path to gatk ver.4.2.0.0
 gatk_folder=/home/$user_name/local/gatk-4.2.0.0
@@ -22,7 +26,7 @@ gatk_folder=/home/$user_name/local/gatk-4.2.0.0
 # defining argument of samples for GenomicsDBImports
 input_samples=""
 option_lab="-V "
-gvcf_lab=".agi.2.0.rev1.g.vcf.gz"
+gvcf_lab="."$code_ID".g.vcf.gz"
 one_space=" "
 slash_lab="/"
 
@@ -33,14 +37,14 @@ while read sample; do
 		
 	input_samples=$input_samples$option_lab$gvcf_folder$sample$gvcf_lab$one_space
 
-done < $SCRIPT_DIR/sample_ID.A0001_A0646.list #1st + 2nd samples
+done < $script_folder/sample_ID.A0001_A0646.list #1st + 2nd samples
 
 echo $input_samples
 
 #-----------------------------------------------------
 
 
-target_ID=Traja_GRASDi_ref2_rev1
+target_ID=Traja_GRASDi_ref2_rev2
 output_folder=$main_folder/gDB
 lab_under_bar="_"
 mkdir -p $output_folder
@@ -60,8 +64,8 @@ while read chr; do
 	 --intervals $chr\
 	 --reader-threads $no_threads
 
-done < $SCRIPT_DIR/Traja.agi.2.0.Chr.list
+done < $script_folder/Traja.agi.2.0.Chr.list
 
 
-cd $SCRIPT_DIR
+cd $CURRENT_DIR
 

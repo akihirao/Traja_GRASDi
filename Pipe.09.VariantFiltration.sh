@@ -4,23 +4,27 @@
 
 set -exuo pipefail
 
-SCRIPT_DIR=$(cd $(dirname $0)  && pwd)
+CURRENT_DIR=$(cd $(dirname $0)  && pwd)
 
 no_threads=48
 
 #input your account name
 user_name=akihirao
 
+#agi.2.0.rev2 (agi.2.0: reference genome; rev2: pair-end merge reads)
+code_ID="agi.2.0.rev2"
+
 reference_fa=agi.2.0.fa
 reference_folder=/home/$user_name/work/Traja/RefGenome/RefGenome_v4
 main_folder=/home/$user_name/work/Traja/Traja_GRASDi
+script_folder=$main_folder/Scripts
 
 #set path to gatk ver.4.2.0.0
 gatk_folder=/home/$user_name/local/gatk-4.2.0.0
 
 
-target_ID=Traja_GRASDi_ref2_rev1
-output_folder=$main_folder/vcf_out_ref2_rev1
+target_ID=Traja_GRASDi_ref2_rev2
+output_folder=$main_folder/vcf_out_ref2_rev2
 mkdir -p $output_folder
 
 cd $output_folder
@@ -59,8 +63,8 @@ $gatk_folder/gatk SelectVariants\
  -O $target_ID.ExcessHet.vcf
 
 #Making bed file that marked ExcessHet block
-perl $SCRIPT_DIR/Vcf2BED_chr_start_end.pl < $target_ID.ExcessHet.vcf | bedtools cluster -d 300 > $target_ID.ExcessHet.cluster.bed
-perl $SCRIPT_DIR/ClusterBedBlock.pl < $target_ID.ExcessHet.cluster.bed > $target_ID.ExcessHet.block.bed
+perl $script_folder/Vcf2BED_chr_start_end.pl < $target_ID.ExcessHet.vcf | bedtools cluster -d 300 > $target_ID.ExcessHet.cluster.bed
+perl $script_folder/ClusterBedBlock.pl < $target_ID.ExcessHet.cluster.bed > $target_ID.ExcessHet.block.bed
 
 #=====================================================================
 #filtering out ExcessHetblock:SNP
@@ -170,5 +174,5 @@ bcftools index -f $target_ID.snp.indel.DPfilterNoCall.vcf.gz
 bcftools view  $target_ID.snp.indel.DPfilterNoCall.vcf.gz -Ov -o  $target_ID.snp.indel.DPfilterNoCall.vcf
 
 
-cd $SCRIPT_DIR
+cd $CURRENT_DIR
 
