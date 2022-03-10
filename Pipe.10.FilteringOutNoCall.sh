@@ -34,14 +34,14 @@ cd $work_folder
 $gatk_folder/gatk SelectVariants\
  -R $reference_folder/$reference_fa\
  -V $target_ID.nDNA.snp.DPfilterNoCall.vcf.gz\
- --exclude-sample-name $SCRIPT_DIR/Traja_GRASDi.LabelRepetation.IndivRepetation.args\
+ --exclude-sample-name $script_folder/Traja_GRASDi.LabelRepetation.IndivRepetation.args\
  -O $target_ID.nDNA.snp.DPfilterNoCall.non_rep.vcf.gz
 
 #Filtering out samples with label repetation: INDEL
 $gatk_folder/gatk SelectVariants\
  -R $reference_folder/$reference_fa\
  -V $target_ID.nDNA.indel.DPfilterNoCall.vcf.gz\
- --exclude-sample-name $SCRIPT_DIR/Traja_GRASDi.LabelRepetation.IndivRepetation.args\
+ --exclude-sample-name $script_folder/Traja_GRASDi.LabelRepetation.IndivRepetation.args\
  -O $target_ID.nDNA.indel.DPfilterNoCall.non_rep.vcf.gz
 
 
