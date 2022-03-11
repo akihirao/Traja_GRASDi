@@ -6,7 +6,7 @@ set -exuo pipefail
 
 CURRENT_DIR=$(cd $(dirname $0)  && pwd)
 
-no_threads=48
+no_threads=96
 
 #input your account name
 user_name=akihirao
@@ -68,8 +68,8 @@ while read sample; do
 	mkdir -p $work_folder
 	cd $work_folder
 
-	fastq_R1=$sample$R1_tag.trimQ20.trimmomatic.fastp.fastq.rev1.gz
-	fastq_R2=$sample$R2_tag.trimQ20.trimmomatic.fastp.fastq.rev1.gz
+	fastq_R1=$sample$R1_tag.trimQ20.merge.trimmomatic.fastp.fastq.gz
+	fastq_R2=$sample$R2_tag.trimQ20.merge.trimmomatic.fastp.fastq.gz
 		
 	#setting RG: @RG\tID:Traja_GRASDi\tSM:$sample\tPL:Illumina
 	specific_ID="Traja_GRASDi"
@@ -83,8 +83,8 @@ while read sample; do
 	samtools index -@ $no_threads $sample.$code_ID.bam
 	
 #done < $script_folder/sample_ID.A0001_A0646.list  #list of MIDs
-done < $script_folder/sample_ID.test.list
-
+#done < $script_folder/sample_ID.test.list
+done < $script_folder/sample_ID.A0001_A0400.list
 
 cd $CURRENT_DIR
 
