@@ -40,7 +40,8 @@ while read sample; do
 	samtools index -@ $no_threads $sample.$code_ID.filteredDup.bam
 
 #done < $script_folder/sample_ID.A0001_A0646.list  #list of MIDs
-done < $script_folder/sample_ID.test.list
+#done < $script_folder/sample_ID.test.list
+done < $script_folder/sample_ID.A0601_A0646.list
 
 cd $CURRENT_DIR
 

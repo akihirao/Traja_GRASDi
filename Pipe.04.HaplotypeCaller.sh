@@ -6,7 +6,7 @@ set -exuo pipefail
 
 CURRENT_DIR=$(cd $(dirname $0)  && pwd)
 
-no_threads=48
+no_threads=36
 
 #input your account name
 user_name=akihirao
@@ -37,8 +37,8 @@ while read sample; do
 	 -O $sample.$code_ID.g.vcf.gz
 
 #done < $script_folder/sample_ID.A0001_A0646.list #list of MIDs
-done < $script_folder/sample_ID.test.list  #list of MIDs
-
+#done < $script_folder/sample_ID.test.list  #list of MIDs
+done < $script_folder/sample_ID.A0601_A0646.list
 
 cd $CURRENT_DIR
 
