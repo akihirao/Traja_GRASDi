@@ -20,7 +20,7 @@ main_folder=/home/$user_name/work/Traja/Traja_GRASDi
 script_folder=$main_folder/Scripts
 
 #set path to gatk ver.4.2.0.0
-gatk_folder=/home/$user_name/local/gakt-4.2.0.0
+gatk_folder=/home/$user_name/local/gatk-4.2.0.0
 
 
 target_ID=Traja_GRASDi_ref2_rev2

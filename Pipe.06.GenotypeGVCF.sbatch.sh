@@ -6,8 +6,6 @@ set -exuo pipefail
 
 CURRENT_DIR=$(cd $(dirname $0)  && pwd)
 
-no_threads=48
-
 #input your account name
 user_name=akihirao
 
@@ -28,20 +26,17 @@ output_folder=$main_folder/vcf_out_ref2_rev2
 lab_under_bar="_"
 mkdir -p $output_folder
 
+#define "chr" as ARGS
+chr=$1
 
 cd $main_folder/gDB
 
 
-while read chr; do
+genomicsDB_name=genomicsDB.$target_ID$lab_under_bar$chr
 
-	genomicsDB_name=genomicsDB.$target_ID$lab_under_bar$chr
-
-	$gatk_folder/gatk GenotypeGVCFs\
-	 -R $reference_folder/$reference_fa -V gendb://$genomicsDB_name\
-	 -O $output_folder/$target_ID.$chr.vcf.gz
-
-done < $script_folder/Traja.agi.2.0.Chr.list
-
+$gatk_folder/gatk GenotypeGVCFs\
+ -R $reference_folder/$reference_fa -V gendb://$genomicsDB_name\
+ -O $output_folder/$target_ID.$chr.vcf.gz
 
 cd $CURRENT_DIR
 
