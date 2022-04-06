@@ -27,7 +27,7 @@ Primary assembly of <i>Trachurus japonicus</i> genome (agi ver.2) was developed 
 Run a series of the shell scripts in the order listed after changing paths according to your environemt:
  
 ```bash
-Pipe.01.trimmomatic.fastp.sh
+Pipe.01.NGmerge.trimmomatic.fastp.sh
 Pipe.02.Map.sh
 Pipe.03.RemoveMultipleMappedReads.sh
 ..
