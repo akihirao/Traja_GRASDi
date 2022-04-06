@@ -25,7 +25,7 @@ gatk_folder=/home/$user_name/local/gatk-4.2.0.0
 
 target_ID=Traja_GRASDi_ref2_rev2
 
-cd $main_folder/vcf_out_ref2_rev2
+cd $main_folder/vcf_out
 
 
 $gatk_folder/gatk MergeVcfs\

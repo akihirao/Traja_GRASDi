@@ -24,7 +24,7 @@ gatk_folder=/home/$user_name/local/gatk-4.2.0.0
 
 
 target_ID=Traja_GRASDi_ref2_rev2
-output_folder=$main_folder/vcf_out_ref2_rev2
+output_folder=$main_folder/vcf_out
 mkdir -p $output_folder
 
 cd $output_folder
@@ -35,13 +35,13 @@ cd $output_folder
 $gatk_folder/gatk SelectVariants\
  -R $reference_folder/$reference_fa\
  -V $target_ID.sca_all.snp.vcf.gz\
- -XL $SCRIPT_DIR/mt.list\
+ -XL $script_folder/mt.list\
  -O $target_ID.nDNA.snp.vcf.gz
 
 $gatk_folder/gatk SelectVariants\
  -R $reference_folder/$reference_fa\
  -V $target_ID.sca_all.indel.vcf.gz\
- -XL $SCRIPT_DIR/mt.list\
+ -XL $script_folder/mt.list\
  -O $target_ID.nDNA.indel.vcf.gz
 #===============================================
  
@@ -124,24 +124,24 @@ $gatk_folder/gatk SelectVariants\
 
 
 #---------------------------------------------------------------------------------------------------------------
-#Sample-based filtering of SNPs: DP < 10 & GQ <20 (Low Genotype Quality: less than 99%)
+#Sample-based filtering out SNPs: DP < 20 & GQ <20 (Low Genotype Quality: less than 99%)
 $gatk_folder/gatk VariantFiltration\
  -R $reference_folder/$reference_fa\
  -V $target_ID.nDNA.snp.filterPASSED.vcf.gz\
  -G-filter "GQ < 20"\
  -G-filter-name "lowGQ"\
- -G-filter "DP < 10"\
- -G-filter-name "DP_10"\
+ -G-filter "DP < 20"\
+ -G-filter-name "DP_20"\
  -O $target_ID.nDNA.snp.DPfilterPASSED.vcf.gz
 
-#Sample-based filtering of INDELs: DP < 10 & GQ < 20 (Low Genotype Quality: less than 99%) 
+#Sample-based filtering out INDELs: DP < 20 & GQ < 20 (Low Genotype Quality: less than 99%) 
 $gatk_folder/gatk VariantFiltration\
  -R $reference_folder/$reference_fa\
  -V $target_ID.nDNA.indel.filterPASSED.vcf.gz\
  -G-filter "GQ < 20"\
  -G-filter-name "lowGQ"\
- -G-filter "DP < 10"\
- -G-filter-name "DP_10"\
+ -G-filter "DP < 20"\
+ -G-filter-name "DP_20"\
  -O $target_ID.nDNA.indel.DPfilterPASSED.vcf.gz
 
 #Set filtered sites to no call:SNP

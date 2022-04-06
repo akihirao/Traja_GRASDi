@@ -24,9 +24,9 @@ gatk_folder=/home/$user_name/local/gatk-4.2.0.0
 
 
 target_ID=Traja_GRASDi_ref2_rev2
-work_folder=$main_folder/vcf_out_ref2_rev2
-vcf_folder=$main_folder/vcf_out_ref2_rev2
-plink_folder=$main_folder/plink_filtering_rev2
+work_folder=$main_folder/vcf_out
+vcf_folder=$main_folder/vcf_out
+plink_folder=$main_folder/plink_filtering
 
 mkdir -p $plink_folder
 

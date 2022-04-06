@@ -24,7 +24,7 @@ gatk_folder=/home/$user_name/local/gatk-4.2.0.0
 
 
 target_ID=Traja_GRASDi_ref2_rev2
-output_folder=$main_folder/vcf_out_ref2_rev2
+output_folder=$main_folder/vcf_out
 lab_under_bar="_"
 mkdir -p $output_folder
 
