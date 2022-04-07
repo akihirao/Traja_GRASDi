@@ -108,7 +108,7 @@ perl $script_folder/PlinkMAP2BED.pl < $plink_folder/$target_ID.nDNA.snp.$lab_50_
 perl $script_folder/Select_ID_PED.pl < $plink_folder/$target_ID.nDNA.snp.$lab_50_filtering.ped > $script_folder/$target_ID.nDNA.snp.$lab_50_filtering.indiv.args
 
 vcftools --gzvcf $vcf_folder/$target_ID.nDNA.snp.DPfilterNoCall.non_rep.P99.vcf.gz\
- --recode --recode-INFO-all --stdout --bed $plink_folder/$target_ID.nDNA.snp.$lab_50_filtering.bed --keep $script_folder/Scripts/$target_ID.nDNA.snp.$lab_50_filtering.indiv.args --max-missing 0.9 > $vcf_folder/$target_ID.nDNA.snp.$lab_50_filtering.from_bed.vcf
+ --recode --recode-INFO-all --stdout --bed $plink_folder/$target_ID.nDNA.snp.$lab_50_filtering.bed --keep $script_folder/$target_ID.nDNA.snp.$lab_50_filtering.indiv.args --max-missing 0.9 > $vcf_folder/$target_ID.nDNA.snp.$lab_50_filtering.from_bed.vcf
 bgzip -c $vcf_folder/$target_ID.nDNA.snp.$lab_50_filtering.from_bed.vcf > $vcf_folder/$target_ID.nDNA.snp.$lab_50_filtering.from_bed.vcf.gz
 tabix -p vcf $vcf_folder/$target_ID.nDNA.snp.$lab_50_filtering.from_bed.vcf.gz
 
