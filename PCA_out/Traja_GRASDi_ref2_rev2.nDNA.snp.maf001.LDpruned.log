@@ -1,0 +1,39 @@
+PLINK v1.90b6.24 64-bit (6 Jun 2021)
+Options in effect:
+  --allow-extra-chr
+  --out /home/akihirao/work/Traja/Traja_GRASDi/Scripts/PCA_out/Traja_GRASDi_ref2_rev2.nDNA.snp.maf001.LDpruned
+  --pca
+  --vcf /home/akihirao/work/Traja/Traja_GRASDi/vcf_out/Traja_GRASDi_ref2_rev2.nDNA.snp.maf001.LDpruned.vcf.gz
+
+Hostname: node6.saints.fra.go.jp
+Working directory: /home/akihirao/work/Traja/Traja_GRASDi/plink_filtering
+Start time: Thu Apr 14 18:10:50 2022
+
+Random number seed: 1649927450
+1031982 MB RAM detected; reserving 515991 MB for main workspace.
+--vcf:
+/home/akihirao/work/Traja/Traja_GRASDi/Scripts/PCA_out/Traja_GRASDi_ref2_rev2.nDNA.snp.maf001.LDpruned-temporary.bed
++
+/home/akihirao/work/Traja/Traja_GRASDi/Scripts/PCA_out/Traja_GRASDi_ref2_rev2.nDNA.snp.maf001.LDpruned-temporary.bim
++
+/home/akihirao/work/Traja/Traja_GRASDi/Scripts/PCA_out/Traja_GRASDi_ref2_rev2.nDNA.snp.maf001.LDpruned-temporary.fam
+written.
+20125 variants loaded from .bim file.
+614 people (0 males, 0 females, 614 ambiguous) loaded from .fam.
+Ambiguous sex IDs written to
+/home/akihirao/work/Traja/Traja_GRASDi/Scripts/PCA_out/Traja_GRASDi_ref2_rev2.nDNA.snp.maf001.LDpruned.nosex
+.
+Using up to 127 threads (change this with --threads).
+Before main variant filters, 614 founders and 0 nonfounders present.
+Calculating allele frequencies... done.
+Total genotyping rate is 0.97575.
+20125 variants and 614 people pass filters and QC.
+Note: No phenotypes present.
+Relationship matrix calculation complete.
+--pca: Results saved to
+/home/akihirao/work/Traja/Traja_GRASDi/Scripts/PCA_out/Traja_GRASDi_ref2_rev2.nDNA.snp.maf001.LDpruned.eigenval
+and
+/home/akihirao/work/Traja/Traja_GRASDi/Scripts/PCA_out/Traja_GRASDi_ref2_rev2.nDNA.snp.maf001.LDpruned.eigenvec
+.
+
+End time: Thu Apr 14 18:10:52 2022
