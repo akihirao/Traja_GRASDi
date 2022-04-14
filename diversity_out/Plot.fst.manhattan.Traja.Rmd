@@ -50,7 +50,7 @@ don <- fst_100kb_set %>%
 axisdf = don %>% group_by(CHROM) %>% summarize(center=( max(BPcum) + min(BPcum) ) / 2 )
 ```
 
-# Manhattan Plotting of Fst
+# Manhattan Plot of Fst
 
 ```{r message = FALSE, warning = FALSE, echo = TRUE}
 ggplot(don, aes(x=BPcum, y=MEAN_FST)) +

@@ -1,4 +1,4 @@
--   [Manhattan Plotting of Fst](#manhattan-plotting-of-fst)
+-   [Manhattan Plot of Fst](#manhattan-plot-of-fst)
 
 ------------------------------------------------------------------------
 
@@ -41,7 +41,7 @@ don <- fst_100kb_set %>%
 axisdf = don %>% group_by(CHROM) %>% summarize(center=( max(BPcum) + min(BPcum) ) / 2 )
 ```
 
-# Manhattan Plotting of Fst
+# Manhattan Plot of Fst
 
 ``` r
 ggplot(don, aes(x=BPcum, y=MEAN_FST)) +
