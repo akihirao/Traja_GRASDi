@@ -1,0 +1,69 @@
+-   [Manhattan Plotting of Fst](#manhattan-plotting-of-fst)
+
+------------------------------------------------------------------------
+
+####Plot.fst.manhattan.Traja.R
+####<https://r-graph-gallery.com/101_Manhattan_plot.html>
+
+#### load library
+
+``` r
+library(tidyverse)
+```
+
+#### load dataset
+
+``` r
+#fst_100kb_set <- read_table("Traja_GRASDi_ref2_rev2.nDNA.snp.50.non_singleton.FST_100kb.windowed.weir.fst")
+fst_100kb_set <- read_table("~/work/Traja/Traja_GRASDi/R_work/Traja_GRASDi_ref2_rev2.nDNA.snp.50.non_singleton.FST_100kb.windowed.weir.fst")
+
+fst_100kb_set$CHROM <- factor(fst_100kb_set$CHROM, levels=c("sca1","sca2","sca3","sca4","sca5","sca6","sca7","sca8","sca9","sca10","sca11","sca12","sca13","sca14","sca15","sca16","sca17","sca18","sca19","sca20","sca21","sca22","sca23","sca24","unplaced"))
+
+
+####compute the cumulative position of SNPs
+don <- fst_100kb_set %>% 
+  
+  # Compute chromosome size
+  group_by(CHROM) %>% 
+  summarise(chr_len=max(BIN_END)) %>% 
+  
+  # Calculate cumulative position of each chromosome
+  mutate(tot=cumsum(chr_len)-chr_len) %>%
+  select(-chr_len) %>%
+  
+  # Add this info to the initial dataset
+  left_join(fst_100kb_set, ., by=c("CHROM"="CHROM")) %>%
+  
+  # Add a cumulative position of each SNP
+  arrange(CHROM, BIN_END) %>%
+  mutate( BPcum=BIN_END+tot)
+
+axisdf = don %>% group_by(CHROM) %>% summarize(center=( max(BPcum) + min(BPcum) ) / 2 )
+```
+
+# Manhattan Plotting of Fst
+
+``` r
+ggplot(don, aes(x=BPcum, y=MEAN_FST)) +
+    
+    # Show all points
+    geom_point( aes(color=as.factor(CHROM)), alpha=0.8, size=1.3) +
+    scale_color_manual(values = rep(c("grey", "black"), 22 )) +
+    
+    # custom X axis:
+    scale_x_continuous( label = axisdf$CHROM, breaks= axisdf$center ) +
+    scale_y_continuous(expand = c(0, 0) ) +     # remove space between plot area and x axis
+    # custom X/Y labels
+    xlab("") + ylab("FST") +
+  
+    # Custom the theme:
+    theme_bw() +
+    theme( 
+      legend.position="none",
+      panel.border = element_blank(),
+      panel.grid.major.x = element_blank(),
+      panel.grid.minor.x = element_blank()
+    )
+```
+
+![](Plot.fst.manhattan.Traja_files/figure-markdown_github/unnamed-chunk-3-1.png)
