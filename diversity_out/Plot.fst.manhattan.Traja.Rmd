@@ -26,14 +26,15 @@ library(tidyverse)
 #fst_100kb_set <- read_table("Traja_GRASDi_ref2_rev2.nDNA.snp.50.non_singleton.FST_100kb.windowed.weir.fst")
 fst_100kb_set <- read_table("~/work/Traja/Traja_GRASDi/R_work/Traja_GRASDi_ref2_rev2.nDNA.snp.50.non_singleton.FST_100kb.windowed.weir.fst")
 
-fst_100kb_set$CHROM <- factor(fst_100kb_set$CHROM, levels=c("sca1","sca2","sca3","sca4","sca5","sca6","sca7","sca8","sca9","sca10","sca11","sca12","sca13","sca14","sca15","sca16","sca17","sca18","sca19","sca20","sca21","sca22","sca23","sca24","unplaced"))
-
+fst_100kb_set$CHR <- gsub("sca","", fst_100kb_set$CHROM)
+fst_100kb_set$CHR <- gsub("unplaced", "u", fst_100kb_set$CHR)
+fst_100kb_set$CHR <- factor(fst_100kb_set$CHR, levels=c(seq(1:24),"u"))
 
 ####compute the cumulative position of SNPs
 don <- fst_100kb_set %>% 
   
   # Compute chromosome size
-  group_by(CHROM) %>% 
+  group_by(CHR) %>% 
   summarise(chr_len=max(BIN_END)) %>% 
   
   # Calculate cumulative position of each chromosome
@@ -41,13 +42,13 @@ don <- fst_100kb_set %>%
   select(-chr_len) %>%
   
   # Add this info to the initial dataset
-  left_join(fst_100kb_set, ., by=c("CHROM"="CHROM")) %>%
+  left_join(fst_100kb_set, ., by=c("CHR"="CHR")) %>%
   
   # Add a cumulative position of each SNP
-  arrange(CHROM, BIN_END) %>%
+  arrange(CHR, BIN_END) %>%
   mutate( BPcum=BIN_END+tot)
 
-axisdf = don %>% group_by(CHROM) %>% summarize(center=( max(BPcum) + min(BPcum) ) / 2 )
+axisdf = don %>% group_by(CHR) %>% summarize(center=( max(BPcum) + min(BPcum) ) / 2 )
 ```
 
 # Manhattan Plot of Fst
@@ -56,14 +57,14 @@ axisdf = don %>% group_by(CHROM) %>% summarize(center=( max(BPcum) + min(BPcum) 
 ggplot(don, aes(x=BPcum, y=MEAN_FST)) +
     
     # Show all points
-    geom_point( aes(color=as.factor(CHROM)), alpha=0.8, size=1.3) +
-    scale_color_manual(values = rep(c("grey", "black"), 22 )) +
+    geom_point( aes(color=as.factor(CHR)), alpha=0.8, size=1.3) +
+    scale_color_manual(values = rep(c("black", "grey"), 22 )) +
     
     # custom X axis:
-    scale_x_continuous( label = axisdf$CHROM, breaks= axisdf$center ) +
-    scale_y_continuous(expand = c(0, 0) ) +     # remove space between plot area and x axis
+    scale_x_continuous( label = axisdf$CHR, breaks= axisdf$center ) +
+    scale_y_continuous(expand = c(0, 0) ) + # remove space between plot area and x axis
     # custom X/Y labels
-    xlab("") + ylab("FST") +
+    xlab("Chromosome") + ylab("FST") +
   
     # Custom the theme:
     theme_bw() +
@@ -72,6 +73,7 @@ ggplot(don, aes(x=BPcum, y=MEAN_FST)) +
       panel.border = element_blank(),
       panel.grid.major.x = element_blank(),
       panel.grid.minor.x = element_blank()
+      #axis.title.x = element_text(angle=90)
     )
 ```
 
