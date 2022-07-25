@@ -33,11 +33,11 @@ mkdir -p $plink_folder
 
 cd $plink_folder
 
-zcat $vcf_folder/$target_ID.nDNA.snp.50.non_singleton.vcf.gz | perl Vcf2BED_chr_start_end.pl > $vcf_folder/$target_ID.nDNA.snp.50.non_singleton.bed
+zcat $vcf_folder/$target_ID.nDNA.snp.50.non_singleton.vcf.gz | perl $script_folder/Vcf2BED_chr_start_end.pl > $vcf_folder/$target_ID.nDNA.snp.50.non_singleton.bed
 
 #Extrac three samples by three replications
-vcftools --gzvcf $vcf_folder/$target_ID.nDNA.snp.DPfilterNoCall.non_rep.P99.vcf.gz\
- --keep rep_sample_ID.list --bed $vcf_folder/$target_ID.nDNA.snp.50.non_singleton.bed\
+vcftools --gzvcf $vcf_folder/$target_ID.nDNA.snp.DPfilterNoCall.vcf.gz\
+ --keep $script_folder/rep_sample_ID.list --bed $vcf_folder/$target_ID.nDNA.snp.50.non_singleton.bed\
  --recode --recode-INFO-all --stdout > $vcf_folder/$target_ID.replications.nDNA.snp.50.non_singleton.vcf
 bgzip -c $vcf_folder/$target_ID.replications.nDNA.snp.50.non_singleton.vcf > $vcf_folder/$target_ID.replications.nDNA.snp.50.non_singleton.vcf.gz
 tabix -p vcf $vcf_folder/$target_ID.replications.nDNA.snp.50.non_singleton.vcf.gz
