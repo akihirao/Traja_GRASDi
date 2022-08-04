@@ -19,15 +19,9 @@ spagedi_output_file="spagedi.output.txt"
 output_csv="Rousset_A.DistMat.csv"
 
 nInd=(`awk 'NR==3 {print $1}' ${spagedi_input_file}`)
-
-#echo $nInd
-
 nCutCol=$((${nInd}+2));
-#echo $nCutCol
 
-
-input_file="Chiopi.spagedi.output.txt"
-
+#Extract dist matrix of Rousset's A from SPAGeDi outpufile 
 cat $spagedi_output_file | grep -A $nCutCol "^Pairwise Rousset's distance between individuals ('a' in Rousset, 2000)$" | sed -e '1,2d' | sed s/"ALL LOCI"/ID/ | awk -F '\t' 'BEGIN{OFS=","}{$1=""; print $0}' | sed 's/^,//g' > $output_csv
 
 cd $CURRENT_DIR
