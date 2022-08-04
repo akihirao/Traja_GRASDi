@@ -8,8 +8,8 @@
 #Conversion R script from vcf file to input for SPAGeDi
 vcf2spagedi.R
 
-#Execute spagedi on CUI
-spagedi < cmd.txt 
+#Execute spagedi by the command file containing the keystrokes 
+spagedi < cmds.txt 
 
 #Extract distance matrix of Rousset's A from the SPAGeDi output file spagedi
 Extract.RoussetA.MatCsv.sh
