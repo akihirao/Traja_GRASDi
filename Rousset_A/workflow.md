@@ -1,9 +1,9 @@
 ## Workflow to make distance matrix of Rousset's A with using the program SPAGeDi
 
-#### Requirement
+### Requirement
 * SPAGeDi (Spatial Pattern Analysis of Genetic Diversity) https://github.com/reedacartwright/spagedi
 
-#### Usage
+### Usage
 ```bash
 #Conversion R script from vcf file to input for SPAGeDi
 vcf2spagedi.R
@@ -15,5 +15,5 @@ spagedi < cmds.txt
 Extract.RoussetA.MatCsv.sh
 ```
 
-#### Reference
+### Reference
 Rousset, F.(2000) Genetic differentiation between individuals. J. Evol. Biol. 13:58–62. https://doi.org/10.1046/j.1420-9101.2000.00137.x
