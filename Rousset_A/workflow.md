@@ -9,7 +9,7 @@
 vcf2spagedi.R
 
 #Execute spagedi on CUI
-spagedi < cmd.Chiopi.txt 
+spagedi < cmd.txt 
 
 #Extract distance matrix of Rousset's A from the SPAGeDi output file spagedi
 Extract.RoussetA.MatCsv.sh
