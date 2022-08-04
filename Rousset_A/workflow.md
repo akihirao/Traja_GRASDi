@@ -1,6 +1,7 @@
 ## Workflow to make distance matrix of Rousset's A with using the program SPAGeDi
 
-#### The program [SPAGeDi](https://github.com/reedacartwright/spagedi) (Spatial Pattern Analysis of Genetic Diversity) must be install on your system.
+#### Requirement
+* SPAGeDi (Spatial Pattern Analysis of Genetic Diversity) https://github.com/reedacartwright/spagedi
 
 #### Usage
 ```bash
