@@ -8,8 +8,6 @@ CURRENT_DIR=$(cd $(dirname $0)  && pwd)
 
 no_threads=96
 
-#input your account name
-user_name=akihirao
 
 #agi.2.0.rev2 (agi.2.0: reference genome; rev2: pair-end merge reads) 
 code_ID="agi.2.0.rev2"
@@ -17,11 +15,11 @@ code_ID="agi.2.0.rev2"
 #agi.2.0.fa: the reference genoeme provided by Dr. Fujiwara @2021/8/26
 reference_fa=agi.2.0.fa
 reference_fa_head=agi.2.0
-reference_folder=/home/$user_name/work/Traja/RefGenome/RefGenome_v4
-main_folder=/home/$user_name/work/Traja/Traja_GRASDi
+reference_folder=/home/$USER/work/Traja/RefGenome/RefGenome_v4
+main_folder=/home/$USER/work/Traja/Traja_GRASDi
 script_folder=$main_folder/Scripts
 QC_folder=$main_folder/Traja_QCData_GRASDi
-bwa_mem2_folder=/home/$user_name/local/bwa-mem2
+bwa_mem2_folder=/home/$USER/local/bwa-mem2
 
 R1_tag="_R1"
 R2_tag="_R2"
@@ -33,7 +31,7 @@ R2_tag="_R2"
 #gatk 4.2.0.0
 
 #set path to gatke ver.4.2.0.0
-gatk_folder=/home/$user_name/local/gatk-4.2.0.0
+gatk_folder=/home/$USER/local/gatk-4.2.0.0
 
 
 #Checking for reference index (bwa-mem2)

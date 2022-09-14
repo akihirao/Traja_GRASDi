@@ -8,19 +8,17 @@ CURRENT_DIR=$(cd $(dirname $0)  && pwd)
 
 no_threads=96
 
-#input your account name
-user_name=akihirao
 
 #agi.2.0.rev2 (agi.2.0: reference genome; rev2: pair-end merge reads)
 code_ID="agi.2.0.rev2"
 
 reference_fa=agi.2.0.fa
-reference_folder=/home/$user_name/work/Traja/RefGenome/RefGenome_v4
-main_folder=/home/$user_name/work/Traja/Traja_GRASDi
+reference_folder=/home/$USER/work/Traja/RefGenome/RefGenome_v4
+main_folder=/home/$USER/work/Traja/Traja_GRASDi
 script_folder=$main_folder/Scripts
 
 #set path to gatk ver.4.2.0.0
-gatk_folder=/home/$user_name/local/gatk-4.2.0.0
+gatk_folder=/home/$USER/local/gatk-4.2.0.0
 
 #-----------------------------------------------------
 # defining argument of samples for GenomicsDBImports

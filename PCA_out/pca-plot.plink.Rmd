@@ -32,9 +32,10 @@ ggColorHue <- function(n, l=65) {
 ```
 
 ```{r message = FALSE, warning = FALSE, echo = TRUE}
-code_ID <- "Traja_GRASDi_ref2_rev2.nDNA.snp.maf001.LDpruned"
+#code_ID <- "Traja_GRASDi_ref2_rev2.nDNA.snp.maf001.LDpruned"
 #code_ID <- "Traja_GRASDi_ref2_rev2.nDNA.snp.maf001"
 #code_ID <- "Traja_GRASDi_ref2_rev2.nDNA.snp.non_singleton"
+code_ID <- "Traja_GRASDi_ref2_rev2.nDNA.snp.non_singleton.100.dim"
 ```
 
 ```{r message = FALSE, warning = FALSE, echo = TRUE}
@@ -49,7 +50,7 @@ sample_info <- read.table(sample_info_input,header=T)
 
 ```{r message = FALSE, warning = FALSE, echo = TRUE}
 pca <- read.table(pca_input, header=F)
-eigenval <- read.csv("Traja_GRASDi_ref2_rev2.nDNA.snp.maf001.LDpruned.eigenval", header=F)
+eigenval <- read.csv(eigenval_input, header=F)
 df <- data.frame(pc = 1:nrow(eigenval), eigenval/sum(eigenval)*100)
 colnames(pca) <- c("ID","FID",paste("PC",seq(1:(ncol(pca)-2)),sep=""))
 pca$stock <- factor(sample_info$YearClassStock, levels=c("T2019","K2019","K2020"))

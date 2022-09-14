@@ -1,0 +1,32 @@
+PLINK v1.90b6.24 64-bit (6 Jun 2021)
+Options in effect:
+  --allow-extra-chr
+  --out Traja_GRASDi_ref2_rev2.nDNA.snp.non_singleton.100.dim
+  --pca 100
+  --vcf ../../vcf_out/Traja_GRASDi_ref2_rev2.nDNA.snp.non_singleton.vcf.gz
+
+Hostname: node6.saints.fra.go.jp
+Working directory: /home/akihirao/work/Traja/Traja_GRASDi/Scripts/PCA_out
+Start time: Fri Apr 15 15:08:35 2022
+
+Random number seed: 1650002915
+1031982 MB RAM detected; reserving 515991 MB for main workspace.
+--vcf: Traja_GRASDi_ref2_rev2.nDNA.snp.non_singleton.100.dim-temporary.bed +
+Traja_GRASDi_ref2_rev2.nDNA.snp.non_singleton.100.dim-temporary.bim +
+Traja_GRASDi_ref2_rev2.nDNA.snp.non_singleton.100.dim-temporary.fam written.
+109536 variants loaded from .bim file.
+614 people (0 males, 0 females, 614 ambiguous) loaded from .fam.
+Ambiguous sex IDs written to
+Traja_GRASDi_ref2_rev2.nDNA.snp.non_singleton.100.dim.nosex .
+Using up to 127 threads (change this with --threads).
+Before main variant filters, 614 founders and 0 nonfounders present.
+Calculating allele frequencies... done.
+Total genotyping rate is 0.978614.
+109536 variants and 614 people pass filters and QC.
+Note: No phenotypes present.
+Relationship matrix calculation complete.
+--pca: Results saved to
+Traja_GRASDi_ref2_rev2.nDNA.snp.non_singleton.100.dim.eigenval and
+Traja_GRASDi_ref2_rev2.nDNA.snp.non_singleton.100.dim.eigenvec .
+
+End time: Fri Apr 15 15:08:41 2022

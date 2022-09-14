@@ -10,15 +10,13 @@ CURRENT_DIR=$(cd $(dirname $0) && pwd)
 
 no_threads=48
 
-#input your account
-user_name=akihirao
 
 #agi.2.0.rev2 (agi.2.0: reference genome; rev2: pair-end merge reads)
 code_ID="agi.2.0.rev2"
 
 reference_fa=agi.2.0.fa
-reference_folder=/home/$user_name/work/Traja/RefGenome/RefGenome_v4
-main_folder=/home/$user_name/work/Traja/Traja_GRASDi
+reference_folder=/home/$USER/work/Traja/RefGenome/RefGenome_v4
+main_folder=/home/$USER/work/Traja/Traja_GRASDi
 script_folder=$main_folder/Scripts
 
 #samtools 1.12-12-g38139f7
@@ -26,7 +24,7 @@ script_folder=$main_folder/Scripts
 #gatk 4.2.0.0
 
 #set path to gatk ver.4.2.0.0
-gatk_folder=/home/$user_name/local/gatk-4.2.0.0
+gatk_folder=/home/$USER/local/gatk-4.2.0.0
 
 
 while read sample; do
@@ -39,9 +37,8 @@ while read sample; do
 	samtools view -@ $no_threads -b -q 4 $sample.$code_ID.bam > $sample.$code_ID.filteredDup.bam
 	samtools index -@ $no_threads $sample.$code_ID.filteredDup.bam
 
-#done < $script_folder/sample_ID.A0001_A0646.list  #list of MIDs
+done < $script_folder/sample_ID.A0001_A0646.list  #list of MIDs
 #done < $script_folder/sample_ID.test.list
-done < $script_folder/sample_ID.A0601_A0646.list
 
 cd $CURRENT_DIR
 

@@ -10,10 +10,8 @@ CURRENT_DIR=$(cd $(dirname $0)  && pwd)
 no_threads=96
 no_threads_fastp=16
 
-#input your account name
-user_name=akihirao
 
-main_folder=/home/$user_name/work/Traja/Traja_GRASDi
+main_folder=/home/$USER/work/Traja/Traja_GRASDi
 script_folder=$main_folder/Scripts
 
 #Prepare raw fastq.gz files in the followig folder

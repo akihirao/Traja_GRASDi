@@ -10,14 +10,12 @@ SCRIPT_DIR=$(cd $(dirname $0)  && pwd)
 no_threads=64
 no_threads_fastp=16
 
-#input your account name
-user_name=akihirao
 
 #Prepare raw fastq.gz files in the follwing folder
-raw_fastq_folder=/home/$user_name/work/Traja/Traja_GRASDi/Traja_RawData_GRASDi
+raw_fastq_folder=/home/$USER/work/Traja/Traja_GRASDi/Traja_RawData_GRASDi
 
 #Make the foloder for QC output data
-QC_folder=/home/$user_name/work/Traja/Traja_GRASDi/Traja_QCData_GRASDi
+QC_folder=/home/$USER/work/Traja/Traja_GRASDi/Traja_QCData_GRASDi
 mkdir -p $QC_folder
 
 while read sample; do
