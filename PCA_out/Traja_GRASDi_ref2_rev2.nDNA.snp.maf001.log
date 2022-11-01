@@ -5,11 +5,11 @@ Options in effect:
   --pca
   --vcf /home/akihirao/work/Traja/Traja_GRASDi/vcf_out/Traja_GRASDi_ref2_rev2.nDNA.snp.maf001.vcf.gz
 
-Hostname: node6.saints.fra.go.jp
+Hostname: node4.saints.fra.go.jp
 Working directory: /home/akihirao/work/Traja/Traja_GRASDi/plink_filtering
-Start time: Thu Apr 14 18:08:10 2022
+Start time: Tue Nov  1 21:08:31 2022
 
-Random number seed: 1649927290
+Random number seed: 1667304511
 1031982 MB RAM detected; reserving 515991 MB for main workspace.
 --vcf:
 /home/akihirao/work/Traja/Traja_GRASDi/Scripts/PCA_out/Traja_GRASDi_ref2_rev2.nDNA.snp.maf001-temporary.bed
@@ -36,4 +36,4 @@ and
 /home/akihirao/work/Traja/Traja_GRASDi/Scripts/PCA_out/Traja_GRASDi_ref2_rev2.nDNA.snp.maf001.eigenvec
 .
 
-End time: Thu Apr 14 18:08:12 2022
+End time: Tue Nov  1 21:08:33 2022

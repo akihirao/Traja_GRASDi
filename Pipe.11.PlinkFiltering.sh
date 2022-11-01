@@ -111,13 +111,16 @@ vcftools --gzvcf $vcf_folder/$target_ID.nDNA.snp.DPfilterNoCall.non_rep.P99.vcf.
 bgzip -c $vcf_folder/$target_ID.nDNA.snp.$lab_50_filtering.from_bed.vcf > $vcf_folder/$target_ID.nDNA.snp.$lab_50_filtering.from_bed.vcf.gz
 tabix -p vcf $vcf_folder/$target_ID.nDNA.snp.$lab_50_filtering.from_bed.vcf.gz
 
+#Rename the full dataset including singleton
+cp $vcf_folder/$target_ID.nDNA.snp.$lab_50_filtering.from_bed.vcf.gz $vcf_folder/$target_ID.nDNA.snp.singleton.vcf.gz
+tabix -p vcf $vcf_folder//$target_ID.nDNA.snp.singleton.vcf.gz
 
 #filtering out singletons
-vcftools --gzvcf $vcf_folder/$target_ID.nDNA.snp.$lab_50_filtering.from_bed.vcf.gz --singletons --stdout > $vcf_folder/$target_ID.nDNA.snp.$lab_50_filtering.from_bed.singletons.txt
-perl $script_folder/Singletons2BED.pl < $vcf_folder/$target_ID.nDNA.snp.$lab_50_filtering.from_bed.singletons.txt > $vcf_folder/$target_ID.nDNA.snp.$lab_50_filtering.from_bed.singletons.bed
+vcftools --gzvcf $vcf_folder/$target_ID.nDNA.snp.singleton.vcf.gz --singletons --stdout > $vcf_folder/$target_ID.nDNA.snp.singletons.txt
+perl $script_folder/Singletons2BED.pl < $vcf_folder/$target_ID.nDNA.snp.singletons.txt > $vcf_folder/$target_ID.nDNA.snp.singletons.bed
 
-vcftools --gzvcf $vcf_folder/$target_ID.nDNA.snp.$lab_50_filtering.from_bed.vcf.gz\
- --recode --recode-INFO-all --stdout --exclude-bed $vcf_folder/$target_ID.nDNA.snp.$lab_50_filtering.from_bed.singletons.bed > $vcf_folder/$target_ID.nDNA.snp.non_singleton.vcf
+vcftools --gzvcf $vcf_folder/$target_ID.nDNA.snp.singleton.vcf.gz\
+ --recode --recode-INFO-all --stdout --exclude-bed $vcf_folder/$target_ID.nDNA.snp.singletons.bed > $vcf_folder/$target_ID.nDNA.snp.non_singleton.vcf
 bgzip -c $vcf_folder/$target_ID.nDNA.snp.non_singleton.vcf > $vcf_folder/$target_ID.nDNA.snp.non_singleton.vcf.gz
 tabix -p vcf $vcf_folder/$target_ID.nDNA.snp.non_singleton.vcf.gz
 
@@ -159,7 +162,7 @@ $gatk_folder/gatk SelectVariants\
 #replicate samples for calculateing a genotyping error rate
 $gatk_folder/gatk SelectVariants\
  -R $reference_folder/$reference_fa\
- -V $vcf_folder/$target_ID.nDNA.snp.DPfilterNoCall.non_rep.P99.vcf.gz\
+ -V $vcf_folder/$target_ID.nDNA.snp.DPfilterNoCall.vcf.gz\
  --sample-name $script_folder/rep_sample_ID.list\
  -L $plink_folder/$target_ID.nDNA.snp.maf001.LDpruned.bed\
  -O $vcf_folder/$target_ID.nDNA.snp.maf001.LDpruned.replicates.vcf.gz
