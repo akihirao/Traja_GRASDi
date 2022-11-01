@@ -156,6 +156,15 @@ $gatk_folder/gatk SelectVariants\
  -L $plink_folder/$target_ID.nDNA.snp.maf001.LDpruned.bed\
  -O $vcf_folder/$target_ID.nDNA.snp.maf001.LDpruned.vcf.gz
 
+#replicate samples for calculateing a genotyping error rate
+$gatk_folder/gatk SelectVariants\
+ -R $reference_folder/$reference_fa\
+ -V $vcf_folder/$target_ID.nDNA.snp.DPfilterNoCall.non_rep.P99.vcf.gz\
+ --sample-name $script_folder/rep_sample_ID.list\
+ -L $plink_folder/$target_ID.nDNA.snp.maf001.LDpruned.bed\
+ -O $vcf_folder/$target_ID.nDNA.snp.maf001.LDpruned.replicates.vcf.gz
+
+
 ##Performing PCA: LD-pruned
 plink --vcf $vcf_folder/$target_ID.nDNA.snp.maf001.LDpruned.vcf.gz\
  --allow-extra-chr --pca --out $script_folder/PCA_out/$target_ID.nDNA.snp.maf001.LDpruned
