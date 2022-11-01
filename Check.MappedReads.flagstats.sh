@@ -29,9 +29,9 @@ while read sample; do
 	cd $work_folder
 
 	echo $sample.$code_ID.bam >> $script_folder/CheckOutMappedReads.raw.bam.txt
-	samtools flagstats --threads $no_threads $sample.$code_ID.rev2.bam >> $script_folder/CheckOutMappedReads.raw.bam.txt
+	samtools flagstats --threads $no_threads $sample.$code_ID.bam >> $script_folder/CheckOutMappedReads.raw.bam.txt
 	echo $sample.$code_ID.filteredDup.bam >> $script_folder/CheckOutMappedReads.filtered.bam.txt
-	samtools flagstats --threads $no_threads $sample.$code_ID.rev2.filteredDup.bam >> $script_folder/CheckOutMappedReads.filtered.bam.txt
+	samtools flagstats --threads $no_threads $sample.$code_ID.filteredDup.bam >> $script_folder/CheckOutMappedReads.filtered.bam.txt
 
 done < $script_folder/sample_ID.A0001_A0646.list	
 
