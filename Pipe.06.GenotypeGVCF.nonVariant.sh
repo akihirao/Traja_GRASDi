@@ -39,8 +39,8 @@ while read chr; do
 	 --include-non-variant-sites\
 	 -O $output_folder/$target_ID.nonVar.$chr.vcf.gz
 
+#done < $script_folder/Traja.agi.2.0.Chr2.list
 done < $script_folder/Traja.agi.2.0.Chr.list
-
 
 cd $CURRENT_DIR
 

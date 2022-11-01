@@ -1291,5 +1291,3 @@ A0645_R1.fastq.gz,6740037,1011005550
 A0645_R2.fastq.gz,6740037,1011005550
 A0646_R1.fastq.gz,6747322,1012098300
 A0646_R2.fastq.gz,6747322,1012098300
-file,num_seqs,sum_len
-file,num_seqs,sum_len
