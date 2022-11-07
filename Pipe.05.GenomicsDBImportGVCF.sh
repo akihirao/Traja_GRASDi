@@ -6,7 +6,7 @@ set -exuo pipefail
 
 CURRENT_DIR=$(cd $(dirname $0)  && pwd)
 
-no_threads=80
+no_threads=8
 
 
 #agi.2.0.rev2 (agi.2.0: reference genome; rev2: pair-end merge reads)
@@ -14,11 +14,11 @@ code_ID="agi.2.0.rev2"
 
 reference_fa=agi.2.0.fa
 reference_folder=/home/$USER/work/Traja/RefGenome/RefGenome_v4
-main_folder=/home/$USER/work/Traja/Traja_GRASDi
+main_folder=/mnt/WD20/Traja/Traja_GRASDi
 script_folder=$main_folder/Scripts
+bwa_folder~$main_folder/bwa_out
 
-#set path to gatk ver.4.2.0.0
-gatk_folder=/home/$USER/local/gatk-4.2.0.0
+module load gatk4/4.3.0.0
 
 #-----------------------------------------------------
 # defining argument of samples for GenomicsDBImports
@@ -31,7 +31,7 @@ slash_lab="/"
 while read sample; do
 
 	echo $sample
-	gvcf_folder=$main_folder/bwa_out/$sample$slash_lab
+	gvcf_folder=$bwa_folder/$sample$slash_lab
 		
 	input_samples=$input_samples$option_lab$gvcf_folder$sample$gvcf_lab$one_space
 
@@ -66,4 +66,6 @@ done < $script_folder/Traja.agi.2.0.Chr.list
 
 
 cd $CURRENT_DIR
+
+module unload gatk4
 

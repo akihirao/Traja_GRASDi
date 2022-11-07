@@ -6,7 +6,7 @@ set -exuo pipefail
 
 CURRENT_DIR=$(cd $(dirname $0)  && pwd)
 
-no_threads=48
+no_threads=8
 
 
 #agi.2.0.rev2 (agi.2.0: reference genome; rev2: pair-end merge reads)
@@ -14,12 +14,11 @@ code_ID="agi.2.0.rev2"
 
 reference_fa=agi.2.0.fa
 reference_folder=/home/$USER/work/Traja/RefGenome/RefGenome_v4
-main_folder=/home/$USER/work/Traja/Traja_GRASDi
+main_folder=/mnt/WD20/Traja/Traja_GRASDi
 script_folder=$main_folder/Scripts
 
-#set path to gatk ver.4.2.0.0
-gatk_folder=/home/$USER/local/gatk-4.2.0.0
-
+# gatk v.4.3.0.0
+module load gatk4/4.3.0.0
 
 target_ID=Traja_GRASDi_ref2_rev2
 output_folder=$main_folder/vcf_out
@@ -30,17 +29,23 @@ cd $output_folder
 
 #===============================================
 #Filtering out mt
-$gatk_folder/gatk SelectVariants\
+gatk SelectVariants\
  -R $reference_folder/$reference_fa\
  -V $target_ID.sca_all.snp.vcf.gz\
  -XL $script_folder/mt.list\
  -O $target_ID.nDNA.snp.vcf.gz
 
-$gatk_folder/gatk SelectVariants\
+gatk SelectVariants\
  -R $reference_folder/$reference_fa\
  -V $target_ID.sca_all.indel.vcf.gz\
  -XL $script_folder/mt.list\
  -O $target_ID.nDNA.indel.vcf.gz
+
+gatk SelectVariants\
+ -R $reference_folder/$reference_fa\
+ -V $target_ID.sca_all.non_variant.vcf.gz\
+ -XL $script_folder/mt.list\
+ -O $target_ID.nDNA.non_variant.vcf.gz
 #===============================================
  
  
@@ -65,25 +70,32 @@ perl $script_folder/Vcf2BED_chr_start_end.pl < $target_ID.ExcessHet.vcf | bedtoo
 perl $script_folder/ClusterBedBlock.pl < $target_ID.ExcessHet.cluster.bed > $target_ID.ExcessHet.block.bed
 
 #=====================================================================
-#filtering out ExcessHetblock:SNP
-$gatk_folder/gatk SelectVariants\
+#filtering out ExcessHetblock: SNPs
+gatk SelectVariants\
  -R $reference_folder/$reference_fa\
  -V $target_ID.nDNA.snp.vcf.gz\
  --exclude-intervals $target_ID.ExcessHet.block.bed\
  -O $target_ID.nDNA.snp.no_ExcessHetBlock.vcf.gz \
 
-#Set filtered sites to no call:INDEL
-$gatk_folder/gatk SelectVariants\
+#Set filtered sites to no call: INDELs
+gatk SelectVariants\
  -R $reference_folder/$reference_fa\
  -V $target_ID.nDNA.indel.vcf.gz\
  --exclude-intervals $target_ID.ExcessHet.block.bed\
  -O $target_ID.nDNA.indel.no_ExcessHetBlock.vcf.gz \
+
+#Set filtered sites to no call: Non-variants
+gatk SelectVariants\
+ -R $reference_folder/$reference_fa\
+ -V $target_ID.nDNA.non_variant.vcf.gz\
+ --exclude-intervals $target_ID.ExcessHet.block.bed\
+ -O $target_ID.nDNA.non_variant.no_ExcessHetBlock.vcf.gz \
 #=====================================================================
 
-
-
+#=====================================================================
+#=====================================================================
 #Site-based filtering of SNPs
-$gatk_folder/gatk VariantFiltration\
+gatk VariantFiltration\
  -R $reference_folder/$reference_fa\
  -V $target_ID.nDNA.snp.no_ExcessHetBlock.vcf.gz \
  --filter-expression "QD < 2.0" --filter-name "QD2"\
@@ -96,14 +108,14 @@ $gatk_folder/gatk VariantFiltration\
  -O $target_ID.nDNA.snp.filter.vcf.gz
 
 ##Excluding filtered sites (including "PASS" or "." in FILTER filed) of SNPs
-$gatk_folder/gatk SelectVariants\
+gatk SelectVariants\
  -R $reference_folder/$reference_fa\
  -V $target_ID.nDNA.snp.filter.vcf.gz\
  --exclude-filtered\
  -O $target_ID.nDNA.snp.filterPASSED.vcf.gz
 
 #Site-based filtering of INDELs
-$gatk_folder/gatk VariantFiltration\
+gatk VariantFiltration\
  -R $reference_folder/$reference_fa\
  -V $target_ID.nDNA.indel.no_ExcessHetBlock.vcf.gz \
  --filter-expression "QD < 2.0" --filter-name "QD2"\
@@ -114,7 +126,7 @@ $gatk_folder/gatk VariantFiltration\
  -O $target_ID.nDNA.indel.filter.vcf.gz
 
 ##Excluding filtered sites (including "PASS" or "." in FILTER filed) of INDELs
-$gatk_folder/gatk SelectVariants\
+gatk SelectVariants\
  -R $reference_folder/$reference_fa\
  -V $target_ID.nDNA.indel.filter.vcf.gz\
  --exclude-filtered\
@@ -122,55 +134,71 @@ $gatk_folder/gatk SelectVariants\
 
 
 #---------------------------------------------------------------------------------------------------------------
-#Sample-based filtering out SNPs: DP < 20 & GQ <20 (Low Genotype Quality: less than 99%)
-$gatk_folder/gatk VariantFiltration\
+#Sample-based filtering out SNPs: DP < 20 & GQ <30
+#GQ < 30: Low Genotype Quality: less than 99.9%
+gatk VariantFiltration\
  -R $reference_folder/$reference_fa\
  -V $target_ID.nDNA.snp.filterPASSED.vcf.gz\
- -G-filter "GQ < 20"\
- -G-filter-name "lowGQ"\
+ -G-filter "GQ < 30"\
+ -G-filter-name "GQ30"\
  -G-filter "DP < 20"\
- -G-filter-name "DP_20"\
+ -G-filter-name "DP20"\
  -O $target_ID.nDNA.snp.DPfilterPASSED.vcf.gz
 
-#Sample-based filtering out INDELs: DP < 20 & GQ < 20 (Low Genotype Quality: less than 99%) 
-$gatk_folder/gatk VariantFiltration\
+#Sample-based filtering out INDELs: DP < 20 & GQ < 30
+#GQ < 30: Low Genotype Quality: less than 99.9%
+gatk VariantFiltration\
  -R $reference_folder/$reference_fa\
  -V $target_ID.nDNA.indel.filterPASSED.vcf.gz\
- -G-filter "GQ < 20"\
- -G-filter-name "lowGQ"\
+ -G-filter "GQ < 30"\
+ -G-filter-name "GQ30"\
  -G-filter "DP < 20"\
- -G-filter-name "DP_20"\
+ -G-filter-name "DP20"\
  -O $target_ID.nDNA.indel.DPfilterPASSED.vcf.gz
 
-#Set filtered sites to no call:SNP
-$gatk_folder/gatk SelectVariants\
+#Sample-based filtering out Non-variants: DP < 20 & RGQ < 30
+#RGQ < 30: Low Reference Genotype Quality: less than 99.9%
+gatk VariantFiltration\
+ -R $reference_folder/$reference_fa\
+ -V $target_ID.nDNA.non_variant.no_ExcessHetBlock.vcf.gz\
+ -G-filter "RGQ < 30"\
+ -G-filter-name "RGQ30"\
+ -G-filter "DP < 20"\
+ -G-filter-name "DP20"\
+ -O $target_ID.nDNA.non_variant.DPfilterPASSED.vcf.gz
+
+
+#Set filtered sites to no call: SNPs
+gatk SelectVariants\
  -R $reference_folder/$reference_fa\
  -V $target_ID.nDNA.snp.DPfilterPASSED.vcf.gz\
  --set-filtered-gt-to-nocall\
  -O $target_ID.nDNA.snp.DPfilterNoCall.vcf.gz
-bcftools index -f $target_ID.nDNA.snp.DPfilterNoCall.vcf.gz
-bcftools view $target_ID.nDNA.snp.DPfilterNoCall.vcf.gz -Ov -o $target_ID.nDNA.snp.DPfilterNoCall.vcf
 
-#Set filtered sites to no call:INDEL
-$gatk_folder/gatk SelectVariants\
+#Set filtered sites to no call: INDELs
+gatk SelectVariants\
  -R $reference_folder/$reference_fa\
  -V $target_ID.nDNA.indel.DPfilterPASSED.vcf.gz\
  --set-filtered-gt-to-nocall\
  -O $target_ID.nDNA.indel.DPfilterNoCall.vcf.gz
-bcftools index -f $target_ID.nDNA.indel.DPfilterNoCall.vcf.gz
-bcftools view $target_ID.nDNA.indel.DPfilterNoCall.vcf.gz -Ov -o $target_ID.nDNA.indel.DPfilterNoCall.vcf
+
+#Set filtered sites to no call: Non-variants
+gatk SelectVariants\
+ -R $reference_folder/$reference_fa\
+ -V $target_ID.nDNA.non_variant.DPfilterPASSED.vcf.gz\
+ --set-filtered-gt-to-nocall\
+ -O $target_ID.nDNA.non_variant.DPfilterNoCall.vcf.gz
 #=====================================================================
 
 
-#Merge SNPs and INDELs vcf files into a SNV vcf file
-$gatk_folder/gatk MergeVcfs\
+#Merge SNPs and Non-variants into a single vcf file
+gatk MergeVcfs\
  -R $reference_folder/$reference_fa\
  -I $target_ID.nDNA.snp.DPfilterNoCall.vcf.gz\
- -I $target_ID.nDNA.indel.DPfilterNoCall.vcf.gz\
- -O $target_ID.snp.indel.DPfilterNoCall.vcf.gz
-bcftools index -f $target_ID.snp.indel.DPfilterNoCall.vcf.gz
-bcftools view  $target_ID.snp.indel.DPfilterNoCall.vcf.gz -Ov -o  $target_ID.snp.indel.DPfilterNoCall.vcf
-
+ -I $target_ID.nDNA.non_variant.DPfilterNoCall.vcf.gz\
+ -O $target_ID.snp.non_variant.DPfilterNoCall.vcf.gz
 
 cd $CURRENT_DIR
+
+module unload gatk4
 

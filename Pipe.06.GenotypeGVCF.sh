@@ -14,11 +14,11 @@ code_ID="agi.2.0.rev2"
 
 reference_fa=agi.2.0.fa
 reference_folder=/home/$USER/work/Traja/RefGenome/RefGenome_v4
-main_folder=/home/$USER/work/Traja/Traja_GRASDi
+main_folder=/mnt/WD20/Traja/Traja_GRASDi
 script_folder=$main_folder/Scripts
 
-#set path to gatk ver.4.2.0.0
-gatk_folder=/home/$USER/local/gatk-4.2.0.0
+#gatk v.4.3.0.0
+module load gatk4/4.3.0.0
 
 
 target_ID=Traja_GRASDi_ref2_rev2
@@ -34,8 +34,9 @@ while read chr; do
 
 	genomicsDB_name=genomicsDB.$target_ID$lab_under_bar$chr
 
-	$gatk_folder/gatk GenotypeGVCFs\
+	gatk GenotypeGVCFs\
 	 -R $reference_folder/$reference_fa -V gendb://$genomicsDB_name\
+	 --include-non-variant-sites\
 	 -O $output_folder/$target_ID.$chr.vcf.gz
 
 done < $script_folder/Traja.agi.2.0.Chr.list
@@ -43,4 +44,5 @@ done < $script_folder/Traja.agi.2.0.Chr.list
 
 cd $CURRENT_DIR
 
+module unload gatk4
 
