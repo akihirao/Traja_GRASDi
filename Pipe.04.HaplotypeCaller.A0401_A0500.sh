@@ -35,7 +35,7 @@ while read sample; do
 	 -O $sample.$code_ID.g.vcf.gz
 
 #done < $script_folder/sample_ID.A0001_A0646.list #list of MIDs
-done < $script_folder/sample_ID.A0012_A0100.list #list of MIDs
+done < $script_folder/sample_ID.A0401_A0500.list #list of MIDs
 
 
 cd $CURRENT_DIR
