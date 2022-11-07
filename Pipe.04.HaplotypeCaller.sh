@@ -6,7 +6,7 @@ set -exuo pipefail
 
 CURRENT_DIR=$(cd $(dirname $0)  && pwd)
 
-no_threads=36
+no_threads=8
 
 
 #agi.2.0.rev2 (agi.2.0: reference genome; rev2: pair-end merge reads)
@@ -14,16 +14,16 @@ code_ID="agi.2.0.rev2"
 
 reference_fa=agi.2.0.fa
 reference_folder=/home/$USER/work/Traja/RefGenome/RefGenome_v4
-main_folder=/home/$USER/work/Traja/Traja_GRASDi
+main_folder=/mnt/WD20/Traja/Traja_GRASDi
 script_folder=$main_folder/Scripts
+bwa_folder=$main_folder/bwa_out
 
-#set path to gatk ver.4.2.0.0
-gatk_folder=/home/$USER/local/gatk-4.2.0.0
 
+module load gatk4/4.3.0.0
 
 while read sample; do
 
-	work_folder=$main_folder/bwa_out/$sample
+	work_folder=$bwa_folder/$sample
 	cd $work_folder
 
 	$gatk_folder/gatk HaplotypeCaller\
@@ -38,4 +38,6 @@ done < $script_folder/sample_ID.A0001_A0646.list #list of MIDs
 
 
 cd $CURRENT_DIR
+
+module unload gatk4
 
