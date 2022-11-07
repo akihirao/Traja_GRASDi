@@ -6,7 +6,7 @@ set -exuo pipefail
 
 CURRENT_DIR=$(cd $(dirname $0)  && pwd)
 
-no_threads=8
+no_threads=2
 
 
 #agi.2.0.rev2 (agi.2.0: reference genome; rev2: pair-end merge reads)
