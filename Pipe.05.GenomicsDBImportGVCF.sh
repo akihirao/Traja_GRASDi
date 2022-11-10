@@ -16,7 +16,7 @@ reference_fa=agi.2.0.fa
 reference_folder=/home/$USER/work/Traja/RefGenome/RefGenome_v4
 main_folder=/mnt/WD20/Traja/Traja_GRASDi
 script_folder=$main_folder/Scripts
-bwa_folder~$main_folder/bwa_out
+bwa_folder=$main_folder/bwa_out
 
 module load gatk4/4.3.0.0
 
