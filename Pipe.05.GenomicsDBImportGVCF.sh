@@ -56,7 +56,7 @@ while read chr; do
 	genomicsDB_name=genomicsDB.$target_ID$lab_under_bar$chr
 	DB_path=$output_folder/$genomicsDB_name
 
-	$gatk_folder/gatk GenomicsDBImport\
+	gatk GenomicsDBImport\
 	 $input_samples\
 	 --genomicsdb-workspace-path  $DB_path\
 	 --intervals $chr\
