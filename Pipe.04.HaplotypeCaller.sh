@@ -34,8 +34,7 @@ while read sample; do
 	 --native-pair-hmm-threads $no_threads\
 	 -O $sample.$code_ID.g.vcf.gz
 
-#done < $script_folder/sample_ID.A0001_A0646.list #list of MIDs
-done < $script_folder/sample_ID.A0012_A0100.list #list of MIDs
+done < $script_folder/sample_ID.A0001_A0646.list #list of MIDs
 
 
 cd $CURRENT_DIR

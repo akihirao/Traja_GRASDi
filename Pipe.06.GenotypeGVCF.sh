@@ -22,9 +22,9 @@ module load gatk4/4.3.0.0
 
 
 target_ID=Traja_GRASDi_ref2_rev2
-output_folder=$main_folder/vcf_out
+vcf_folder=$main_folder/vcf_out
 lab_under_bar="_"
-mkdir -p $output_folder
+mkdir -p $vcf_folder
 
 
 cd $main_folder/gDB
@@ -35,9 +35,10 @@ while read chr; do
 	genomicsDB_name=genomicsDB.$target_ID$lab_under_bar$chr
 
 	gatk GenotypeGVCFs\
-	 -R $reference_folder/$reference_fa -V gendb://$genomicsDB_name\
+	 -R $reference_folder/$reference_fa\
+	 -V gendb://$genomicsDB_name\
 	 --include-non-variant-sites\
-	 -O $output_folder/$target_ID.$chr.vcf.gz
+	 -O $vcf_folder/$target_ID.$chr.vcf.gz
 
 done < $script_folder/Traja.agi.2.0.Chr.list
 
