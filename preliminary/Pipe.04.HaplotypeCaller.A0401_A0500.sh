@@ -6,20 +6,26 @@ set -exuo pipefail
 
 CURRENT_DIR=$(cd $(dirname $0)  && pwd)
 
-no_threads=2
+no_threads=8
 
+#aji.3.1 (aji.3.1: reference genome); fasta header name = scax
+code_ID="aji.3.1"
 
-#agi.2.0.rev2 (agi.2.0: reference genome; rev2: pair-end merge reads)
-code_ID="agi.2.0.rev2"
-
-reference_fa=agi.2.0.fa
-reference_folder=/home/$USER/work/Traja/RefGenome/RefGenome_v4
+#aji.3.1.fa: the reference genoeme provided by Dr. Fujiwara @2023/2/13
+reference_fa=aji.3.1.fa
+reference_fa_head=aji.3.1
+reference_folder=/home/$USER/work/Traja/RefGenome/RefGenome_v5.1
 main_folder=/mnt/WD20/Traja/Traja_GRASDi
 script_folder=$main_folder/Scripts
 bwa_folder=$main_folder/bwa_out
 
+#samtools 1.16.1
+#Using htslib 1.16.1
 
+#gatk 4.3.0.0
+#switch gatk ver.4.3.0.0
 module load gatk4/4.3.0.0
+
 
 while read sample; do
 
@@ -40,5 +46,5 @@ done < $script_folder/sample_ID.A0401_A0500.list #list of MIDs
 
 cd $CURRENT_DIR
 
-module unload gatk4
+module unload gatk4/4.3.0.0
 

@@ -3,12 +3,12 @@
 #SPAGeDiを使って個体間の遺伝的分化係数 Rousset's A (Rousset 2000)を算出し、csv形式のmatrixファイルを出力する
 
 #事前にspagediで算出しておく
-#spagedi < cmd.Chiopi.txt
+#spagedi < Traja.cmd.txt
 
 
 CURRENT_DIR=$(cd $(dirname $0) && pwd)
 
-work_folder=/home/akihirao/work/Traja/Traja_GRASDi/Rousset_A
+work_folder=/mnt/WD20/Traja/Traja_GRASDi/Rousset_A
 
 cd $work_folder
 

@@ -7,17 +7,23 @@ set -exuo pipefail
 
 CURRENT_DIR=$(cd $(dirname $0) && pwd)
 
-no_threads=48
+no_threads=24
 
-reference_folder=/home/akihirao/work/Traja/RefGenome/RefGenome_v4
-main_folder=/home/akihirao/work/Traja/Traja_GRASDi
+#aji.3.0 (aji.3.0: reference genome) 
+code_ID="aji.3.0"
+
+#aji.3.0.fa: the reference genoeme provided by Dr. Fujiwara @2023/2/13
+reference_fa=aji.3.0.fa
+reference_fa_head=aji.3.0
+reference_folder=/home/$USER/work/Traja/RefGenome/RefGenome_v5
+main_folder=/mnt/WD20/Traja/Traja_GRASDi
 script_folder=$main_folder/Scripts
 
-code_ID="agi.2.0.rev2"
 
-#samtools 1.12-12-g38139f7
-#Using htslib 1.12-10-gc3ba302
-#gatk 4.2.0.0
+#bwa (Version: 0.7.17-r1198-dirty)
+#bwa-mem2 v2.2.1
+#samtools 1.16.1
+#Using htslib 1.16.1
 
 echo -n >| $script_folder/CheckOutMappedReads.raw.bam.txt
 echo -n >| $script_folder/CheckOutMappedReads.filtered.bam.txt

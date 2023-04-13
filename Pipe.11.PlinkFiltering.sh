@@ -6,23 +6,26 @@ set -exuo pipefail
 
 CURRENT_DIR=$(cd $(dirname $0)  && pwd)
 
-no_threads=48
+no_threads=24
 
 
-#agi.2.0.rev2 (agi.2.0: reference genome; rev2: pair-end merge reads)
-code_ID="agi.2.0.rev2"
+#aji.3.1 (aji.3.1: reference genome); fasta header name = scax
+code_ID="aji.3.1"
 
-reference_fa=agi.2.0.fa
-reference_folder=/home/$USER/work/Traja/RefGenome/RefGenome_v4
-main_folder=/home/$USER/work/Traja/Traja_GRASDi
+#aji.3.1.fa: the reference genoeme provided by Dr. Fujiwara @2023/2/13
+reference_fa=aji.3.1.fa
+reference_fa_head=aji.3.1
+reference_folder=/home/$USER/work/Traja/RefGenome/RefGenome_v5.1
+main_folder=/mnt/WD20/Traja/Traja_GRASDi
 script_folder=$main_folder/Scripts
 mkdir -p $script_folder/PCA_out
 
-#set path to gatk ver.4.2.0.0
-gatk_folder=/home/$USER/local/gatk-4.2.0.0
+
+# gatk v.4.3.0.0
+module load gatk4/4.3.0.0
 
 
-target_ID=Traja_GRASDi_ref2_rev2
+target_ID=Traja_GRASDi_ref31
 work_folder=$main_folder/vcf_out
 vcf_folder=$main_folder/vcf_out
 plink_folder=$main_folder/plink_filtering
@@ -95,7 +98,7 @@ plink --noweb --allow-extra-chr\
  --recode
 
 #mind 0.5 geno 0.5: removing >50% missing individuals and/or sites
-plink --noweb --allow-extra-chr\
+plink --noweb --chr-set 24 no-xy no-mt\
  --file $target_ID.nDNA.snp.$lab_60_filtering\
  --mind 0.50 --geno 0.50\
  --allow-no-sex\
@@ -124,18 +127,22 @@ vcftools --gzvcf $vcf_folder/$target_ID.nDNA.snp.singleton.vcf.gz\
 bgzip -c $vcf_folder/$target_ID.nDNA.snp.non_singleton.vcf > $vcf_folder/$target_ID.nDNA.snp.non_singleton.vcf.gz
 tabix -p vcf $vcf_folder/$target_ID.nDNA.snp.non_singleton.vcf.gz
 
+
 ##Performing PCA: non-singleton
 plink --vcf $vcf_folder/$target_ID.nDNA.snp.non_singleton.vcf.gz\
- --allow-extra-chr --pca --out $script_folder/PCA_out/$target_ID.nDNA.snp.non_singleton
+  --allow-extra-chr\
+  --pca --out $script_folder/PCA_out/$target_ID.nDNA.snp.non_singleton
 
 #filtering out MAF < 0.01
 vcftools --gzvcf $vcf_folder/$target_ID.nDNA.snp.non_singleton.vcf.gz --maf 0.01 --recode --recode-INFO-all --stdout > $vcf_folder/$target_ID.nDNA.snp.maf001.vcf
 bgzip -c $vcf_folder/$target_ID.nDNA.snp.maf001.vcf > $vcf_folder/$target_ID.nDNA.snp.maf001.vcf.gz
 tabix -p vcf $vcf_folder/$target_ID.nDNA.snp.maf001.vcf.gz
 
+
 ##Performing PCA: MAF >= 0.01
 plink --vcf $vcf_folder/$target_ID.nDNA.snp.maf001.vcf.gz\
- --allow-extra-chr --pca --out $script_folder/PCA_out/$target_ID.nDNA.snp.maf001
+  --allow-extra-chr\
+  --pca --out $script_folder/PCA_out/$target_ID.nDNA.snp.maf001
 
 #Convetion from vcf to plink ped/map
 vcftools --vcf $vcf_folder/$target_ID.nDNA.snp.maf001.vcf\
@@ -150,9 +157,9 @@ plink2 --allow-extra-chr\
 
 
 #convert from LD-prune.in to BED
-perl $script_folder/LDpruned2BED.pl < $vcf_folder/$target_ID.nDNA.snp.maf001.prune.in > $plink_folder/$target_ID.nDNA.snp.maf001.LDpruned.bed
+perl $script_folder/LDpruned2BED.chr.pl < $vcf_folder/$target_ID.nDNA.snp.maf001.prune.in > $plink_folder/$target_ID.nDNA.snp.maf001.LDpruned.bed
 
-$gatk_folder/gatk SelectVariants\
+gatk SelectVariants\
  -R $reference_folder/$reference_fa\
  -V $vcf_folder/$target_ID.nDNA.snp.DPfilterNoCall.non_rep.P99.vcf.gz\
  --sample-name $script_folder/$target_ID.nDNA.snp.$lab_50_filtering.indiv.args\
@@ -160,7 +167,7 @@ $gatk_folder/gatk SelectVariants\
  -O $vcf_folder/$target_ID.nDNA.snp.maf001.LDpruned.vcf.gz
 
 #replicate samples for calculateing a genotyping error rate
-$gatk_folder/gatk SelectVariants\
+gatk SelectVariants\
  -R $reference_folder/$reference_fa\
  -V $vcf_folder/$target_ID.nDNA.snp.DPfilterNoCall.vcf.gz\
  --sample-name $script_folder/rep_sample_ID.list\
@@ -170,11 +177,15 @@ $gatk_folder/gatk SelectVariants\
 
 ##Performing PCA: LD-pruned
 plink --vcf $vcf_folder/$target_ID.nDNA.snp.maf001.LDpruned.vcf.gz\
- --allow-extra-chr --pca --out $script_folder/PCA_out/$target_ID.nDNA.snp.maf001.LDpruned
+  --allow-extra-chr\
+  --pca --out $script_folder/PCA_out/$target_ID.nDNA.snp.maf001.LDpruned
 
 #Convertion into *thaw format for analysis using the package "smartsnp" in the R
-plink2 --vcf $vcf_folder/$target_ID.nDNA.snp.maf001.LDpruned.vcf.gz --allow-extra-chr --recode A-transpose --out $vcf_folder/$target_ID.nDNA.snp.maf001.LDpruned.genotypeMatrix
+plink2 --vcf $vcf_folder/$target_ID.nDNA.snp.maf001.LDpruned.vcf.gz\
+  --allow-extra-chr\
+  --recode A-transpose --out $vcf_folder/$target_ID.nDNA.snp.maf001.LDpruned.genotypeMatrix
 
 cd $CURRENT_DIR
 
+module unload gatk4/4.3.0.0
 

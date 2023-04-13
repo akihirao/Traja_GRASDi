@@ -6,37 +6,37 @@ set -exuo pipefail
 
 CURRENT_DIR=$(cd $(dirname $0)  && pwd)
 
-no_threads=96
+no_threads=32
 
 
-#agi.2.0.rev2 (agi.2.0: reference genome; rev2: pair-end merge reads) 
-code_ID="agi.2.0.rev2"
+#aji.3.1 (aji.3.1: reference genome); fasta header name = scax
+code_ID="aji.3.1"
 
-#agi.2.0.fa: the reference genoeme provided by Dr. Fujiwara @2021/8/26
-reference_fa=agi.2.0.fa
-reference_fa_head=agi.2.0
-reference_folder=/home/$USER/work/Traja/RefGenome/RefGenome_v4
-main_folder=/home/$USER/work/Traja/Traja_GRASDi
+#aji.3.1.fa: the reference genoeme provided by Dr. Fujiwara @2023/2/13
+reference_fa=aji.3.1.fa
+reference_fa_head=aji.3.1
+reference_folder=/home/$USER/work/Traja/RefGenome/RefGenome_v5.1
+main_folder=/mnt/WD20/Traja/Traja_GRASDi
 script_folder=$main_folder/Scripts
 QC_folder=$main_folder/Traja_QCData_GRASDi
-bwa_mem2_folder=/home/$USER/local/bwa-mem2
+
 
 R1_tag="_R1"
 R2_tag="_R2"
 
 #bwa (Version: 0.7.17-r1198-dirty)
 #bwa-mem2 v2.2.1
-#samtools 1.12-12-g38139f7
-#Using htslib 1.12-10-gc3ba302
-#gatk 4.2.0.0
+#samtools 1.16.1
+#Using htslib 1.16.1
 
-#set path to gatke ver.4.2.0.0
-gatk_folder=/home/$USER/local/gatk-4.2.0.0
+#gatk 4.3.0.0
+#switch gatk ver.4.3.0.0
+module load gatk4/4.3.0.0
 
 
 #Checking for reference index (bwa-mem2)
 if [ ! -e $reference_folder/$reference_fa.bwt.2bit.64 ]; then
-	$bwa_mem2_folder/bwa-mem2 index $reference_folder/$reference_fa
+	bwa-mem2 index $reference_folder/$reference_fa
 fi
 
 #Checking for reference index (bwa)
@@ -51,7 +51,7 @@ fi
 
 #Checking for gatk reference index (gatk: *.dict)
 if [ ! -e $reference_folder/$reference_fa_head.dict ]; then
-	$gatk_folder/gatk CreateSequenceDictionary -R $reference_folder/$reference_fa -O $reference_folder/$reference_fa_head.dict
+	gatk CreateSequenceDictionary -R $reference_folder/$reference_fa -O $reference_folder/$reference_fa_head.dict
 fi
 
 
@@ -76,14 +76,14 @@ while read sample; do
 	tag_read_group_part3="\tPL:Illumina"
 	tag_read_group=$tag_read_group_part1$specific_ID$tag_read_group_part2$sample$tag_read_group_part3
 
-	$bwa_mem2_folder/bwa-mem2 mem -t $no_threads -M -R $tag_read_group $reference_folder/$reference_fa\
+	bwa-mem2 mem -t $no_threads -M -R $tag_read_group $reference_folder/$reference_fa\
 	 $QC_folder/$sample/$fastq_R1 $QC_folder/$sample/$fastq_R2 | samtools view -@ $no_threads -b | samtools sort -@ $no_threads > $sample.$code_ID.bam
 	samtools index -@ $no_threads $sample.$code_ID.bam
 	
 done < $script_folder/sample_ID.A0001_A0646.list  #list of MIDs
 
 
-
 cd $CURRENT_DIR
 
+module unload gatk4/4.3.0.0
 

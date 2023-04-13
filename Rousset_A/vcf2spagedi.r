@@ -5,9 +5,9 @@
 library(vcfR)
 library(adegenet)
 
-setwd("/home/akihirao/work/Traja/Traja_GRASDi/Rousset_A")
+setwd("/mnt/WD20/Traja/Traja_GRASDi/Rousset_A")
 
-input_vcf_file <- "../vcf_out/Traja_GRASDi_ref2_rev2.nDNA.snp.maf001.LDpruned.vcf.gz"
+input_vcf_file <- "/mnt/WD20/Traja/Traja_GRASDi/vcf_out/Traja_GRASDi_ref3.nDNA.snp.maf001.non_unplaced.LDpruned.vcf.gz"
 output_file <- "spagedi.input.txt"
 
 

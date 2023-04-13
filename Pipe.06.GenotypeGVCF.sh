@@ -6,14 +6,16 @@ set -exuo pipefail
 
 CURRENT_DIR=$(cd $(dirname $0)  && pwd)
 
-no_threads=48
+no_threads=24
 
 
-#agi.2.0.rev2 (agi.2.0: reference genome; rev2: pair-end merge reads)
-code_ID="agi.2.0.rev2"
+#aji.3.1 (aji.3.1: reference genome); fasta header name = scax
+code_ID="aji.3.1"
 
-reference_fa=agi.2.0.fa
-reference_folder=/home/$USER/work/Traja/RefGenome/RefGenome_v4
+#aji.3.1.fa: the reference genoeme provided by Dr. Fujiwara @2023/2/13
+reference_fa=aji.3.1.fa
+reference_fa_head=aji.3.1
+reference_folder=/home/$USER/work/Traja/RefGenome/RefGenome_v5.1
 main_folder=/mnt/WD20/Traja/Traja_GRASDi
 script_folder=$main_folder/Scripts
 
@@ -21,7 +23,7 @@ script_folder=$main_folder/Scripts
 module load gatk4/4.3.0.0
 
 
-target_ID=Traja_GRASDi_ref2_rev2
+target_ID=Traja_GRASDi_ref31
 vcf_folder=$main_folder/vcf_out
 lab_under_bar="_"
 mkdir -p $vcf_folder
@@ -37,13 +39,13 @@ while read chr; do
 	gatk GenotypeGVCFs\
 	 -R $reference_folder/$reference_fa\
 	 -V gendb://$genomicsDB_name\
-	 --include-non-variant-sites\
 	 -O $vcf_folder/$target_ID.$chr.vcf.gz
 
-done < $script_folder/Traja.agi.2.0.Chr.list
+done < $script_folder/Traja.aji.3.1.Chr.list
 
 
 cd $CURRENT_DIR
 
-module unload gatk4
+module unload gatk4/4.3.0.0
+
 

@@ -1,0 +1,40 @@
+PLINK v1.90b6.26 64-bit (2 Apr 2022)
+Options in effect:
+  --allow-extra-chr
+  --out /mnt/WD20/Traja/Traja_GRASDi/Scripts/PCA_out/Traja_GRASDi_ref3.nDNA.snp.maf001
+  --pca
+  --vcf /mnt/WD20/Traja/Traja_GRASDi/vcf_out/Traja_GRASDi_ref3.nDNA.snp.maf001.vcf.gz
+
+Hostname: 22-0103
+Working directory: /mnt/WD20/Traja/Traja_GRASDi/plink_filtering
+Start time: Wed Feb 22 21:58:38 2023
+
+Random number seed: 1677070718
+257609 MB RAM detected; reserving 128804 MB for main workspace.
+--vcf:
+/mnt/WD20/Traja/Traja_GRASDi/Scripts/PCA_out/Traja_GRASDi_ref3.nDNA.snp.maf001-temporary.bed
++
+/mnt/WD20/Traja/Traja_GRASDi/Scripts/PCA_out/Traja_GRASDi_ref3.nDNA.snp.maf001-temporary.bim
++
+/mnt/WD20/Traja/Traja_GRASDi/Scripts/PCA_out/Traja_GRASDi_ref3.nDNA.snp.maf001-temporary.fam
+written.
+21863 variants loaded from .bim file.
+614 people (0 males, 0 females, 614 ambiguous) loaded from .fam.
+Ambiguous sex IDs written to
+/mnt/WD20/Traja/Traja_GRASDi/Scripts/PCA_out/Traja_GRASDi_ref3.nDNA.snp.maf001.nosex
+.
+Using up to 31 threads (change this with --threads).
+Before main variant filters, 614 founders and 0 nonfounders present.
+Calculating allele frequencies... done.
+Total genotyping rate is 0.975054.
+21863 variants and 614 people pass filters and QC.
+Note: No phenotypes present.
+Excluding 669 variants on non-autosomes from relationship matrix calc.
+Relationship matrix calculation complete.
+--pca: Results saved to
+/mnt/WD20/Traja/Traja_GRASDi/Scripts/PCA_out/Traja_GRASDi_ref3.nDNA.snp.maf001.eigenval
+and
+/mnt/WD20/Traja/Traja_GRASDi/Scripts/PCA_out/Traja_GRASDi_ref3.nDNA.snp.maf001.eigenvec
+.
+
+End time: Wed Feb 22 21:58:40 2023

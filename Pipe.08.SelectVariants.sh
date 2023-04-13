@@ -9,11 +9,13 @@ CURRENT_DIR=$(cd $(dirname $0)  && pwd)
 no_threads=8
 
 
-#agi.2.0.rev2 (agi.2.0: reference genome; rev2: pair-end merge reads)
-code_ID="agi.2.0.rev2"
+#aji.3.1 (aji.3.1: reference genome); fasta header name = scax
+code_ID="aji.3.1"
 
-reference_fa=agi.2.0.fa
-reference_folder=/home/$USER/work/Traja/RefGenome/RefGenome_v4
+#aji.3.1.fa: the reference genoeme provided by Dr. Fujiwara @2023/2/13
+reference_fa=aji.3.1.fa
+reference_fa_head=aji.3.1
+reference_folder=/home/$USER/work/Traja/RefGenome/RefGenome_v5.1
 main_folder=/mnt/WD20/Traja/Traja_GRASDi
 script_folder=$main_folder/Scripts
 
@@ -21,7 +23,7 @@ script_folder=$main_folder/Scripts
 module load gatk4/4.3.0.0
 
 
-target_ID=Traja_GRASDi_ref2_rev2
+target_ID=Traja_GRASDi_ref31
 work_folder=$main_folder/vcf_out
 mkdir -p $work_folder
 
@@ -45,16 +47,10 @@ gatk SelectVariants\
  --restrict-alleles-to BIALLELIC\
  -O $work_folder/$target_ID.sca_all.indel.vcf.gz
 
-#Extracting non-variants
-gatk SelectVariants\
- -R $reference_folder/$reference_fa\
- -V $work_folder/$target_ID.sca_all.vcf.gz\
- -select-type NO_VARIATION\
- -O $work_folder/$target_ID.sca_all.non_variant.vcf.gz
 
 #----------------------------------------------------------------------------------
 
 cd $CURRENT_DIR
 
-module unload gatk4
+module unload gatk4/4.3.0.0
 

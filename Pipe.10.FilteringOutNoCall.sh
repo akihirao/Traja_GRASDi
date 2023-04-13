@@ -6,22 +6,24 @@ set -exuo pipefail
 
 CURRENT_DIR=$(cd $(dirname $0)  && pwd)
 
-no_threads=48
+no_threads=24
 
 
-#agi.2.0.rev2 (agi.2.0: reference genome; rev2: pair-end merge reads)
-code_ID="agi.2.0.rev2"
+#aji.3.1 (aji.3.1: reference genome); fasta header name = scax
+code_ID="aji.3.1"
 
-reference_fa=agi.2.0.fa
-reference_folder=/home/$USER/work/Traja/RefGenome/RefGenome_v4
-main_folder=/home/$USER/work/Traja/Traja_GRASDi
+#aji.3.1.fa: the reference genoeme provided by Dr. Fujiwara @2023/2/13
+reference_fa=aji.3.1.fa
+reference_fa_head=aji.3.1
+reference_folder=/home/$USER/work/Traja/RefGenome/RefGenome_v5.1
+main_folder=/mnt/WD20/Traja/Traja_GRASDi
 script_folder=$main_folder/Scripts
 
-#set path to gatk ver.4.2.0.0
-gatk_folder=/home/$USER/local/gatk-4.2.0.0
+# gatk v.4.3.0.0
+module load gatk4/4.3.0.0
 
 
-target_ID=Traja_GRASDi_ref2_rev2
+target_ID=Traja_GRASDi_ref31
 work_folder=$main_folder/vcf_out
 mkdir -p $work_folder
 
@@ -29,14 +31,14 @@ mkdir -p $work_folder
 cd $work_folder
 
 #Filtering out samples with label repetation: SNP
-$gatk_folder/gatk SelectVariants\
+gatk SelectVariants\
  -R $reference_folder/$reference_fa\
  -V $target_ID.nDNA.snp.DPfilterNoCall.vcf.gz\
  --exclude-sample-name $script_folder/Traja_GRASDi.LabelRepetation.IndivRepetation.args\
  -O $target_ID.nDNA.snp.DPfilterNoCall.non_rep.vcf.gz
 
 #Filtering out samples with label repetation: INDEL
-$gatk_folder/gatk SelectVariants\
+gatk SelectVariants\
  -R $reference_folder/$reference_fa\
  -V $target_ID.nDNA.indel.DPfilterNoCall.vcf.gz\
  --exclude-sample-name $script_folder/Traja_GRASDi.LabelRepetation.IndivRepetation.args\
@@ -45,7 +47,7 @@ $gatk_folder/gatk SelectVariants\
 
 #Set filtered sites to no call: SNP
 #set filtering out locus with no genotypes 99%
-$gatk_folder/gatk SelectVariants\
+gatk SelectVariants\
  -R $reference_folder/$reference_fa\
  -V $target_ID.nDNA.snp.DPfilterNoCall.non_rep.vcf.gz\
  --set-filtered-gt-to-nocall\
@@ -56,7 +58,7 @@ $gatk_folder/gatk SelectVariants\
 
 #Set filtered sites to no call: INDEL
 #set filtering out locus with no genotypes 99%
-$gatk_folder/gatk SelectVariants\
+gatk SelectVariants\
  -R $reference_folder/$reference_fa\
  -V $target_ID.nDNA.indel.DPfilterNoCall.non_rep.vcf.gz\
  --set-filtered-gt-to-nocall\
@@ -66,3 +68,4 @@ $gatk_folder/gatk SelectVariants\
 
 cd $CURRENT_DIR
 
+module unload gatk4/4.3.0.0

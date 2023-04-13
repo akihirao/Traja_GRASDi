@@ -7,10 +7,10 @@ set -exuo pipefail
 
 SCRIPT_DIR=$(cd $(dirname $0)  && pwd)
 
-no_threads=64
+no_threads=24
 
 
-main_folder=/home/$USER/work/Traja/Traja_GRASDi
+main_folder=/mnt/WD20/Traja/Traja_GRASDi
 raw_fastq_folder=$main_folder/Traja_RawData_GRASDi
 
 echo -n >| Summary.RawReads.txt
