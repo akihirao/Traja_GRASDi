@@ -157,7 +157,7 @@ plink2 --allow-extra-chr\
 
 
 #convert from LD-prune.in to BED
-perl $script_folder/LDpruned2BED.chr.pl < $vcf_folder/$target_ID.nDNA.snp.maf001.prune.in > $plink_folder/$target_ID.nDNA.snp.maf001.LDpruned.bed
+perl $script_folder/LDpruned2BED.pl < $vcf_folder/$target_ID.nDNA.snp.maf001.prune.in > $plink_folder/$target_ID.nDNA.snp.maf001.LDpruned.bed
 
 gatk SelectVariants\
  -R $reference_folder/$reference_fa\
