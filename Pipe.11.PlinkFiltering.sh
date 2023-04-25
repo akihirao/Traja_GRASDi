@@ -98,7 +98,7 @@ plink --noweb --allow-extra-chr\
  --recode
 
 #mind 0.5 geno 0.5: removing >50% missing individuals and/or sites
-plink --noweb --chr-set 24 no-xy no-mt\
+plink - --noweb --allow-extra-chr\
  --file $target_ID.nDNA.snp.$lab_60_filtering\
  --mind 0.50 --geno 0.50\
  --allow-no-sex\
