@@ -15,11 +15,11 @@
 * Trimmomatic: a flexible read trimming tool https://github.com/usadellab/Trimmomatic
 * vcftools: a set of tools for working with VCF files https://github.com/vcftools/vcftools
 
-The environments under Ubuntu 18.04 are tested. The versions of the tools used are documented in a series of shell scripts.
+The environments under Ubuntu 22.04 are tested. The versions of the tools used are documented in a series of shell scripts.
 
 
 ## Reference genome and the sequencing data
-Primary assembly of <i>Trachurus japonicus</i> genome (agi ver.2) was developed by Dr. Atsushi Fujiwara (Fisheries Research Agency, Japan). The raw sequencing data analyzed were deposited into the DNA Data Bank of Japan Sequence Read Archive with the accession number DRA012187 and DRA012269.
+Primary assembly of <i>Trachurus japonicus</i> genome (agi ver.2) was developed by Dr. Atsushi Fujiwara (Fisheries Research Agency, Japan). The raw sequencing data analyzed were deposited into the DNA Data Bank of Japan Sequence Read Archive with the accession number DRA012187 and DRA012219.
 
 
 
