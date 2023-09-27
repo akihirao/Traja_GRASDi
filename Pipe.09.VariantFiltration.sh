@@ -31,17 +31,17 @@ cd $output_folder
 
 #===============================================
 #Filtering out mt
-#gatk SelectVariants\
-# -R $reference_folder/$reference_fa\
-# -V $target_ID.sca_all.snp.vcf.gz\
-# -XL $script_folder/mt.list\
-# -O $target_ID.nDNA.snp.vcf.gz
+gatk SelectVariants\
+ -R $reference_folder/$reference_fa\
+ -V $target_ID.sca_all.snp.vcf.gz\
+ -XL $script_folder/mt.list\
+ -O $target_ID.nDNA.snp.vcf.gz
 
-#gatk SelectVariants\
-# -R $reference_folder/$reference_fa\
-# -V $target_ID.sca_all.indel.vcf.gz\
-# -XL $script_folder/mt.list\
-# -O $target_ID.nDNA.indel.vcf.gz
+gatk SelectVariants\
+ -R $reference_folder/$reference_fa\
+ -V $target_ID.sca_all.indel.vcf.gz\
+ -XL $script_folder/mt.list\
+ -O $target_ID.nDNA.indel.vcf.gz
 
 #===============================================
  
@@ -56,30 +56,30 @@ echo $ExcessHet_param
 
 
 #Making select sited that having ExcessHet
-#gatk SelectVariants\
-# -R $reference_folder/$reference_fa\
-# -V $target_ID.sca_all.vcf.gz\
-# -select "${ExcessHet_param}"\
-# -O $target_ID.ExcessHet.vcf
+gatk SelectVariants\
+ -R $reference_folder/$reference_fa\
+ -V $target_ID.sca_all.vcf.gz\
+ -select "${ExcessHet_param}"\
+ -O $target_ID.ExcessHet.vcf
 
 #Making bed file that marked ExcessHet block
-#perl $script_folder/Vcf2BED_chr_start_end.pl < $target_ID.ExcessHet.vcf | bedtools cluster -d 300 > $target_ID.ExcessHet.cluster.bed
-#perl $script_folder/ClusterBedBlock.pl < $target_ID.ExcessHet.cluster.bed > $target_ID.ExcessHet.block.bed
+perl $script_folder/Vcf2BED_chr_start_end.pl < $target_ID.ExcessHet.vcf | bedtools cluster -d 300 > $target_ID.ExcessHet.cluster.bed
+perl $script_folder/ClusterBedBlock.pl < $target_ID.ExcessHet.cluster.bed > $target_ID.ExcessHet.block.bed
 
 #=====================================================================
 #filtering out ExcessHetblock: SNPs
-#gatk SelectVariants\
-# -R $reference_folder/$reference_fa\
-# -V $target_ID.nDNA.snp.vcf.gz\
-# --exclude-intervals $target_ID.ExcessHet.block.bed\
-# -O $target_ID.nDNA.snp.no_ExcessHetBlock.vcf.gz \
+gatk SelectVariants\
+ -R $reference_folder/$reference_fa\
+ -V $target_ID.nDNA.snp.vcf.gz\
+ --exclude-intervals $target_ID.ExcessHet.block.bed\
+ -O $target_ID.nDNA.snp.no_ExcessHetBlock.vcf.gz \
 
 #filtering out ExcessHetblock: INDELs
-#gatk SelectVariants\
-# -R $reference_folder/$reference_fa\
-# -V $target_ID.nDNA.indel.vcf.gz\
-# --exclude-intervals $target_ID.ExcessHet.block.bed\
-# -O $target_ID.nDNA.indel.no_ExcessHetBlock.vcf.gz \
+gatk SelectVariants\
+ -R $reference_folder/$reference_fa\
+ -V $target_ID.nDNA.indel.vcf.gz\
+ --exclude-intervals $target_ID.ExcessHet.block.bed\
+ -O $target_ID.nDNA.indel.no_ExcessHetBlock.vcf.gz \
 
 
 #=====================================================================
@@ -103,11 +103,12 @@ gatk SelectVariants\
 
 #=====================================================================
 #Site-based filtering of SNPs
+# FS filter shoud not apply for GRAS-Di data set
 gatk VariantFiltration\
  -R $reference_folder/$reference_fa\
- -V $target_ID.nDNA.snp.no_ExcessHetBlock_RM.vcf.gz \
+ -V $target_ID.nDNA.snp.no_ExcessHetBlock.vcf.gz \
  --filter-expression "QD < 2.0" --filter-name "QD2"\
- --filter-expression "FS > 60.0" --filter-name "FS60"\
+# --filter-expression "FS > 60.0" --filter-name "FS60"\
  --filter-expression "MQ < 40.0" --filter-name "MQ40"\
  --filter-expression "MQRankSum < -12.5" --filter-name "MQRS_Nega12.5"\
  --filter-expression "ReadPosRankSum < -8.0" --filter-name "RPRS_Nega8"\
@@ -125,9 +126,9 @@ gatk SelectVariants\
 #Site-based filtering of INDELs
 gatk VariantFiltration\
  -R $reference_folder/$reference_fa\
- -V $target_ID.nDNA.indel.no_ExcessHetBlock_RM.vcf.gz \
+ -V $target_ID.nDNA.indel.no_ExcessHetBlock.vcf.gz \
  --filter-expression "QD < 2.0" --filter-name "QD2"\
- --filter-expression "FS > 200.0" --filter-name "FS200"\
+# --filter-expression "FS > 200.0" --filter-name "FS200"\
  --filter-expression "ReadPosRankSum < -20.0" --filter-name "RPRS_Nega20"\
  --filter-expression "SOR > 10.0" --filter-name "SOR10"\
  --filter-expression "${ExcessHet_param}" --filter-name "ExHet"\
