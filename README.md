@@ -39,7 +39,7 @@ Pipe.11.PlinkFiltering.sh
 * Reads of mapping quality (MAPQ) < 4 were removed. 
 * Common for filtering out: Depth ＜ 20x, GenotypeQuality < 30 
 * SNPs for flitering out: QualByDepth < 2.0, RMSMappingQuality < 40.0, MQRankSum < -12.5, ReadPosRankUsm < -8.0, StrandOddsRatio > 4.0, and ExcessHet > 13.0  
-* INDELs for flitering out: QualByDepth < 2.0, FisherStrand > 200.0, RMSMappingQuality < 20.0, StrandOddsRatio > 10.0, and ExcessHet > 13.0    
+* INDELs for flitering out: QualByDepth < 2.0, RMSMappingQuality < 20.0, StrandOddsRatio > 10.0, and ExcessHet > 13.0    
 
 
 ## Note
