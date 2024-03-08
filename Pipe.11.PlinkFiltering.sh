@@ -1,6 +1,6 @@
 #!/bin/bash
-#Pipe.11.PlinkFiltering.sh
-#by HIRAO Akira
+# Pipe.11.PlinkFiltering.sh
+# by HIRAO Akira
 
 set -exuo pipefail
 
@@ -116,7 +116,7 @@ tabix -p vcf $vcf_folder/$target_ID.nDNA.snp.$lab_50_filtering.from_bed.vcf.gz
 
 #Rename the full dataset including singleton
 cp $vcf_folder/$target_ID.nDNA.snp.$lab_50_filtering.from_bed.vcf.gz $vcf_folder/$target_ID.nDNA.snp.singleton.vcf.gz
-tabix -p vcf $vcf_folder//$target_ID.nDNA.snp.singleton.vcf.gz
+tabix -p vcf $vcf_folder/$target_ID.nDNA.snp.singleton.vcf.gz
 
 #filtering out singletons
 vcftools --gzvcf $vcf_folder/$target_ID.nDNA.snp.singleton.vcf.gz --singletons --stdout > $vcf_folder/$target_ID.nDNA.snp.singletons.txt

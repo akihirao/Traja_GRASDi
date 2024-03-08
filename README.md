@@ -19,7 +19,7 @@ The environments under Ubuntu 22.04 are tested. The versions of the tools used a
 
 
 ## Reference genome and the sequencing data
-Primary assembly of <i>Trachurus japonicus</i> genome (agi ver.2) was developed by Dr. Atsushi Fujiwara (Fisheries Research Agency, Japan). The raw sequencing data analyzed were deposited into the DNA Data Bank of Japan Sequence Read Archive with the accession number DRA012187 and DRA012219.
+Genome assembly of <i>Trachurus japonicus</i> developed by Dr. Atushi Fujiwara (Fisheries Research Agency, Japan) was deposited at DDBJ/ENA/GenBank under the accession AP029620-AP031217. The raw sequencing data were deposited into the DNA Data Bank of Japan Sequence Read Archive with the accession number DRA012187 and DRA012219.
 
 
 
