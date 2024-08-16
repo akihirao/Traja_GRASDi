@@ -19,7 +19,7 @@ The environments under Ubuntu 22.04 are tested. The versions of the tools used a
 
 
 ## Reference genome and the sequencing data
-The genome assembly of <i>Trachurus japonicus</i> developed by Dr. Atushi Fujiwara (Fisheries Research Agency, Japan) was deposited at DDBJ/ENA/GenBank under the accession AP029620-AP031217. The raw sequencing data were deposited into the DNA Data Bank of Japan Sequence Read Archive with the accession number DRA012187 and DRA012219.
+The assembly of T. japonicus has been uploaded to DDBJ/ENA/GenBank (AP029620-AP031217). Raw FASTQ files of GRAS-Di data were deposited in DRA/SRA/ERA ([PRJDB11775](https://www.ncbi.nlm.nih.gov/nuccore/?term=PRJDB11775)).
 
 
 
@@ -42,5 +42,6 @@ Pipe.11.PlinkFiltering.sh
 * INDELs for flitering out: QualByDepth < 2.0, RMSMappingQuality < 20.0, StrandOddsRatio > 10.0, and ExcessHet > 13.0    
 
 
-## Note
-This project is currently under development. Thank you!
+## Reference
+Hirao AS, Imoto J, Fujiwara A, Watanabe C, Yoda M, Matsuura A, Akita T (accepted) Genome-wide SNP analysis coupled with geographic and reproductive-phenological information reveals panmixia in a classical marine species, the Japanese jack mackerel (<i>Trachurus japonicus</i>). Fisheries Research
+
