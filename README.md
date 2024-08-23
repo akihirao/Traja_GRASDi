@@ -43,5 +43,5 @@ Pipe.11.PlinkFiltering.sh
 
 
 ## Reference
-Hirao AS, Imoto J, Fujiwara A, Watanabe C, Yoda M, Matsuura A, Akita T (accepted) Genome-wide SNP analysis coupled with geographic and reproductive-phenological information reveals panmixia in a classical marine species, the Japanese jack mackerel (<i>Trachurus japonicus</i>). Fisheries Research
+Hirao AS, Imoto J, Fujiwara A, Watanabe C, Yoda M, Matsuura A, Akita T (2024) Genome-wide SNP analysis coupled with geographic and reproductive-phenological information reveals panmixia in a classical marine species, the Japanese jack mackerel (<i>Trachurus japonicus</i>). Fisheries Research 279, 107146. https://doi.org/10.1016/j.fishres.2024.107146
 
